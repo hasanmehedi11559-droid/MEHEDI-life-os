@@ -1,508 +1,1605 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LIFE.OS // Personal Dashboard</title>
-    <link rel="manifest" href="manifest.json">
-    <style>
-        :root {
-            --bg: #0b0f19;
-            --card-bg: #151d2a;
-            --border: #232f45;
-            --accent: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.2);
-            --text: #f1f5f9;
-            --text-dim: #94a3b8;
-            --warning: #fbbf24;
-            --danger: #ef4444;
-            --success: #22c55e;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050816">
+<meta name="apple-mobile-web-app-capable" content="yes">
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Courier New', Courier, monospace, system-ui; }
-        body { background: var(--bg); color: var(--text); padding: 15px; padding-bottom: 50px; }
+<link rel="manifest" href="manifest.json">
 
-        /* Lock Screen */
-        #lock-screen { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; }
-        .pin-input { font-size: 2rem; width: 140px; text-align: center; margin: 15px 0; background: var(--card-bg); color: var(--accent); border: 1px solid var(--border); border-radius: 8px; padding: 8px; }
+<title>MEHEDI HASAN — LIFE.OS</title>
 
-        header { border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .title-brand { font-size: 1.1rem; color: var(--accent); letter-spacing: 2px; }
-        .status-badge { background: rgba(34, 197, 94, 0.1); color: var(--success); padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; border: 1px solid var(--success); }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap');
 
-        /* Grid Layout */
-        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px; }
-        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; }
-        .card h2 { font-size: 0.95rem; color: var(--accent); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; display: flex; justify-content: space-between; }
+:root{
+    --bg:#050816;
+    --card:#0a1024;
+    --card2:#0d1430;
+    --cyan:#00eaff;
+    --violet:#8b5cf6;
+    --text:#eef7ff;
+    --muted:#7f91aa;
+    --border:rgba(0,234,255,.16);
+    --glow:0 0 25px rgba(0,234,255,.12);
+}
 
-        /* Original Identity Grid */
-        .age-main { font-size: 2.2rem; font-weight: bold; color: var(--accent); text-shadow: 0 0 10px var(--accent-glow); margin: 10px 0; }
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .stat-box { background: var(--bg); padding: 10px; border-radius: 8px; border: 1px solid var(--border); }
-        .stat-val { font-size: 1.1rem; font-weight: bold; color: #fff; }
-        .stat-lbl { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; margin-top: 2px; }
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
-        /* UI Inputs & Buttons */
-        input, select, button, textarea { background: var(--bg); color: var(--text); border: 1px solid var(--border); padding: 10px; border-radius: 6px; width: 100%; margin-top: 8px; font-size: 0.85rem; }
-        button { background: var(--accent); color: #000; font-weight: bold; cursor: pointer; border: none; transition: 0.2s; }
-        button:hover { opacity: 0.9; transform: translateY(-1px); }
+body{
+    background:
+        radial-gradient(circle at 20% 0%,rgba(0,234,255,.08),transparent 30%),
+        radial-gradient(circle at 90% 20%,rgba(139,92,246,.10),transparent 30%),
+        var(--bg);
+    color:var(--text);
+    font-family:Inter,sans-serif;
+    min-height:100vh;
+}
 
-        /* Progress Bars */
-        .progress-bar { background: var(--bg); height: 8px; border-radius: 4px; overflow: hidden; margin-top: 6px; border: 1px solid var(--border); }
-        .progress-fill { background: var(--accent); height: 100%; width: 0%; transition: width 0.4s ease; }
+.container{
+    width:min(1150px,94%);
+    margin:auto;
+}
 
-        /* Memento Mori Matrix */
-        .mori-grid { display: grid; grid-template-columns: repeat(26, 1fr); gap: 3px; height: 130px; overflow-y: auto; margin-top: 10px; padding-right: 5px; }
-        .mori-dot { background: var(--border); aspect-ratio: 1; border-radius: 1px; }
-        .mori-dot.passed { background: var(--accent); opacity: 0.7; }
+header{
+    padding:24px 0;
+    border-bottom:1px solid var(--border);
+}
 
-        /* Lists & Matrix */
-        ul { list-style: none; margin-top: 10px; }
-        li { background: var(--bg); padding: 8px 12px; border-radius: 6px; margin-bottom: 6px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
-        .matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .matrix-box { background: var(--bg); padding: 8px; border-radius: 6px; border: 1px solid var(--border); min-height: 80px; font-size: 0.75rem; }
-    </style>
+.logo{
+    font-family:Orbitron,sans-serif;
+    font-size:13px;
+    letter-spacing:3px;
+    color:var(--cyan);
+}
+
+.name{
+    margin-top:7px;
+    font-family:Orbitron,sans-serif;
+    font-size:clamp(22px,5vw,42px);
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+.hero{
+    text-align:center;
+    padding:55px 0 35px;
+}
+
+.badge{
+    display:inline-block;
+    padding:7px 14px;
+    border:1px solid var(--border);
+    border-radius:30px;
+    color:var(--cyan);
+    font-family:Orbitron,sans-serif;
+    font-size:10px;
+    letter-spacing:2px;
+    margin-bottom:18px;
+}
+
+.hero h1{
+    font-family:Orbitron,sans-serif;
+    font-size:clamp(24px,6vw,52px);
+    margin-bottom:10px;
+}
+
+.hero p{
+    color:var(--muted);
+}
+
+.clock{
+    margin:35px auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.unit{
+    min-width:90px;
+    padding:15px 12px;
+    background:linear-gradient(145deg,var(--card2),var(--card));
+    border:1px solid var(--border);
+    border-radius:14px;
+    box-shadow:var(--glow);
+}
+
+.number{
+    font-family:Orbitron,sans-serif;
+    font-size:clamp(22px,5vw,38px);
+    color:var(--cyan);
+    text-shadow:0 0 15px rgba(0,234,255,.35);
+}
+
+.label{
+    margin-top:6px;
+    font-size:9px;
+    color:var(--muted);
+    letter-spacing:2px;
+}
+
+.colon{
+    font-family:Orbitron,sans-serif;
+    font-size:25px;
+    color:var(--violet);
+}
+
+.card{
+    background:linear-gradient(145deg,rgba(13,20,48,.94),rgba(7,12,29,.94));
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:24px;
+    margin:22px 0;
+    box-shadow:var(--glow);
+}
+
+.section-title{
+    font-family:Orbitron,sans-serif;
+    font-size:16px;
+    letter-spacing:2px;
+    color:var(--cyan);
+    margin-bottom:18px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:12px;
+}
+
+.data-box{
+    padding:18px;
+    border-radius:14px;
+    background:rgba(255,255,255,.025);
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.data-box strong{
+    display:block;
+    font-family:Orbitron,sans-serif;
+    font-size:20px;
+    margin-bottom:7px;
+}
+
+.data-box span{
+    color:var(--muted);
+    font-size:11px;
+    letter-spacing:1px;
+}
+
+.progress-wrap{
+    margin-top:20px;
+}
+
+.progress-info{
+    display:flex;
+    justify-content:space-between;
+    color:var(--muted);
+    font-size:11px;
+    margin-bottom:8px;
+}
+
+.progress{
+    height:8px;
+    border-radius:10px;
+    overflow:hidden;
+    background:#101936;
+}
+
+.progress-bar{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--cyan),var(--violet));
+    box-shadow:0 0 15px rgba(0,234,255,.4);
+}
+
+.admission-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.tabs{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.tab{
+    border:1px solid var(--border);
+    background:#080d20;
+    color:var(--muted);
+    padding:9px 13px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.tab.active{
+    color:#000;
+    background:var(--cyan);
+}
+
+.btn{
+    border:0;
+    padding:11px 16px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:700;
+    background:var(--cyan);
+    color:#001018;
+}
+
+.btn.secondary{
+    background:#111a38;
+    color:var(--text);
+    border:1px solid var(--border);
+}
+
+.form{
+    display:none;
+    margin-top:20px;
+    padding:18px;
+    border:1px solid var(--border);
+    border-radius:15px;
+    background:rgba(0,0,0,.15);
+}
+
+.form.show{
+    display:block;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+}
+
+input,select{
+    width:100%;
+    padding:13px;
+    border-radius:10px;
+    border:1px solid var(--border);
+    background:#070c1e;
+    color:white;
+    outline:none;
+}
+
+input:focus,select:focus{
+    border-color:var(--cyan);
+    box-shadow:0 0 12px rgba(0,234,255,.12);
+}
+
+.form-actions{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.exam-list{
+    margin-top:20px;
+    display:grid;
+    gap:15px;
+}
+
+.exam-card{
+    padding:20px;
+    border:1px solid var(--border);
+    border-radius:16px;
+    background:linear-gradient(145deg,#0b1330,#070c1d);
+}
+
+.exam-top{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.exam-name{
+    font-family:Orbitron,sans-serif;
+    font-size:18px;
+}
+
+.exam-category{
+    display:inline-block;
+    margin-top:7px;
+    font-size:10px;
+    letter-spacing:1.5px;
+    color:var(--cyan);
+}
+
+.exam-date{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:8px;
+}
+
+.exam-clock{
+    margin:20px 0 5px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.exam-clock .unit{
+    min-width:75px;
+    padding:11px 8px;
+}
+
+.exam-clock .number{
+    font-size:22px;
+}
+
+.exam-clock .label{
+    font-size:8px;
+}
+
+.exam-clock .colon{
+    font-size:18px;
+}
+
+.completed{
+    text-align:center;
+    padding:22px;
+    border-radius:12px;
+    border:1px solid rgba(255,80,100,.25);
+    color:#ff7185;
+    font-family:Orbitron,sans-serif;
+    letter-spacing:2px;
+    background:rgba(255,50,80,.05);
+}
+
+.exam-actions{
+    display:flex;
+    gap:8px;
+    justify-content:flex-end;
+    margin-top:12px;
+}
+
+.small-btn{
+    border:1px solid var(--border);
+    background:#0b1230;
+    color:var(--text);
+    padding:7px 11px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:11px;
+}
+
+.small-btn.delete{
+    color:#ff7185;
+}
+
+.settings-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.settings-row input{
+    flex:1;
+    min-width:200px;
+}
+
+.timeline{
+    border-left:1px solid var(--border);
+    margin-left:10px;
+    padding-left:22px;
+}
+
+.timeline-item{
+    position:relative;
+    margin-bottom:25px;
+}
+
+.timeline-item::before{
+    content:"";
+    position:absolute;
+    left:-28px;
+    top:5px;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--cyan);
+    box-shadow:0 0 12px var(--cyan);
+}
+
+.timeline-item h3{
+    font-family:Orbitron,sans-serif;
+    font-size:14px;
+}
+
+.timeline-item p{
+    margin-top:5px;
+    color:var(--muted);
+    font-size:12px;
+}
+
+footer{
+    text-align:center;
+    padding:40px 0;
+    color:var(--muted);
+    font-size:11px;
+    letter-spacing:1px;
+}
+
+@media(max-width:600px){
+    .clock{
+        gap:5px;
+    }
+
+    .unit{
+        min-width:72px;
+        padding:11px 7px;
+    }
+
+    .number{
+        font-size:20px;
+    }
+
+    .colon{
+        font-size:17px;
+    }
+
+    .card{
+        padding:17px;
+    }
+
+    .exam-clock .unit{
+        min-width:65px;
+    }
+}
+</style>
 </head>
+
 <body>
 
-    <!-- Security Lock Screen -->
-    <div id="lock-screen">
-        <h2 style="color:var(--accent); letter-spacing: 2px;">🔒 LIFE.OS LOCKED</h2>
-        <input type="password" id="pin-code" class="pin-input" maxlength="4" placeholder="****">
-        <button onclick="unlockApp()" style="width: 140px;">UNLOCK</button>
-        <small style="color:var(--text-dim); margin-top:10px;">ডিফল্ট PIN: 1234</small>
+<div class="container">
+
+<header>
+    <div class="logo">CREATED BY MEHEDI HASAN</div>
+    <div class="name" id="displayName">MEHEDI HASAN</div>
+</header>
+
+<section class="hero">
+
+    <div class="badge">LIVE LIFE COUNTER</div>
+
+    <h1>
+        <span id="heroName">MEHEDI HASAN</span>
+    </h1>
+
+    <p>Every second is being counted.</p>
+
+    <div class="clock">
+
+        <div class="unit">
+            <div class="number" id="years">00</div>
+            <div class="label">YEARS</div>
+        </div>
+
+        <div class="colon">:</div>
+
+        <div class="unit">
+            <div class="number" id="months">00</div>
+            <div class="label">MONTHS</div>
+        </div>
+
+        <div class="colon">:</div>
+
+        <div class="unit">
+            <div class="number" id="days">00</div>
+            <div class="label">DAYS</div>
+        </div>
+
+        <div class="colon">:</div>
+
+        <div class="unit">
+            <div class="number" id="hours">00</div>
+            <div class="label">HOURS</div>
+        </div>
+
+        <div class="colon">:</div>
+
+        <div class="unit">
+            <div class="number" id="minutes">00</div>
+            <div class="label">MINUTES</div>
+        </div>
+
+        <div class="colon">:</div>
+
+        <div class="unit">
+            <div class="number" id="seconds">00</div>
+            <div class="label">SECONDS</div>
+        </div>
+
+        <div class="colon">.</div>
+
+        <div class="unit">
+            <div class="number" id="milliseconds">000</div>
+            <div class="label">MILLISECONDS</div>
+        </div>
+
+    </div>
+</section>
+
+<section class="card">
+
+    <div class="section-title">EXISTENCE DATA</div>
+
+    <div class="grid">
+
+        <div class="data-box">
+            <strong id="totalDays">0</strong>
+            <span>TOTAL DAYS LIVED</span>
+        </div>
+
+        <div class="data-box">
+            <strong id="totalHours">0</strong>
+            <span>TOTAL HOURS LIVED</span>
+        </div>
+
+        <div class="data-box">
+            <strong id="totalMinutes">0</strong>
+            <span>TOTAL MINUTES LIVED</span>
+        </div>
+
+        <div class="data-box">
+            <strong id="totalSeconds">0</strong>
+            <span>TOTAL SECONDS LIVED</span>
+        </div>
+
     </div>
 
-    <header>
+    <div class="progress-wrap">
+
+        <div class="progress-info">
+            <span>CURRENT LIFE YEAR</span>
+            <span id="yearProgressText">0%</span>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="yearProgress"></div>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="card">
+
+    <div class="admission-head">
+
         <div>
-            <div class="title-brand">LIFE.OS // PERSONAL TIME INTELLIGENCE</div>
-            <div id="live-clock" style="font-size: 0.8rem; color: var(--text-dim); margin-top: 3px;"></div>
-        </div>
-        <div class="status-badge">● OFFLINE READY</div>
-    </header>
-
-    <div class="dashboard">
-
-        <!-- ORIGINAL FEATURE: IDENTITY CORE & REAL-TIME AGE COUNTER -->
-        <div class="card" style="grid-column: span auto;">
-            <h2>IDENTITY CORE</h2>
-            <h1 style="font-size: 1.5rem; letter-spacing: 2px; color: #fff;">MEHEDI HASAN</h1>
-            <p style="font-size: 0.7rem; color: var(--text-dim); margin-bottom: 10px;">YOUR TIME. YOUR DATA. YOUR DEVICE.</p>
-
-            <div style="font-size: 0.7rem; color: var(--text-dim); margin-top: 15px;">CURRENT AGE</div>
-            <div id="age-display" class="age-main">00Y 00M 00D</div>
-            <div id="clock-display" style="font-size: 1.1rem; color: var(--text-dim); font-weight: bold;">00:00:00</div>
-
-            <div class="stats-grid">
-                <div class="stat-box"><div id="stat-days" class="stat-val">0</div><div class="stat-lbl">Total Days</div></div>
-                <div class="stat-box"><div id="stat-hours" class="stat-val">0</div><div class="stat-lbl">Total Hours</div></div>
-                <div class="stat-box"><div id="stat-minutes" class="stat-val">0</div><div class="stat-lbl">Total Minutes</div></div>
-                <div class="stat-box"><div id="stat-seconds" class="stat-val">0</div><div class="stat-lbl">Total Seconds</div></div>
-            </div>
-
-            <button onclick="toggleDobInput()" style="margin-top: 15px; background: var(--border); color: #fff;">⚙ CHANGE DATE OF BIRTH</button>
-            <div id="dob-container" style="display: none; margin-top: 10px;">
-                <input type="datetime-local" id="dob-input">
-                <button onclick="saveDob()">SAVE DOB</button>
+            <div class="section-title">ADMISSION.OS</div>
+            <div style="color:var(--muted);font-size:12px;">
+                Your admission countdown system
             </div>
         </div>
 
-        <!-- 2. Life Milestones Bar -->
-        <div class="card">
-            <h2>📊 LIFE MILESTONES (%)</h2>
-            <label style="font-size: 0.75rem;">Current Year Progress</label>
-            <div class="progress-bar"><div id="year-progress" class="progress-fill"></div></div>
-            <small id="year-text" style="color:var(--text-dim); font-size:0.7rem;"></small>
-            <br><br>
-            <label style="font-size: 0.75rem;">Current Month Progress</label>
-            <div class="progress-bar"><div id="month-progress" class="progress-fill"></div></div>
-            <small id="month-text" style="color:var(--text-dim); font-size:0.7rem;"></small>
-        </div>
+        <button class="btn" id="addExamBtn">
+            + ADD EXAM
+        </button>
 
-        <!-- 1. Memento Mori Matrix -->
-        <div class="card">
-            <h2>⌛ MEMENTO MORI MATRIX</h2>
-            <small style="color:var(--text-dim); font-size:0.7rem;">জীবনের পার হয়ে যাওয়া সপ্তাহসমূহ (৮০ বছর ভিত্তিক)</small>
-            <div id="mori-grid" class="mori-grid"></div>
-        </div>
+    </div>
 
-        <!-- 5. Gamification System -->
-        <div class="card">
-            <h2>🎮 GAMIFICATION (XP)</h2>
-            <div style="font-size:0.9rem;">Level: <b id="user-level" style="color:var(--warning)">1</b> | XP: <span id="user-xp">0</span>/100</div>
-            <div class="progress-bar"><div id="xp-progress" class="progress-fill" style="background:var(--warning)"></div></div>
-            <button onclick="addXP(20)">+20 XP অর্জিত (টাস্ক সম্পন্ন)</button>
-        </div>
+    <div class="tabs" style="margin-top:20px;">
 
-        <!-- 7. Pomodoro & Focus Timer -->
-        <div class="card">
-            <h2>⏱️ FOCUS TIMER & SOUND</h2>
-            <h3 id="timer-display" style="font-size: 2rem; text-align: center; margin: 10px 0; color:var(--accent);">25:00</h3>
-            <div style="display: flex; gap: 5px;">
-                <button onclick="startTimer()">Start</button>
-                <button onclick="pauseTimer()" style="background:var(--warning); color:#000;">Pause</button>
-                <button onclick="resetTimer()" style="background:var(--border); color:#fff">Reset</button>
+        <button class="tab active" data-category="ALL">
+            ALL
+        </button>
+
+        <button class="tab" data-category="ENGINEERING">
+            ENGINEERING
+        </button>
+
+        <button class="tab" data-category="UNIVERSITY">
+            UNIVERSITY
+        </button>
+
+        <button class="tab" data-category="MEDICAL">
+            MEDICAL
+        </button>
+
+    </div>
+
+    <div class="form" id="examForm">
+
+        <input type="hidden" id="editExamId">
+
+        <div class="form-grid">
+
+            <div>
+                <label style="font-size:11px;color:var(--muted);">
+                    CATEGORY
+                </label>
+
+                <select id="examCategory">
+
+                    <option value="ENGINEERING">
+                        ENGINEERING
+                    </option>
+
+                    <option value="UNIVERSITY">
+                        UNIVERSITY
+                    </option>
+
+                    <option value="MEDICAL">
+                        MEDICAL
+                    </option>
+
+                </select>
             </div>
-            <audio id="ambient-audio" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-            <button onclick="toggleAudio()" style="background:var(--border); color:#fff; margin-top:8px;">🎧 Lofi Sound Play/Pause</button>
-        </div>
 
-        <!-- 8. Daily Habit Loop -->
-        <div class="card">
-            <h2>🔥 HABIT LOOP</h2>
-            <input type="text" id="habit-input" placeholder="নতুন অভ্যাস যোগ করুন...">
-            <button onclick="addHabit()">যোগ করুন</button>
-            <ul id="habit-list"></ul>
-        </div>
+            <div>
+                <label style="font-size:11px;color:var(--muted);">
+                    EXAM / UNIVERSITY NAME
+                </label>
 
-        <!-- 17. Smart To-Do List -->
-        <div class="card">
-            <h2>✅ SMART TO-DO</h2>
-            <input type="text" id="todo-input" placeholder="কাজ লিখুন...">
-            <select id="todo-cat">
-                <option value="Today">আজকের কাজ</option>
-                <option value="Week">চলতি সপ্তাহ</option>
-                <option value="Future">ভবিষ্যতের কাজ</option>
-            </select>
-            <button onclick="addTodo()">টাস্ক সেভ করুন</button>
-            <ul id="todo-list"></ul>
-        </div>
-
-        <!-- 9. Priority Matrix -->
-        <div class="card">
-            <h2>📌 PRIORITY MATRIX</h2>
-            <div class="matrix">
-                <div class="matrix-box"><b style="color:var(--danger)">জরুরি ও গুরুত্বপূর্ণ</b><div id="m-1"></div></div>
-                <div class="matrix-box"><b style="color:var(--warning)">গুরুত্বপূর্ণ (জরুরি না)</b><div id="m-2"></div></div>
-                <div class="matrix-box"><b style="color:var(--accent)">জরুরি (গুরুত্বপূর্ণ না)</b><div id="m-3"></div></div>
-                <div class="matrix-box"><b style="color:var(--text-dim)">কোনোটিই নয়</b><div id="m-4"></div></div>
+                <input
+                    type="text"
+                    id="examName"
+                    placeholder="e.g. BUET Admission"
+                >
             </div>
-        </div>
 
-        <!-- 10. Mood Tracker -->
-        <div class="card">
-            <h2>😊 MOOD TRACKER</h2>
-            <div style="display: flex; justify-content: space-around; font-size: 1.6rem; margin: 10px 0;">
-                <span onclick="setMood('😀')" style="cursor:pointer">😀</span>
-                <span onclick="setMood('😐')" style="cursor:pointer">😐</span>
-                <span onclick="setMood('😔')" style="cursor:pointer">😔</span>
-                <span onclick="setMood('🔥')" style="cursor:pointer">🔥</span>
+            <div>
+                <label style="font-size:11px;color:var(--muted);">
+                    EXAM DATE
+                </label>
+
+                <input type="date" id="examDate">
             </div>
-            <div id="mood-status" style="text-align: center; color:var(--accent); font-size:0.85rem;">আজকের মেজাজ সিলেক্ট করুন</div>
+
+            <div>
+                <label style="font-size:11px;color:var(--muted);">
+                    EXACT EXAM TIME
+                </label>
+
+                <input type="time" id="examTime">
+            </div>
+
         </div>
 
-        <!-- 4. Bio-Rhythm Energy -->
-        <div class="card">
-            <h2>⚡ BIO-RHYTHM ENERGY</h2>
-            <select id="energy-level" onchange="saveEnergy()">
-                <option value="">শক্তি লেভেল বেছে নিন</option>
-                <option value="High Energy (Morning)">Peak Morning Energy ☀️</option>
-                <option value="Medium Energy (Afternoon)">Afternoon Steady ⛅</option>
-                <option value="High Focus (Night)">Night Owl Focus 🌙</option>
-            </select>
-            <div id="energy-display" style="margin-top: 10px; font-size: 0.85rem;"></div>
-        </div>
+        <div class="form-actions">
 
-        <!-- 11. Gratitude Jar -->
-        <div class="card">
-            <h2>🫙 GRATITUDE JAR</h2>
-            <textarea id="gratitude-input" rows="2" placeholder="আজকের বিশেষ ভালো অনুভূতি..."></textarea>
-            <button onclick="addGratitude()">জারে জমা রাখুন</button>
-            <ul id="gratitude-list"></ul>
-        </div>
+            <button class="btn" id="saveExamBtn">
+                SAVE EXAM
+            </button>
 
-        <!-- 15. Daily Reflection -->
-        <div class="card">
-            <h2>📝 DAILY REFLECTION</h2>
-            <p style="font-size: 0.75rem; color:var(--text-dim)">আজকের দিনটি থেকে শেখা প্রধান শিক্ষাটি কী?</p>
-            <textarea id="reflection-input" rows="2" placeholder="এক লাইনে উত্তর লিখুন..."></textarea>
-            <button onclick="saveReflection()">সেভ করুন</button>
-        </div>
+            <button class="btn secondary" id="cancelExamBtn">
+                CANCEL
+            </button>
 
-        <!-- 3. Digital Time Capsule -->
-        <div class="card">
-            <h2>⌛ TIME CAPSULE</h2>
-            <textarea id="capsule-msg" rows="2" placeholder="ভবিষ্যতের নিজের জন্য নোট..."></textarea>
-            <input type="date" id="capsule-date">
-            <button onclick="saveCapsule()">লক করুন</button>
-            <div id="capsule-display" style="margin-top:10px; font-size: 0.8rem;"></div>
-        </div>
-
-        <!-- 13. Micro Budget Tracker -->
-        <div class="card">
-            <h2>💰 MICRO BUDGET</h2>
-            <input type="text" id="expense-name" placeholder="খরচের বিবরণ">
-            <input type="number" id="expense-amt" placeholder="পরিমাণ (৳)">
-            <button onclick="addExpense()">খরচ যোগ করুন</button>
-            <ul id="expense-list"></ul>
-        </div>
-
-        <!-- 14. Skill Tree -->
-        <div class="card">
-            <h2>🌱 SKILL & BOOK PROGRESS</h2>
-            <input type="text" id="skill-name" placeholder="স্কিল / বইয়ের নাম">
-            <input type="number" id="skill-progress" placeholder="অগ্রগতি (%)" min="0" max="100">
-            <button onclick="addSkill()">আপডেট করুন</button>
-            <ul id="skill-list"></ul>
-        </div>
-
-        <!-- 16. Digital Detox -->
-        <div class="card">
-            <h2>📵 DIGITAL DETOX</h2>
-            <label style="font-size: 0.75rem;">আজকের টার্গেট স্ক্রিন টাইম (ঘণ্টা):</label>
-            <input type="number" id="detox-target" value="2" onchange="saveDetox()">
-            <p style="margin-top:8px; font-size: 0.75rem; color:var(--text-dim)">সোশ্যাল মিডিয়া ব্যবহারের সময় নিয়ন্ত্রণে রাখুন!</p>
-        </div>
-
-        <!-- 18. Bucket List -->
-        <div class="card">
-            <h2>🪣 BUCKET LIST</h2>
-            <input type="text" id="bucket-input" placeholder="জীবনের বড় কোনো লক্ষ্য...">
-            <button onclick="addBucket()">তালিকায় যুক্ত করুন</button>
-            <ul id="bucket-list"></ul>
-        </div>
-
-        <!-- 19. Journey Log -->
-        <div class="card">
-            <h2>🚀 JOURNEY LOG</h2>
-            <input type="text" id="journey-input" placeholder="বড় কোনো অর্জন বা মেমোরি...">
-            <button onclick="addJourney()">টাইমলাইনে সেভ করুন</button>
-            <ul id="journey-list"></ul>
-        </div>
-
-        <!-- 6. Data Backup & Restore -->
-        <div class="card">
-            <h2>⚙️ BACKUP & RESTORE</h2>
-            <button onclick="exportData()">EXPORT DATA (JSON)</button>
-            <input type="file" id="import-file" style="display:none" onchange="importData(event)">
-            <button onclick="document.getElementById('import-file').click()" style="background:var(--border); color:#fff; margin-top:8px;">IMPORT DATA</button>
         </div>
 
     </div>
 
-    <script>
-        // Default DOB setup (2003-01-01 if not set)
-        let dob = new Date(localStorage.getItem('user_dob') || '2003-01-01T00:00:00');
+    <div class="exam-list" id="examList"></div>
 
-        function updateAgeCore() {
-            const now = new Date();
-            const diff = now - dob;
+</section>
 
-            const seconds = Math.floor(diff / 1000);
-            const minutes = Math.floor(seconds / 60);
-            const hours = Math.floor(minutes / 60);
-            const days = Math.floor(hours / 24);
+<section class="card">
 
-            // Age calculation
-            let years = now.getFullYear() - dob.getFullYear();
-            let months = now.getMonth() - dob.getMonth();
-            let dateDays = now.getDate() - dob.getDate();
+    <div class="section-title">PERSONAL SETTINGS</div>
 
-            if (dateDays < 0) {
-                months--;
-                dateDays += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+    <div style="color:var(--muted);font-size:12px;margin-bottom:12px;">
+        Change the display name of this LIFE.OS.
+    </div>
+
+    <div class="settings-row">
+
+        <input
+            type="text"
+            id="nameInput"
+            placeholder="Enter your name"
+        >
+
+        <button class="btn" id="saveNameBtn">
+            SAVE NAME
+        </button>
+
+    </div>
+
+</section>
+
+<section class="card">
+
+    <div class="section-title">LIFE TIMELINE</div>
+
+    <div class="timeline">
+
+        <div class="timeline-item">
+
+            <h3>12 MAY 2005</h3>
+
+            <p>
+                <span id="timelineName">MEHEDI HASAN</span>
+                entered this world.
+            </p>
+
+        </div>
+
+        <div class="timeline-item">
+
+            <h3>NOW</h3>
+
+            <p>
+                You are currently living your
+                <span id="timelineYear">1st</span>
+                life year.
+            </p>
+
+        </div>
+
+        <div class="timeline-item">
+
+            <h3>FUTURE</h3>
+
+            <p>
+                Every second is moving toward the next moment.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <span id="footerName">MEHEDI HASAN</span>
+    — LIFE.OS
+
+</footer>
+
+</div>
+
+<script>
+
+const birth = new Date(
+    2005,
+    4,
+    12,
+    0,
+    0,
+    0,
+    0
+);
+
+function pad(number,length=2){
+    return String(number).padStart(length,"0");
+}
+
+function updateAge(){
+
+    const now = new Date();
+
+    let years =
+        now.getFullYear() -
+        birth.getFullYear();
+
+    let months =
+        now.getMonth() -
+        birth.getMonth();
+
+    let days =
+        now.getDate() -
+        birth.getDate();
+
+    let hours =
+        now.getHours() -
+        birth.getHours();
+
+    let minutes =
+        now.getMinutes() -
+        birth.getMinutes();
+
+    let seconds =
+        now.getSeconds() -
+        birth.getSeconds();
+
+    let milliseconds =
+        now.getMilliseconds() -
+        birth.getMilliseconds();
+
+    if(milliseconds < 0){
+        milliseconds += 1000;
+        seconds--;
+    }
+
+    if(seconds < 0){
+        seconds += 60;
+        minutes--;
+    }
+
+    if(minutes < 0){
+        minutes += 60;
+        hours--;
+    }
+
+    if(hours < 0){
+        hours += 24;
+        days--;
+    }
+
+    if(days < 0){
+
+        const previousMonth =
+            new Date(
+                now.getFullYear(),
+                now.getMonth(),
+                0
+            ).getDate();
+
+        days += previousMonth;
+        months--;
+
+    }
+
+    if(months < 0){
+        months += 12;
+        years--;
+    }
+
+    document.getElementById("years").textContent =
+        pad(years);
+
+    document.getElementById("months").textContent =
+        pad(months);
+
+    document.getElementById("days").textContent =
+        pad(days);
+
+    document.getElementById("hours").textContent =
+        pad(hours);
+
+    document.getElementById("minutes").textContent =
+        pad(minutes);
+
+    document.getElementById("seconds").textContent =
+        pad(seconds);
+
+    document.getElementById("milliseconds").textContent =
+        pad(milliseconds,3);
+
+    const lived =
+        now.getTime() -
+        birth.getTime();
+
+    const totalSeconds =
+        Math.floor(lived / 1000);
+
+    const totalMinutes =
+        Math.floor(totalSeconds / 60);
+
+    const totalHours =
+        Math.floor(totalMinutes / 60);
+
+    const totalDays =
+        Math.floor(totalHours / 24);
+
+    document.getElementById("totalDays").textContent =
+        totalDays.toLocaleString();
+
+    document.getElementById("totalHours").textContent =
+        totalHours.toLocaleString();
+
+    document.getElementById("totalMinutes").textContent =
+        totalMinutes.toLocaleString();
+
+    document.getElementById("totalSeconds").textContent =
+        totalSeconds.toLocaleString();
+
+    const currentBirthday =
+        new Date(
+            now.getFullYear(),
+            birth.getMonth(),
+            birth.getDate()
+        );
+
+    let start;
+
+    if(now >= currentBirthday){
+        start = currentBirthday;
+    }else{
+        start =
+            new Date(
+                now.getFullYear()-1,
+                birth.getMonth(),
+                birth.getDate()
+            );
+    }
+
+    const nextBirthday =
+        new Date(
+            start.getFullYear()+1,
+            birth.getMonth(),
+            birth.getDate()
+        );
+
+    const yearLength =
+        nextBirthday.getTime() -
+        start.getTime();
+
+    const yearElapsed =
+        now.getTime() -
+        start.getTime();
+
+    const percentage =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                yearElapsed / yearLength * 100
+            )
+        );
+
+    document.getElementById("yearProgress").style.width =
+        percentage + "%";
+
+    document.getElementById("yearProgressText").textContent =
+        percentage.toFixed(4) + "%";
+
+    document.getElementById("timelineYear").textContent =
+        years + 1;
+}
+
+const savedName =
+    localStorage.getItem("lifeos_display_name")
+    || "MEHEDI HASAN";
+
+function applyName(name){
+
+    const finalName =
+        name.trim() || "MEHEDI HASAN";
+
+    document.getElementById("displayName").textContent =
+        finalName;
+
+    document.getElementById("heroName").textContent =
+        finalName;
+
+    document.getElementById("timelineName").textContent =
+        finalName;
+
+    document.getElementById("footerName").textContent =
+        finalName;
+
+    document.getElementById("nameInput").value =
+        finalName;
+}
+
+applyName(savedName);
+
+document.getElementById("saveNameBtn")
+.addEventListener("click",()=>{
+
+    const name =
+        document.getElementById("nameInput").value.trim();
+
+    const finalName =
+        name || "MEHEDI HASAN";
+
+    localStorage.setItem(
+        "lifeos_display_name",
+        finalName
+    );
+
+    applyName(finalName);
+
+});
+
+let exams =
+    JSON.parse(
+        localStorage.getItem("lifeos_exams")
+        || "[]"
+    );
+
+let activeCategory = "ALL";
+
+function saveExams(){
+
+    localStorage.setItem(
+        "lifeos_exams",
+        JSON.stringify(exams)
+    );
+
+}
+
+document.getElementById("addExamBtn")
+.addEventListener("click",()=>{
+
+    document.getElementById("examForm")
+        .classList.add("show");
+
+    document.getElementById("editExamId").value = "";
+
+    document.getElementById("examName").value = "";
+
+    document.getElementById("examDate").value = "";
+
+    document.getElementById("examTime").value = "";
+
+});
+
+document.getElementById("cancelExamBtn")
+.addEventListener("click",()=>{
+
+    document.getElementById("examForm")
+        .classList.remove("show");
+
+});
+
+document.querySelectorAll(".tab")
+.forEach(tab=>{
+
+    tab.addEventListener("click",()=>{
+
+        document.querySelectorAll(".tab")
+        .forEach(t=>t.classList.remove("active"));
+
+        tab.classList.add("active");
+
+        activeCategory =
+            tab.dataset.category;
+
+        renderExams();
+
+    });
+
+});
+
+function getCountdownParts(remaining){
+
+    const milliseconds =
+        remaining % 1000;
+
+    const totalSeconds =
+        Math.floor(remaining / 1000);
+
+    const seconds =
+        totalSeconds % 60;
+
+    const totalMinutes =
+        Math.floor(totalSeconds / 60);
+
+    const minutes =
+        totalMinutes % 60;
+
+    const totalHours =
+        Math.floor(totalMinutes / 60);
+
+    const hours =
+        totalHours % 24;
+
+    const days =
+        Math.floor(totalHours / 24);
+
+    return {
+        days,
+        hours,
+        minutes,
+        seconds,
+        milliseconds
+    };
+
+}
+
+function countdownHTML(parts){
+
+    return `
+
+        <div class="unit">
+            <div class="number">
+                ${pad(parts.days)}
+            </div>
+            <div class="label">
+                DAYS
+            </div>
+        </div>
+
+        <div class="colon">:</div>
+
+        <div class="unit">
+            <div class="number">
+                ${pad(parts.hours)}
+            </div>
+            <div class="label">
+                HOURS
+            </div>
+        </div>
+
+        <div class="colon">:</div>
+
+        <div class="unit">
+            <div class="number">
+                ${pad(parts.minutes)}
+            </div>
+            <div class="label">
+                MINUTES
+            </div>
+        </div>
+
+        <div class="colon">:</div>
+
+        <div class="unit">
+            <div class="number">
+                ${pad(parts.seconds)}
+            </div>
+            <div class="label">
+                SECONDS
+            </div>
+        </div>
+
+        <div class="colon">.</div>
+
+        <div class="unit">
+            <div class="number">
+                ${pad(parts.milliseconds,3)}
+            </div>
+            <div class="label">
+                MILLISECONDS
+            </div>
+        </div>
+
+    `;
+
+}
+
+function formatDate(date){
+
+    return new Intl.DateTimeFormat(
+        undefined,
+        {
+            day:"2-digit",
+            month:"long",
+            year:"numeric"
+        }
+    ).format(date);
+
+}
+
+function formatTime(date){
+
+    return new Intl.DateTimeFormat(
+        undefined,
+        {
+            hour:"2-digit",
+            minute:"2-digit",
+            second:"2-digit"
+        }
+    ).format(date);
+
+}
+
+function escapeHTML(value){
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+function renderExams(){
+
+    const list =
+        document.getElementById("examList");
+
+    let filtered =
+        exams.filter(exam=>{
+
+            if(activeCategory === "ALL"){
+                return true;
             }
-            if (months < 0) {
-                years--;
-                months += 12;
+
+            return exam.category === activeCategory;
+
+        });
+
+    filtered.sort(
+        (a,b)=>
+            a.timestamp -
+            b.timestamp
+    );
+
+    if(filtered.length === 0){
+
+        list.innerHTML = `
+
+            <div style="
+                text-align:center;
+                color:var(--muted);
+                padding:30px;
+                font-size:12px;
+            ">
+
+                NO EXAMS ADDED YET.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    list.innerHTML =
+        filtered.map(exam=>{
+
+            const remaining =
+                exam.timestamp -
+                Date.now();
+
+            const completed =
+                remaining <= 0;
+
+            const date =
+                new Date(exam.timestamp);
+
+            return `
+
+                <div class="exam-card">
+
+                    <div class="exam-top">
+
+                        <div>
+
+                            <div class="exam-name">
+                                ${escapeHTML(exam.name)}
+                            </div>
+
+                            <div class="exam-category">
+                                ${escapeHTML(exam.category)}
+                            </div>
+
+                            <div class="exam-date">
+                                ${formatDate(date)}
+                                —
+                                ${formatTime(date)}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="exam-clock"
+                        id="countdown-${exam.id}"
+                        data-status="${completed ? "completed" : "running"}"
+                    >
+
+                        ${
+                            completed
+                            ?
+                            `
+                            <div class="completed">
+                                EXAM COMPLETED
+                            </div>
+                            `
+                            :
+                            countdownHTML(
+                                getCountdownParts(
+                                    remaining
+                                )
+                            )
+                        }
+
+                    </div>
+
+                    <div class="exam-actions">
+
+                        <button
+                            class="small-btn"
+                            onclick="editExam('${exam.id}')"
+                        >
+                            EDIT
+                        </button>
+
+                        <button
+                            class="small-btn delete"
+                            onclick="deleteExam('${exam.id}')"
+                        >
+                            DELETE
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+function updateExamCountdowns(){
+
+    const now =
+        Date.now();
+
+    let needsRender = false;
+
+    exams.forEach(exam=>{
+
+        const box =
+            document.getElementById(
+                `countdown-${exam.id}`
+            );
+
+        if(!box){
+            return;
+        }
+
+        const remaining =
+            exam.timestamp -
+            now;
+
+        if(remaining <= 0){
+
+            if(
+                box.dataset.status !==
+                "completed"
+            ){
+
+                needsRender = true;
+
             }
 
-            document.getElementById('age-display').innerText = `${years}Y ${months}M ${dateDays}D`;
-            document.getElementById('clock-display').innerText = now.toTimeString().split(' ')[0];
-
-            document.getElementById('stat-days').innerText = days.toLocaleString();
-            document.getElementById('stat-hours').innerText = hours.toLocaleString();
-            document.getElementById('stat-minutes').innerText = minutes.toLocaleString();
-            document.getElementById('stat-seconds').innerText = seconds.toLocaleString();
-
-            document.getElementById('live-clock').innerText = now.toLocaleDateString('bn-BD', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            return;
         }
 
-        setInterval(updateAgeCore, 1000);
+        box.dataset.status =
+            "running";
 
-        function toggleDobInput() {
-            const container = document.getElementById('dob-container');
-            container.style.display = container.style.display === 'none' ? 'block' : 'none';
-        }
+        const parts =
+            getCountdownParts(
+                remaining
+            );
 
-        function saveDob() {
-            const val = document.getElementById('dob-input').value;
-            if(val) {
-                localStorage.setItem('user_dob', val);
-                dob = new Date(val);
-                toggleDobInput();
-                updateAgeCore();
-                renderMori();
-            }
-        }
+        box.innerHTML =
+            countdownHTML(parts);
 
-        // Lock Security
-        const DEFAULT_PIN = "1234";
-        function unlockApp() {
-            const input = document.getElementById('pin-code').value;
-            if(input === DEFAULT_PIN || input === "") {
-                document.getElementById('lock-screen').style.display = 'none';
-            } else {
-                alert("ভুল PIN code!");
-            }
-        }
+    });
 
-        // Init
-        window.onload = function() {
-            updateAgeCore();
-            renderStats();
-            renderMori();
-            loadUserData();
-        };
+    if(needsRender){
+        renderExams();
+    }
 
-        // Milestones
-        function renderStats() {
-            const now = new Date();
-            const startYear = new Date(now.getFullYear(), 0, 1);
-            const endYear = new Date(now.getFullYear() + 1, 0, 1);
-            const yearPct = (((now - startYear) / (endYear - startYear)) * 100).toFixed(1);
+}
 
-            const startMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-            const endMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
-            const monthPct = (((now - startMonth) / (endMonth - startMonth)) * 100).toFixed(1);
+document.getElementById("saveExamBtn")
+.addEventListener("click",()=>{
 
-            document.getElementById('year-progress').style.width = yearPct + '%';
-            document.getElementById('year-text').innerText = `${now.getFullYear()}-এর ${yearPct}% পার হয়েছে`;
+    const category =
+        document.getElementById(
+            "examCategory"
+        ).value;
 
-            document.getElementById('month-progress').style.width = monthPct + '%';
-            document.getElementById('month-text').innerText = `চলতি মাসের ${monthPct}% পার হয়েছে`;
-        }
+    const name =
+        document.getElementById(
+            "examName"
+        ).value.trim();
 
-        // Memento Mori Matrix
-        function renderMori() {
-            const grid = document.getElementById('mori-grid');
-            grid.innerHTML = '';
-            const now = new Date();
-            const diffWeeks = Math.floor((now - dob) / (1000 * 60 * 60 * 24 * 7));
+    const date =
+        document.getElementById(
+            "examDate"
+        ).value;
 
-            for(let i=0; i<600; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'mori-dot' + (i < Math.min(diffWeeks, 600) ? ' passed' : '');
-                grid.appendChild(dot);
-            }
-        }
+    const time =
+        document.getElementById(
+            "examTime"
+        ).value;
 
-        // Gamification
-        let xp = parseInt(localStorage.getItem('user_xp') || '0');
-        let lvl = parseInt(localStorage.getItem('user_lvl') || '1');
+    const editId =
+        document.getElementById(
+            "editExamId"
+        ).value;
 
-        function addXP(val) {
-            xp += val;
-            if(xp >= 100) { lvl++; xp -= 100; alert('🎉 Level Up! New Level: ' + lvl); }
-            localStorage.setItem('user_xp', xp);
-            localStorage.setItem('user_lvl', lvl);
-            document.getElementById('user-xp').innerText = xp;
-            document.getElementById('user-level').innerText = lvl;
-            document.getElementById('xp-progress').style.width = xp + '%';
-        }
+    if(!name || !date || !time){
 
-        // Pomodoro Timer
-        let timer, left = 1500;
-        function startTimer() {
-            if(!timer) {
-                timer = setInterval(() => {
-                    if(left > 0) {
-                        left--;
-                        let m = Math.floor(left/60), s = left%60;
-                        document.getElementById('timer-display').innerText = `${m}:${s<10?'0':''}${s}`;
-                    } else { clearInterval(timer); addXP(50); }
-                }, 1000);
-            }
-        }
-        function pauseTimer() { clearInterval(timer); timer = null; }
-        function resetTimer() { pauseTimer(); left = 1500; document.getElementById('timer-display').innerText = "25:00"; }
-        function toggleAudio() {
-            const a = document.getElementById('ambient-audio');
-            a.paused ? a.play() : a.pause();
-        }
+        alert(
+            "Please enter exam name, date and exact time."
+        );
 
-        // Generic List Utils
-        function addToList(inputId, listKey, ulId) {
-            const val = document.getElementById(inputId).value;
-            if(!val) return;
-            const items = JSON.parse(localStorage.getItem(listKey) || '[]');
-            items.push(val);
-            localStorage.setItem(listKey, JSON.stringify(items));
-            document.getElementById(inputId).value = '';
-            loadList(listKey, ulId);
-        }
+        return;
 
-        function loadList(listKey, ulId) {
-            const items = JSON.parse(localStorage.getItem(listKey) || '[]');
-            const ul = document.getElementById(ulId);
-            if(!ul) return;
-            ul.innerHTML = items.map((item, i) => `<li>${item} <span onclick="removeItem('${listKey}', ${i}, '${ulId}')" style="color:var(--danger);cursor:pointer">✖</span></li>`).join('');
-        }
+    }
 
-        function removeItem(key, index, ulId) {
-            const items = JSON.parse(localStorage.getItem(key) || '[]');
-            items.splice(index, 1);
-            localStorage.setItem(key, JSON.stringify(items));
-            loadList(key, ulId);
-        }
+    const timestamp =
+        new Date(
+            `${date}T${time}`
+        ).getTime();
 
-        function addHabit() { addToList('habit-input', 'habits', 'habit-list'); }
-        function addTodo() { addToList('todo-input', 'todos', 'todo-list'); }
-        function addGratitude() { addToList('gratitude-input', 'gratitudes', 'gratitude-list'); }
-        function addExpense() { addToList('expense-name', 'expenses', 'expense-list'); }
-        function addBucket() { addToList('bucket-input', 'buckets', 'bucket-list'); }
-        function addJourney() { addToList('journey-input', 'journeys', 'journey-list'); }
+    if(Number.isNaN(timestamp)){
 
-        function setMood(m) {
-            localStorage.setItem('user_mood', m);
-            document.getElementById('mood-status').innerText = 'আজকের মেজাজ: ' + m;
-        }
+        alert(
+            "Invalid date or time."
+        );
 
-        function saveEnergy() {
-            const v = document.getElementById('energy-level').value;
-            localStorage.setItem('user_energy', v);
-            document.getElementById('energy-display').innerText = 'Selected: ' + v;
-        }
+        return;
 
-        function saveReflection() {
-            localStorage.setItem('user_reflection', document.getElementById('reflection-input').value);
-            alert('সেভ হয়েছে!');
-        }
+    }
 
-        // Data Backup / Export
-        function exportData() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(localStorage));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "LIFE_OS_BACKUP.json");
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-        }
+    if(editId){
 
-        function importData(e) {
-            const fileReader = new FileReader();
-            fileReader.onload = function (event) {
-                const data = JSON.parse(event.target.result);
-                Object.keys(data).forEach(key => localStorage.setItem(key, data[key]));
-                alert('ডাটা সফলভাবে রিস্টোর হয়েছে!');
-                location.reload();
+        const index =
+            exams.findIndex(
+                exam =>
+                    String(exam.id) ===
+                    String(editId)
+            );
+
+        if(index !== -1){
+
+            exams[index] = {
+
+                ...exams[index],
+
+                category,
+                name,
+                date,
+                time,
+                timestamp
+
             };
-            fileReader.readAsText(e.target.files[0]);
+
         }
 
-        function loadUserData() {
-            loadList('habits', 'habit-list');
-            loadList('todos', 'todo-list');
-            loadList('gratitudes', 'gratitude-list');
-            loadList('expenses', 'expense-list');
-            loadList('buckets', 'bucket-list');
-            loadList('journeys', 'journey-list');
+    }else{
 
-            if(localStorage.getItem('user_mood')) document.getElementById('mood-status').innerText = 'আজকের মেজাজ: ' + localStorage.getItem('user_mood');
-            if(localStorage.getItem('user_energy')) document.getElementById('energy-display').innerText = 'Selected: ' + localStorage.getItem('user_energy');
-            if(localStorage.getItem('user_reflection')) document.getElementById('reflection-input').value = localStorage.getItem('user_reflection');
+        exams.push({
+
+            id:
+                Date.now().toString(),
+
+            category,
+
+            name,
+
+            date,
+
+            time,
+
+            timestamp
+
+        });
+
+    }
+
+    saveExams();
+
+    document.getElementById("examForm")
+        .classList.remove("show");
+
+    renderExams();
+
+});
+
+function editExam(id){
+
+    const exam =
+        exams.find(
+            item =>
+                String(item.id) ===
+                String(id)
+        );
+
+    if(!exam){
+        return;
+    }
+
+    document.getElementById(
+        "editExamId"
+    ).value = exam.id;
+
+    document.getElementById(
+        "examCategory"
+    ).value = exam.category;
+
+    document.getElementById(
+        "examName"
+    ).value = exam.name;
+
+    document.getElementById(
+        "examDate"
+    ).value = exam.date;
+
+    document.getElementById(
+        "examTime"
+    ).value = exam.time;
+
+    document.getElementById("examForm")
+        .classList.add("show");
+
+    window.scrollTo({
+        top:
+            document.getElementById(
+                "examForm"
+            ).offsetTop - 30,
+
+        behavior:"smooth"
+    });
+
+}
+
+function deleteExam(id){
+
+    if(
+        !confirm(
+            "Delete this exam?"
+        )
+    ){
+        return;
+    }
+
+    exams =
+        exams.filter(
+            exam =>
+                String(exam.id) !==
+                String(id)
+        );
+
+    saveExams();
+
+    renderExams();
+
+}
+
+renderExams();
+
+updateAge();
+
+setInterval(
+    updateAge,
+    10
+);
+
+setInterval(
+    updateExamCountdowns,
+    50
+);
+
+if(
+    "serviceWorker" in navigator
+){
+
+    window.addEventListener(
+        "load",
+        ()=>{
+
+            navigator.serviceWorker
+            .register(
+                "service-worker.js"
+            )
+            .catch(
+                error =>
+                    console.log(
+                        "Service Worker:",
+                        error
+                    )
+            );
+
         }
-    </script>
+    );
+
+}
+
+</script>
+
 </body>
 </html>
