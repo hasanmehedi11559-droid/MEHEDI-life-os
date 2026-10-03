@@ -1,48 +1,508 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#05060a"><meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png">
-<title>MEHEDI HASAN — LIFE.OS</title>
-<style>
-:root{--bg:#05060a;--panel:rgba(16,18,28,.78);--line:rgba(120,220,255,.16);--text:#edf7ff;--muted:#8b9aaa;--cyan:#6ee7ff;--violet:#a78bfa;--green:#6dffb1}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
-body{overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 15% 10%,rgba(110,231,255,.10),transparent 30%),radial-gradient(circle at 90% 25%,rgba(167,139,250,.10),transparent 28%),radial-gradient(circle at 50% 100%,rgba(109,255,177,.05),transparent 35%)}
-.app{max-width:820px;margin:auto;padding:22px 16px 38px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.brand{letter-spacing:.18em;font-size:12px;color:var(--cyan)}.status{font-size:10px;color:var(--green);letter-spacing:.1em}.status:before{content:"●";margin-right:6px}
-.hero{border:1px solid var(--line);border-radius:28px;padding:24px 20px;background:var(--panel);backdrop-filter:blur(18px);box-shadow:0 20px 70px rgba(0,0,0,.45)}
-.kicker{font-size:10px;color:var(--muted);letter-spacing:.2em}.name{font-size:clamp(26px,7vw,48px);font-weight:800;letter-spacing:.04em;margin:8px 0 4px}.sub{color:var(--muted);font-size:11px}
-.ageLabel{margin-top:26px;font-size:10px;color:var(--cyan);letter-spacing:.18em}.age{font-size:clamp(40px,11vw,78px);line-height:1;margin:8px 0 20px;font-weight:800;letter-spacing:-.05em}.age span{color:var(--cyan)}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{border:1px solid var(--line);border-radius:18px;padding:16px;background:rgba(255,255,255,.025)}.card .v{font-size:clamp(18px,5vw,27px);font-weight:700}.card .l{font-size:9px;color:var(--muted);letter-spacing:.12em;margin-top:6px}
-.section{margin-top:14px;border:1px solid var(--line);border-radius:22px;padding:18px;background:rgba(16,18,28,.62)}.sectionTitle{font-size:10px;letter-spacing:.18em;color:var(--muted);margin-bottom:14px}
-.row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:11px}.row:last-child{border-bottom:0}.row b{font-weight:500;color:#dce9f3;text-align:right}
-button{font:inherit;border:0}.settingsBtn{width:100%;margin-top:14px;padding:15px;border-radius:16px;background:linear-gradient(100deg,rgba(110,231,255,.14),rgba(167,139,250,.14));border:1px solid var(--line);color:var(--text);letter-spacing:.08em}
-.footer{text-align:center;color:#596777;font-size:9px;letter-spacing:.12em;margin-top:18px}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(12px);display:none;align-items:flex-end;justify-content:center;padding:14px;z-index:10}.modal.open{display:flex}
-.sheet{width:min(520px,100%);background:#0b0d14;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 25px 100px #000}.sheet h2{margin:0 0 6px;font-size:20px}.sheet p{font-size:10px;color:var(--muted);line-height:1.6}
-label{display:block;font-size:10px;color:var(--muted);margin:18px 0 7px;letter-spacing:.1em}input{width:100%;padding:15px;border-radius:14px;border:1px solid var(--line);background:#05060a;color:var(--text);font:inherit}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.save{padding:14px;border-radius:14px;background:var(--cyan);color:#031017;font-weight:800}.cancel{padding:14px;border-radius:14px;background:#171a24;color:var(--text);border:1px solid var(--line)}
-@media(max-width:430px){.app{padding:18px 12px 30px}.hero{padding:20px 16px}.grid{gap:8px}.card{padding:13px}}
-</style></head><body>
-<main class="app"><div class="top"><div class="brand">LIFE.OS // PERSONAL TIME INTELLIGENCE</div><div class="status">OFFLINE READY</div></div>
-<section class="hero"><div class="kicker">IDENTITY CORE</div><div class="name">MEHEDI HASAN</div><div class="sub">YOUR TIME. YOUR DATA. YOUR DEVICE.</div>
-<div class="ageLabel">CURRENT AGE</div><div class="age" id="age">—</div>
-<div class="grid"><div class="card"><div class="v" id="totalDays">—</div><div class="l">TOTAL DAYS</div></div><div class="card"><div class="v" id="totalHours">—</div><div class="l">TOTAL HOURS</div></div><div class="card"><div class="v" id="totalMinutes">—</div><div class="l">TOTAL MINUTES</div></div><div class="card"><div class="v" id="totalSeconds">—</div><div class="l">TOTAL SECONDS</div></div></div></section>
-<section class="section"><div class="sectionTitle">EXISTENCE DATA</div>
-<div class="row"><span>DATE OF BIRTH</span><b id="dobText">—</b></div><div class="row"><span>BIRTH DAY</span><b id="birthDay">—</b></div><div class="row"><span>LOCAL DATE</span><b id="today">—</b></div><div class="row"><span>LOCAL TIME</span><b id="clock">—</b></div></section>
-<button class="settingsBtn" id="openSettings">⚙  CHANGE DATE OF BIRTH</button><div class="footer">LIFE.OS • PRIVATE • OFFLINE • MEHEDI HASAN</div></main>
-<div class="modal" id="modal"><div class="sheet"><h2>Personal Time Settings</h2><p>Your date of birth is stored only on this device using local storage. No internet connection is required.</p>
-<label for="dobInput">DATE OF BIRTH</label><input id="dobInput" type="date" min="1900-01-01"><div class="actions"><button class="cancel" id="cancel">CANCEL</button><button class="save" id="save">SAVE DOB</button></div></div></div>
-<script>
-const DEFAULT_DOB="2005-05-12",KEY="lifeos_dob",$=id=>document.getElementById(id),pad=n=>String(n).padStart(2,"0");
-const getDob=()=>localStorage.getItem(KEY)||DEFAULT_DOB;
-function parseLocalDate(s){const[y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)}
-function calendarAge(b,n){let y=n.getFullYear()-b.getFullYear(),m=n.getMonth()-b.getMonth(),d=n.getDate()-b.getDate(),h=n.getHours()-b.getHours(),mi=n.getMinutes()-b.getMinutes(),s=n.getSeconds()-b.getSeconds();if(s<0){mi--;s+=60}if(mi<0){h--;mi+=60}if(h<0){d--;h+=24}if(d<0){m--;d+=new Date(n.getFullYear(),n.getMonth(),0).getDate()}if(m<0){y--;m+=12}return{y,m,d,h,mi,s}}
-function update(){const now=new Date(),dob=parseLocalDate(getDob());if(now<dob){$("age").textContent="DATE ERROR";return}const a=calendarAge(dob,now),sec=Math.floor((now-dob)/1000);
-$("age").innerHTML=`${a.y}<span>Y</span> ${a.m}<span>M</span> ${a.d}<span>D</span><br><small style="font-size:.34em;letter-spacing:.04em">${pad(a.h)}:${pad(a.mi)}:${pad(a.s)}</small>`;
-$("totalSeconds").textContent=sec.toLocaleString();$("totalMinutes").textContent=Math.floor(sec/60).toLocaleString();$("totalHours").textContent=Math.floor(sec/3600).toLocaleString();$("totalDays").textContent=Math.floor(sec/86400).toLocaleString();
-$("dobText").textContent=dob.toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"});$("birthDay").textContent=dob.toLocaleDateString(undefined,{weekday:"long"});$("today").textContent=now.toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"});$("clock").textContent=now.toLocaleTimeString(undefined,{hour:"2-digit",minute:"2-digit",second:"2-digit"})}
-function openModal(){$("dobInput").value=getDob();$("modal").classList.add("open")}$("openSettings").onclick=openModal;$("cancel").onclick=()=> $("modal").classList.remove("open");
-$("save").onclick=()=>{const v=$("dobInput").value;if(!v)return;const chosen=parseLocalDate(v);if(chosen>new Date()){alert("Date of birth cannot be in the future.");return}localStorage.setItem(KEY,v);$("modal").classList.remove("open");update()};
-$("modal").addEventListener("click",e=>{if(e.target===$("modal"))$("modal").classList.remove("open")});
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));update();setInterval(update,1000);
-</script></body></html>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIFE.OS // Personal Dashboard</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        :root {
+            --bg: #0b0f19;
+            --card-bg: #151d2a;
+            --border: #232f45;
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.2);
+            --text: #f1f5f9;
+            --text-dim: #94a3b8;
+            --warning: #fbbf24;
+            --danger: #ef4444;
+            --success: #22c55e;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Courier New', Courier, monospace, system-ui; }
+        body { background: var(--bg); color: var(--text); padding: 15px; padding-bottom: 50px; }
+
+        /* Lock Screen */
+        #lock-screen { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; }
+        .pin-input { font-size: 2rem; width: 140px; text-align: center; margin: 15px 0; background: var(--card-bg); color: var(--accent); border: 1px solid var(--border); border-radius: 8px; padding: 8px; }
+
+        header { border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .title-brand { font-size: 1.1rem; color: var(--accent); letter-spacing: 2px; }
+        .status-badge { background: rgba(34, 197, 94, 0.1); color: var(--success); padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; border: 1px solid var(--success); }
+
+        /* Grid Layout */
+        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: relative; }
+        .card h2 { font-size: 0.95rem; color: var(--accent); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; display: flex; justify-content: space-between; }
+
+        /* Original Identity Grid */
+        .age-main { font-size: 2.2rem; font-weight: bold; color: var(--accent); text-shadow: 0 0 10px var(--accent-glow); margin: 10px 0; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .stat-box { background: var(--bg); padding: 10px; border-radius: 8px; border: 1px solid var(--border); }
+        .stat-val { font-size: 1.1rem; font-weight: bold; color: #fff; }
+        .stat-lbl { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; margin-top: 2px; }
+
+        /* UI Inputs & Buttons */
+        input, select, button, textarea { background: var(--bg); color: var(--text); border: 1px solid var(--border); padding: 10px; border-radius: 6px; width: 100%; margin-top: 8px; font-size: 0.85rem; }
+        button { background: var(--accent); color: #000; font-weight: bold; cursor: pointer; border: none; transition: 0.2s; }
+        button:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        /* Progress Bars */
+        .progress-bar { background: var(--bg); height: 8px; border-radius: 4px; overflow: hidden; margin-top: 6px; border: 1px solid var(--border); }
+        .progress-fill { background: var(--accent); height: 100%; width: 0%; transition: width 0.4s ease; }
+
+        /* Memento Mori Matrix */
+        .mori-grid { display: grid; grid-template-columns: repeat(26, 1fr); gap: 3px; height: 130px; overflow-y: auto; margin-top: 10px; padding-right: 5px; }
+        .mori-dot { background: var(--border); aspect-ratio: 1; border-radius: 1px; }
+        .mori-dot.passed { background: var(--accent); opacity: 0.7; }
+
+        /* Lists & Matrix */
+        ul { list-style: none; margin-top: 10px; }
+        li { background: var(--bg); padding: 8px 12px; border-radius: 6px; margin-bottom: 6px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
+        .matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .matrix-box { background: var(--bg); padding: 8px; border-radius: 6px; border: 1px solid var(--border); min-height: 80px; font-size: 0.75rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Security Lock Screen -->
+    <div id="lock-screen">
+        <h2 style="color:var(--accent); letter-spacing: 2px;">🔒 LIFE.OS LOCKED</h2>
+        <input type="password" id="pin-code" class="pin-input" maxlength="4" placeholder="****">
+        <button onclick="unlockApp()" style="width: 140px;">UNLOCK</button>
+        <small style="color:var(--text-dim); margin-top:10px;">ডিফল্ট PIN: 1234</small>
+    </div>
+
+    <header>
+        <div>
+            <div class="title-brand">LIFE.OS // PERSONAL TIME INTELLIGENCE</div>
+            <div id="live-clock" style="font-size: 0.8rem; color: var(--text-dim); margin-top: 3px;"></div>
+        </div>
+        <div class="status-badge">● OFFLINE READY</div>
+    </header>
+
+    <div class="dashboard">
+
+        <!-- ORIGINAL FEATURE: IDENTITY CORE & REAL-TIME AGE COUNTER -->
+        <div class="card" style="grid-column: span auto;">
+            <h2>IDENTITY CORE</h2>
+            <h1 style="font-size: 1.5rem; letter-spacing: 2px; color: #fff;">MEHEDI HASAN</h1>
+            <p style="font-size: 0.7rem; color: var(--text-dim); margin-bottom: 10px;">YOUR TIME. YOUR DATA. YOUR DEVICE.</p>
+
+            <div style="font-size: 0.7rem; color: var(--text-dim); margin-top: 15px;">CURRENT AGE</div>
+            <div id="age-display" class="age-main">00Y 00M 00D</div>
+            <div id="clock-display" style="font-size: 1.1rem; color: var(--text-dim); font-weight: bold;">00:00:00</div>
+
+            <div class="stats-grid">
+                <div class="stat-box"><div id="stat-days" class="stat-val">0</div><div class="stat-lbl">Total Days</div></div>
+                <div class="stat-box"><div id="stat-hours" class="stat-val">0</div><div class="stat-lbl">Total Hours</div></div>
+                <div class="stat-box"><div id="stat-minutes" class="stat-val">0</div><div class="stat-lbl">Total Minutes</div></div>
+                <div class="stat-box"><div id="stat-seconds" class="stat-val">0</div><div class="stat-lbl">Total Seconds</div></div>
+            </div>
+
+            <button onclick="toggleDobInput()" style="margin-top: 15px; background: var(--border); color: #fff;">⚙ CHANGE DATE OF BIRTH</button>
+            <div id="dob-container" style="display: none; margin-top: 10px;">
+                <input type="datetime-local" id="dob-input">
+                <button onclick="saveDob()">SAVE DOB</button>
+            </div>
+        </div>
+
+        <!-- 2. Life Milestones Bar -->
+        <div class="card">
+            <h2>📊 LIFE MILESTONES (%)</h2>
+            <label style="font-size: 0.75rem;">Current Year Progress</label>
+            <div class="progress-bar"><div id="year-progress" class="progress-fill"></div></div>
+            <small id="year-text" style="color:var(--text-dim); font-size:0.7rem;"></small>
+            <br><br>
+            <label style="font-size: 0.75rem;">Current Month Progress</label>
+            <div class="progress-bar"><div id="month-progress" class="progress-fill"></div></div>
+            <small id="month-text" style="color:var(--text-dim); font-size:0.7rem;"></small>
+        </div>
+
+        <!-- 1. Memento Mori Matrix -->
+        <div class="card">
+            <h2>⌛ MEMENTO MORI MATRIX</h2>
+            <small style="color:var(--text-dim); font-size:0.7rem;">জীবনের পার হয়ে যাওয়া সপ্তাহসমূহ (৮০ বছর ভিত্তিক)</small>
+            <div id="mori-grid" class="mori-grid"></div>
+        </div>
+
+        <!-- 5. Gamification System -->
+        <div class="card">
+            <h2>🎮 GAMIFICATION (XP)</h2>
+            <div style="font-size:0.9rem;">Level: <b id="user-level" style="color:var(--warning)">1</b> | XP: <span id="user-xp">0</span>/100</div>
+            <div class="progress-bar"><div id="xp-progress" class="progress-fill" style="background:var(--warning)"></div></div>
+            <button onclick="addXP(20)">+20 XP অর্জিত (টাস্ক সম্পন্ন)</button>
+        </div>
+
+        <!-- 7. Pomodoro & Focus Timer -->
+        <div class="card">
+            <h2>⏱️ FOCUS TIMER & SOUND</h2>
+            <h3 id="timer-display" style="font-size: 2rem; text-align: center; margin: 10px 0; color:var(--accent);">25:00</h3>
+            <div style="display: flex; gap: 5px;">
+                <button onclick="startTimer()">Start</button>
+                <button onclick="pauseTimer()" style="background:var(--warning); color:#000;">Pause</button>
+                <button onclick="resetTimer()" style="background:var(--border); color:#fff">Reset</button>
+            </div>
+            <audio id="ambient-audio" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+            <button onclick="toggleAudio()" style="background:var(--border); color:#fff; margin-top:8px;">🎧 Lofi Sound Play/Pause</button>
+        </div>
+
+        <!-- 8. Daily Habit Loop -->
+        <div class="card">
+            <h2>🔥 HABIT LOOP</h2>
+            <input type="text" id="habit-input" placeholder="নতুন অভ্যাস যোগ করুন...">
+            <button onclick="addHabit()">যোগ করুন</button>
+            <ul id="habit-list"></ul>
+        </div>
+
+        <!-- 17. Smart To-Do List -->
+        <div class="card">
+            <h2>✅ SMART TO-DO</h2>
+            <input type="text" id="todo-input" placeholder="কাজ লিখুন...">
+            <select id="todo-cat">
+                <option value="Today">আজকের কাজ</option>
+                <option value="Week">চলতি সপ্তাহ</option>
+                <option value="Future">ভবিষ্যতের কাজ</option>
+            </select>
+            <button onclick="addTodo()">টাস্ক সেভ করুন</button>
+            <ul id="todo-list"></ul>
+        </div>
+
+        <!-- 9. Priority Matrix -->
+        <div class="card">
+            <h2>📌 PRIORITY MATRIX</h2>
+            <div class="matrix">
+                <div class="matrix-box"><b style="color:var(--danger)">জরুরি ও গুরুত্বপূর্ণ</b><div id="m-1"></div></div>
+                <div class="matrix-box"><b style="color:var(--warning)">গুরুত্বপূর্ণ (জরুরি না)</b><div id="m-2"></div></div>
+                <div class="matrix-box"><b style="color:var(--accent)">জরুরি (গুরুত্বপূর্ণ না)</b><div id="m-3"></div></div>
+                <div class="matrix-box"><b style="color:var(--text-dim)">কোনোটিই নয়</b><div id="m-4"></div></div>
+            </div>
+        </div>
+
+        <!-- 10. Mood Tracker -->
+        <div class="card">
+            <h2>😊 MOOD TRACKER</h2>
+            <div style="display: flex; justify-content: space-around; font-size: 1.6rem; margin: 10px 0;">
+                <span onclick="setMood('😀')" style="cursor:pointer">😀</span>
+                <span onclick="setMood('😐')" style="cursor:pointer">😐</span>
+                <span onclick="setMood('😔')" style="cursor:pointer">😔</span>
+                <span onclick="setMood('🔥')" style="cursor:pointer">🔥</span>
+            </div>
+            <div id="mood-status" style="text-align: center; color:var(--accent); font-size:0.85rem;">আজকের মেজাজ সিলেক্ট করুন</div>
+        </div>
+
+        <!-- 4. Bio-Rhythm Energy -->
+        <div class="card">
+            <h2>⚡ BIO-RHYTHM ENERGY</h2>
+            <select id="energy-level" onchange="saveEnergy()">
+                <option value="">শক্তি লেভেল বেছে নিন</option>
+                <option value="High Energy (Morning)">Peak Morning Energy ☀️</option>
+                <option value="Medium Energy (Afternoon)">Afternoon Steady ⛅</option>
+                <option value="High Focus (Night)">Night Owl Focus 🌙</option>
+            </select>
+            <div id="energy-display" style="margin-top: 10px; font-size: 0.85rem;"></div>
+        </div>
+
+        <!-- 11. Gratitude Jar -->
+        <div class="card">
+            <h2>🫙 GRATITUDE JAR</h2>
+            <textarea id="gratitude-input" rows="2" placeholder="আজকের বিশেষ ভালো অনুভূতি..."></textarea>
+            <button onclick="addGratitude()">জারে জমা রাখুন</button>
+            <ul id="gratitude-list"></ul>
+        </div>
+
+        <!-- 15. Daily Reflection -->
+        <div class="card">
+            <h2>📝 DAILY REFLECTION</h2>
+            <p style="font-size: 0.75rem; color:var(--text-dim)">আজকের দিনটি থেকে শেখা প্রধান শিক্ষাটি কী?</p>
+            <textarea id="reflection-input" rows="2" placeholder="এক লাইনে উত্তর লিখুন..."></textarea>
+            <button onclick="saveReflection()">সেভ করুন</button>
+        </div>
+
+        <!-- 3. Digital Time Capsule -->
+        <div class="card">
+            <h2>⌛ TIME CAPSULE</h2>
+            <textarea id="capsule-msg" rows="2" placeholder="ভবিষ্যতের নিজের জন্য নোট..."></textarea>
+            <input type="date" id="capsule-date">
+            <button onclick="saveCapsule()">লক করুন</button>
+            <div id="capsule-display" style="margin-top:10px; font-size: 0.8rem;"></div>
+        </div>
+
+        <!-- 13. Micro Budget Tracker -->
+        <div class="card">
+            <h2>💰 MICRO BUDGET</h2>
+            <input type="text" id="expense-name" placeholder="খরচের বিবরণ">
+            <input type="number" id="expense-amt" placeholder="পরিমাণ (৳)">
+            <button onclick="addExpense()">খরচ যোগ করুন</button>
+            <ul id="expense-list"></ul>
+        </div>
+
+        <!-- 14. Skill Tree -->
+        <div class="card">
+            <h2>🌱 SKILL & BOOK PROGRESS</h2>
+            <input type="text" id="skill-name" placeholder="স্কিল / বইয়ের নাম">
+            <input type="number" id="skill-progress" placeholder="অগ্রগতি (%)" min="0" max="100">
+            <button onclick="addSkill()">আপডেট করুন</button>
+            <ul id="skill-list"></ul>
+        </div>
+
+        <!-- 16. Digital Detox -->
+        <div class="card">
+            <h2>📵 DIGITAL DETOX</h2>
+            <label style="font-size: 0.75rem;">আজকের টার্গেট স্ক্রিন টাইম (ঘণ্টা):</label>
+            <input type="number" id="detox-target" value="2" onchange="saveDetox()">
+            <p style="margin-top:8px; font-size: 0.75rem; color:var(--text-dim)">সোশ্যাল মিডিয়া ব্যবহারের সময় নিয়ন্ত্রণে রাখুন!</p>
+        </div>
+
+        <!-- 18. Bucket List -->
+        <div class="card">
+            <h2>🪣 BUCKET LIST</h2>
+            <input type="text" id="bucket-input" placeholder="জীবনের বড় কোনো লক্ষ্য...">
+            <button onclick="addBucket()">তালিকায় যুক্ত করুন</button>
+            <ul id="bucket-list"></ul>
+        </div>
+
+        <!-- 19. Journey Log -->
+        <div class="card">
+            <h2>🚀 JOURNEY LOG</h2>
+            <input type="text" id="journey-input" placeholder="বড় কোনো অর্জন বা মেমোরি...">
+            <button onclick="addJourney()">টাইমলাইনে সেভ করুন</button>
+            <ul id="journey-list"></ul>
+        </div>
+
+        <!-- 6. Data Backup & Restore -->
+        <div class="card">
+            <h2>⚙️ BACKUP & RESTORE</h2>
+            <button onclick="exportData()">EXPORT DATA (JSON)</button>
+            <input type="file" id="import-file" style="display:none" onchange="importData(event)">
+            <button onclick="document.getElementById('import-file').click()" style="background:var(--border); color:#fff; margin-top:8px;">IMPORT DATA</button>
+        </div>
+
+    </div>
+
+    <script>
+        // Default DOB setup (2003-01-01 if not set)
+        let dob = new Date(localStorage.getItem('user_dob') || '2003-01-01T00:00:00');
+
+        function updateAgeCore() {
+            const now = new Date();
+            const diff = now - dob;
+
+            const seconds = Math.floor(diff / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+
+            // Age calculation
+            let years = now.getFullYear() - dob.getFullYear();
+            let months = now.getMonth() - dob.getMonth();
+            let dateDays = now.getDate() - dob.getDate();
+
+            if (dateDays < 0) {
+                months--;
+                dateDays += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            document.getElementById('age-display').innerText = `${years}Y ${months}M ${dateDays}D`;
+            document.getElementById('clock-display').innerText = now.toTimeString().split(' ')[0];
+
+            document.getElementById('stat-days').innerText = days.toLocaleString();
+            document.getElementById('stat-hours').innerText = hours.toLocaleString();
+            document.getElementById('stat-minutes').innerText = minutes.toLocaleString();
+            document.getElementById('stat-seconds').innerText = seconds.toLocaleString();
+
+            document.getElementById('live-clock').innerText = now.toLocaleDateString('bn-BD', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        setInterval(updateAgeCore, 1000);
+
+        function toggleDobInput() {
+            const container = document.getElementById('dob-container');
+            container.style.display = container.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function saveDob() {
+            const val = document.getElementById('dob-input').value;
+            if(val) {
+                localStorage.setItem('user_dob', val);
+                dob = new Date(val);
+                toggleDobInput();
+                updateAgeCore();
+                renderMori();
+            }
+        }
+
+        // Lock Security
+        const DEFAULT_PIN = "1234";
+        function unlockApp() {
+            const input = document.getElementById('pin-code').value;
+            if(input === DEFAULT_PIN || input === "") {
+                document.getElementById('lock-screen').style.display = 'none';
+            } else {
+                alert("ভুল PIN code!");
+            }
+        }
+
+        // Init
+        window.onload = function() {
+            updateAgeCore();
+            renderStats();
+            renderMori();
+            loadUserData();
+        };
+
+        // Milestones
+        function renderStats() {
+            const now = new Date();
+            const startYear = new Date(now.getFullYear(), 0, 1);
+            const endYear = new Date(now.getFullYear() + 1, 0, 1);
+            const yearPct = (((now - startYear) / (endYear - startYear)) * 100).toFixed(1);
+
+            const startMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+            const endMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+            const monthPct = (((now - startMonth) / (endMonth - startMonth)) * 100).toFixed(1);
+
+            document.getElementById('year-progress').style.width = yearPct + '%';
+            document.getElementById('year-text').innerText = `${now.getFullYear()}-এর ${yearPct}% পার হয়েছে`;
+
+            document.getElementById('month-progress').style.width = monthPct + '%';
+            document.getElementById('month-text').innerText = `চলতি মাসের ${monthPct}% পার হয়েছে`;
+        }
+
+        // Memento Mori Matrix
+        function renderMori() {
+            const grid = document.getElementById('mori-grid');
+            grid.innerHTML = '';
+            const now = new Date();
+            const diffWeeks = Math.floor((now - dob) / (1000 * 60 * 60 * 24 * 7));
+
+            for(let i=0; i<600; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'mori-dot' + (i < Math.min(diffWeeks, 600) ? ' passed' : '');
+                grid.appendChild(dot);
+            }
+        }
+
+        // Gamification
+        let xp = parseInt(localStorage.getItem('user_xp') || '0');
+        let lvl = parseInt(localStorage.getItem('user_lvl') || '1');
+
+        function addXP(val) {
+            xp += val;
+            if(xp >= 100) { lvl++; xp -= 100; alert('🎉 Level Up! New Level: ' + lvl); }
+            localStorage.setItem('user_xp', xp);
+            localStorage.setItem('user_lvl', lvl);
+            document.getElementById('user-xp').innerText = xp;
+            document.getElementById('user-level').innerText = lvl;
+            document.getElementById('xp-progress').style.width = xp + '%';
+        }
+
+        // Pomodoro Timer
+        let timer, left = 1500;
+        function startTimer() {
+            if(!timer) {
+                timer = setInterval(() => {
+                    if(left > 0) {
+                        left--;
+                        let m = Math.floor(left/60), s = left%60;
+                        document.getElementById('timer-display').innerText = `${m}:${s<10?'0':''}${s}`;
+                    } else { clearInterval(timer); addXP(50); }
+                }, 1000);
+            }
+        }
+        function pauseTimer() { clearInterval(timer); timer = null; }
+        function resetTimer() { pauseTimer(); left = 1500; document.getElementById('timer-display').innerText = "25:00"; }
+        function toggleAudio() {
+            const a = document.getElementById('ambient-audio');
+            a.paused ? a.play() : a.pause();
+        }
+
+        // Generic List Utils
+        function addToList(inputId, listKey, ulId) {
+            const val = document.getElementById(inputId).value;
+            if(!val) return;
+            const items = JSON.parse(localStorage.getItem(listKey) || '[]');
+            items.push(val);
+            localStorage.setItem(listKey, JSON.stringify(items));
+            document.getElementById(inputId).value = '';
+            loadList(listKey, ulId);
+        }
+
+        function loadList(listKey, ulId) {
+            const items = JSON.parse(localStorage.getItem(listKey) || '[]');
+            const ul = document.getElementById(ulId);
+            if(!ul) return;
+            ul.innerHTML = items.map((item, i) => `<li>${item} <span onclick="removeItem('${listKey}', ${i}, '${ulId}')" style="color:var(--danger);cursor:pointer">✖</span></li>`).join('');
+        }
+
+        function removeItem(key, index, ulId) {
+            const items = JSON.parse(localStorage.getItem(key) || '[]');
+            items.splice(index, 1);
+            localStorage.setItem(key, JSON.stringify(items));
+            loadList(key, ulId);
+        }
+
+        function addHabit() { addToList('habit-input', 'habits', 'habit-list'); }
+        function addTodo() { addToList('todo-input', 'todos', 'todo-list'); }
+        function addGratitude() { addToList('gratitude-input', 'gratitudes', 'gratitude-list'); }
+        function addExpense() { addToList('expense-name', 'expenses', 'expense-list'); }
+        function addBucket() { addToList('bucket-input', 'buckets', 'bucket-list'); }
+        function addJourney() { addToList('journey-input', 'journeys', 'journey-list'); }
+
+        function setMood(m) {
+            localStorage.setItem('user_mood', m);
+            document.getElementById('mood-status').innerText = 'আজকের মেজাজ: ' + m;
+        }
+
+        function saveEnergy() {
+            const v = document.getElementById('energy-level').value;
+            localStorage.setItem('user_energy', v);
+            document.getElementById('energy-display').innerText = 'Selected: ' + v;
+        }
+
+        function saveReflection() {
+            localStorage.setItem('user_reflection', document.getElementById('reflection-input').value);
+            alert('সেভ হয়েছে!');
+        }
+
+        // Data Backup / Export
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(localStorage));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "LIFE_OS_BACKUP.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function importData(e) {
+            const fileReader = new FileReader();
+            fileReader.onload = function (event) {
+                const data = JSON.parse(event.target.result);
+                Object.keys(data).forEach(key => localStorage.setItem(key, data[key]));
+                alert('ডাটা সফলভাবে রিস্টোর হয়েছে!');
+                location.reload();
+            };
+            fileReader.readAsText(e.target.files[0]);
+        }
+
+        function loadUserData() {
+            loadList('habits', 'habit-list');
+            loadList('todos', 'todo-list');
+            loadList('gratitudes', 'gratitude-list');
+            loadList('expenses', 'expense-list');
+            loadList('buckets', 'bucket-list');
+            loadList('journeys', 'journey-list');
+
+            if(localStorage.getItem('user_mood')) document.getElementById('mood-status').innerText = 'আজকের মেজাজ: ' + localStorage.getItem('user_mood');
+            if(localStorage.getItem('user_energy')) document.getElementById('energy-display').innerText = 'Selected: ' + localStorage.getItem('user_energy');
+            if(localStorage.getItem('user_reflection')) document.getElementById('reflection-input').value = localStorage.getItem('user_reflection');
+        }
+    </script>
+</body>
+</html>
