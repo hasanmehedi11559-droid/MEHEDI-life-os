@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#05060a"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png">
+<title>MEHEDI HASAN — LIFE.OS</title>
+<style>
+:root{--bg:#05060a;--panel:rgba(16,18,28,.78);--line:rgba(120,220,255,.16);--text:#edf7ff;--muted:#8b9aaa;--cyan:#6ee7ff;--violet:#a78bfa;--green:#6dffb1}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+body{overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 15% 10%,rgba(110,231,255,.10),transparent 30%),radial-gradient(circle at 90% 25%,rgba(167,139,250,.10),transparent 28%),radial-gradient(circle at 50% 100%,rgba(109,255,177,.05),transparent 35%)}
+.app{max-width:820px;margin:auto;padding:22px 16px 38px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.brand{letter-spacing:.18em;font-size:12px;color:var(--cyan)}.status{font-size:10px;color:var(--green);letter-spacing:.1em}.status:before{content:"●";margin-right:6px}
+.hero{border:1px solid var(--line);border-radius:28px;padding:24px 20px;background:var(--panel);backdrop-filter:blur(18px);box-shadow:0 20px 70px rgba(0,0,0,.45)}
+.kicker{font-size:10px;color:var(--muted);letter-spacing:.2em}.name{font-size:clamp(26px,7vw,48px);font-weight:800;letter-spacing:.04em;margin:8px 0 4px}.sub{color:var(--muted);font-size:11px}
+.ageLabel{margin-top:26px;font-size:10px;color:var(--cyan);letter-spacing:.18em}.age{font-size:clamp(40px,11vw,78px);line-height:1;margin:8px 0 20px;font-weight:800;letter-spacing:-.05em}.age span{color:var(--cyan)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{border:1px solid var(--line);border-radius:18px;padding:16px;background:rgba(255,255,255,.025)}.card .v{font-size:clamp(18px,5vw,27px);font-weight:700}.card .l{font-size:9px;color:var(--muted);letter-spacing:.12em;margin-top:6px}
+.section{margin-top:14px;border:1px solid var(--line);border-radius:22px;padding:18px;background:rgba(16,18,28,.62)}.sectionTitle{font-size:10px;letter-spacing:.18em;color:var(--muted);margin-bottom:14px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:11px}.row:last-child{border-bottom:0}.row b{font-weight:500;color:#dce9f3;text-align:right}
+button{font:inherit;border:0}.settingsBtn{width:100%;margin-top:14px;padding:15px;border-radius:16px;background:linear-gradient(100deg,rgba(110,231,255,.14),rgba(167,139,250,.14));border:1px solid var(--line);color:var(--text);letter-spacing:.08em}
+.footer{text-align:center;color:#596777;font-size:9px;letter-spacing:.12em;margin-top:18px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(12px);display:none;align-items:flex-end;justify-content:center;padding:14px;z-index:10}.modal.open{display:flex}
+.sheet{width:min(520px,100%);background:#0b0d14;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 25px 100px #000}.sheet h2{margin:0 0 6px;font-size:20px}.sheet p{font-size:10px;color:var(--muted);line-height:1.6}
+label{display:block;font-size:10px;color:var(--muted);margin:18px 0 7px;letter-spacing:.1em}input{width:100%;padding:15px;border-radius:14px;border:1px solid var(--line);background:#05060a;color:var(--text);font:inherit}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.save{padding:14px;border-radius:14px;background:var(--cyan);color:#031017;font-weight:800}.cancel{padding:14px;border-radius:14px;background:#171a24;color:var(--text);border:1px solid var(--line)}
+@media(max-width:430px){.app{padding:18px 12px 30px}.hero{padding:20px 16px}.grid{gap:8px}.card{padding:13px}}
+</style></head><body>
+<main class="app"><div class="top"><div class="brand">LIFE.OS // PERSONAL TIME INTELLIGENCE</div><div class="status">OFFLINE READY</div></div>
+<section class="hero"><div class="kicker">IDENTITY CORE</div><div class="name">MEHEDI HASAN</div><div class="sub">YOUR TIME. YOUR DATA. YOUR DEVICE.</div>
+<div class="ageLabel">CURRENT AGE</div><div class="age" id="age">—</div>
+<div class="grid"><div class="card"><div class="v" id="totalDays">—</div><div class="l">TOTAL DAYS</div></div><div class="card"><div class="v" id="totalHours">—</div><div class="l">TOTAL HOURS</div></div><div class="card"><div class="v" id="totalMinutes">—</div><div class="l">TOTAL MINUTES</div></div><div class="card"><div class="v" id="totalSeconds">—</div><div class="l">TOTAL SECONDS</div></div></div></section>
+<section class="section"><div class="sectionTitle">EXISTENCE DATA</div>
+<div class="row"><span>DATE OF BIRTH</span><b id="dobText">—</b></div><div class="row"><span>BIRTH DAY</span><b id="birthDay">—</b></div><div class="row"><span>LOCAL DATE</span><b id="today">—</b></div><div class="row"><span>LOCAL TIME</span><b id="clock">—</b></div></section>
+<button class="settingsBtn" id="openSettings">⚙  CHANGE DATE OF BIRTH</button><div class="footer">LIFE.OS • PRIVATE • OFFLINE • MEHEDI HASAN</div></main>
+<div class="modal" id="modal"><div class="sheet"><h2>Personal Time Settings</h2><p>Your date of birth is stored only on this device using local storage. No internet connection is required.</p>
+<label for="dobInput">DATE OF BIRTH</label><input id="dobInput" type="date" min="1900-01-01"><div class="actions"><button class="cancel" id="cancel">CANCEL</button><button class="save" id="save">SAVE DOB</button></div></div></div>
+<script>
+const DEFAULT_DOB="2005-05-12",KEY="lifeos_dob",$=id=>document.getElementById(id),pad=n=>String(n).padStart(2,"0");
+const getDob=()=>localStorage.getItem(KEY)||DEFAULT_DOB;
+function parseLocalDate(s){const[y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)}
+function calendarAge(b,n){let y=n.getFullYear()-b.getFullYear(),m=n.getMonth()-b.getMonth(),d=n.getDate()-b.getDate(),h=n.getHours()-b.getHours(),mi=n.getMinutes()-b.getMinutes(),s=n.getSeconds()-b.getSeconds();if(s<0){mi--;s+=60}if(mi<0){h--;mi+=60}if(h<0){d--;h+=24}if(d<0){m--;d+=new Date(n.getFullYear(),n.getMonth(),0).getDate()}if(m<0){y--;m+=12}return{y,m,d,h,mi,s}}
+function update(){const now=new Date(),dob=parseLocalDate(getDob());if(now<dob){$("age").textContent="DATE ERROR";return}const a=calendarAge(dob,now),sec=Math.floor((now-dob)/1000);
+$("age").innerHTML=`${a.y}<span>Y</span> ${a.m}<span>M</span> ${a.d}<span>D</span><br><small style="font-size:.34em;letter-spacing:.04em">${pad(a.h)}:${pad(a.mi)}:${pad(a.s)}</small>`;
+$("totalSeconds").textContent=sec.toLocaleString();$("totalMinutes").textContent=Math.floor(sec/60).toLocaleString();$("totalHours").textContent=Math.floor(sec/3600).toLocaleString();$("totalDays").textContent=Math.floor(sec/86400).toLocaleString();
+$("dobText").textContent=dob.toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"});$("birthDay").textContent=dob.toLocaleDateString(undefined,{weekday:"long"});$("today").textContent=now.toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"});$("clock").textContent=now.toLocaleTimeString(undefined,{hour:"2-digit",minute:"2-digit",second:"2-digit"})}
+function openModal(){$("dobInput").value=getDob();$("modal").classList.add("open")}$("openSettings").onclick=openModal;$("cancel").onclick=()=> $("modal").classList.remove("open");
+$("save").onclick=()=>{const v=$("dobInput").value;if(!v)return;const chosen=parseLocalDate(v);if(chosen>new Date()){alert("Date of birth cannot be in the future.");return}localStorage.setItem(KEY,v);$("modal").classList.remove("open");update()};
+$("modal").addEventListener("click",e=>{if(e.target===$("modal"))$("modal").classList.remove("open")});
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));update();setInterval(update,1000);
+</script></body></html>
