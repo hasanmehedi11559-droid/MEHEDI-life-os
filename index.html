@@ -3,15 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <meta name="theme-color" content="#05050a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>MEHEDI HASAN — LIFE.OS</title>
+
+<title>Personal Life Tracker</title>
 
 <link rel="manifest" href="manifest.json">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700&display=swap');
 
 *{
     box-sizing:border-box;
@@ -19,10 +22,14 @@
     padding:0;
 }
 
+html{
+    scroll-behavior:smooth;
+}
+
 body{
     background:
-        radial-gradient(circle at 20% 20%,rgba(0,255,255,.08),transparent 30%),
-        radial-gradient(circle at 80% 80%,rgba(140,0,255,.08),transparent 30%),
+        radial-gradient(circle at 15% 15%,rgba(0,246,255,.07),transparent 28%),
+        radial-gradient(circle at 85% 85%,rgba(141,77,255,.08),transparent 30%),
         #05050a;
     color:#fff;
     font-family:Inter,sans-serif;
@@ -30,397 +37,512 @@ body{
     overflow-x:hidden;
 }
 
-body:before{
+body::before{
     content:"";
     position:fixed;
     inset:0;
     pointer-events:none;
     background:
-        linear-gradient(rgba(0,255,255,.025) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(0,255,255,.025) 1px,transparent 1px);
+        linear-gradient(rgba(0,246,255,.018) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,246,255,.018) 1px,transparent 1px);
     background-size:40px 40px;
     mask-image:linear-gradient(to bottom,black,transparent);
+    z-index:-1;
 }
+
+/* ================= HEADER ================= */
 
 header{
     width:100%;
-    padding:22px 20px;
+    padding:15px 18px;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    border-bottom:1px solid rgba(0,255,255,.15);
-    background:rgba(5,5,10,.72);
-    backdrop-filter:blur(16px);
+    border-bottom:1px solid rgba(0,246,255,.12);
+    background:rgba(5,5,10,.78);
+    backdrop-filter:blur(18px);
     position:sticky;
     top:0;
     z-index:100;
 }
 
-.logo{
+.brand{
     font-family:Orbitron,sans-serif;
     color:#00f6ff;
-    font-size:12px;
-    letter-spacing:2px;
-    text-shadow:0 0 15px rgba(0,246,255,.7);
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:1.5px;
 }
 
-.name{
-    font-family:Orbitron,sans-serif;
-    font-size:13px;
-    letter-spacing:2px;
-    color:#fff;
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
+
+.header-name{
+    max-width:150px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-size:10px;
+    color:#cfd4dc;
+}
+
+.menu-button{
+    padding:8px 11px;
+    font-size:9px;
+}
+
+/* ================= MAIN ================= */
 
 main{
-    width:min(1100px,94%);
+    width:min(1080px,92%);
     margin:auto;
-    padding:40px 0 70px;
+    padding:32px 0 50px;
 }
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+/* ================= HERO ================= */
 
 .hero{
     text-align:center;
-    margin-bottom:45px;
+    margin-bottom:35px;
 }
 
 .hero h1{
     font-family:Orbitron,sans-serif;
-    font-size:clamp(25px,6vw,48px);
-    letter-spacing:3px;
-    margin-bottom:10px;
+    font-size:clamp(24px,6vw,40px);
+    font-weight:600;
+    letter-spacing:2px;
+    line-height:1.25;
+    margin-bottom:9px;
     text-shadow:
-        0 0 10px rgba(0,246,255,.8),
-        0 0 30px rgba(0,246,255,.35);
+        0 0 12px rgba(0,246,255,.55),
+        0 0 28px rgba(0,246,255,.2);
 }
 
 .hero p{
-    color:#88909d;
-    font-size:13px;
+    color:#737c89;
+    font-size:11px;
+    line-height:1.6;
+    letter-spacing:.5px;
 }
 
 .hero p span{
     color:#00f6ff;
 }
 
+/* ================= SECTION TITLE ================= */
+
 .section-title{
     font-family:Orbitron,sans-serif;
-    font-size:14px;
-    letter-spacing:3px;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:2px;
     color:#00f6ff;
-    margin:35px 0 18px;
+    margin:30px 0 14px;
 }
+
+/* ================= CLOCK ================= */
 
 .clock{
     display:grid;
     grid-template-columns:repeat(6,1fr);
-    gap:10px;
+    gap:8px;
 }
 
 .unit{
     position:relative;
-    padding:18px 8px;
-    border:1px solid rgba(0,246,255,.22);
-    border-radius:15px;
+    padding:16px 6px;
+    border:1px solid rgba(0,246,255,.17);
+    border-radius:14px;
     background:linear-gradient(
         145deg,
-        rgba(0,246,255,.08),
-        rgba(120,0,255,.05)
+        rgba(0,246,255,.06),
+        rgba(120,0,255,.035)
     );
-    box-shadow:
-        inset 0 0 20px rgba(0,246,255,.025),
-        0 0 25px rgba(0,0,0,.35);
     text-align:center;
     overflow:hidden;
 }
 
-.unit:before{
+.unit::before{
     content:"";
     position:absolute;
-    left:0;
-    right:0;
     top:0;
+    left:15%;
+    right:15%;
     height:1px;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        #00f6ff,
-        transparent
-    );
+    background:#00f6ff;
+    opacity:.5;
 }
 
 .number{
     font-family:Orbitron,sans-serif;
-    font-size:clamp(20px,4vw,34px);
-    color:#fff;
-    text-shadow:0 0 14px rgba(0,246,255,.5);
+    font-size:clamp(18px,4vw,31px);
+    font-weight:600;
+    line-height:1.2;
+    color:#f7f9fc;
     font-variant-numeric:tabular-nums;
 }
 
 .label{
     margin-top:7px;
-    color:#69717e;
-    font-size:9px;
-    letter-spacing:2px;
+    color:#68717e;
+    font-size:8px;
+    font-weight:500;
+    letter-spacing:1.2px;
 }
 
-.colon{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family:Orbitron,sans-serif;
+/* ================= MILLISECONDS ================= */
+
+.milliseconds{
+    text-align:center;
+    margin-top:9px;
     color:#00f6ff;
-    font-size:22px;
+    font-family:Orbitron,sans-serif;
+    font-size:18px;
+    font-variant-numeric:tabular-nums;
 }
+
+.milliseconds .ms-number{
+    color:#00f6ff;
+}
+
+.milliseconds .ms-label{
+    color:#68717e;
+    font-family:Inter,sans-serif;
+    font-size:7px;
+    letter-spacing:1.5px;
+    margin-left:3px;
+}
+
+/* ================= DATA ================= */
 
 .data-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:12px;
+    gap:10px;
 }
 
 .data-card{
-    border:1px solid rgba(140,0,255,.2);
-    border-radius:15px;
-    padding:18px;
-    background:rgba(255,255,255,.025);
+    padding:16px;
+    border:1px solid rgba(141,77,255,.16);
+    border-radius:14px;
+    background:rgba(255,255,255,.022);
 }
 
 .data-card .value{
     font-family:Orbitron,sans-serif;
+    font-size:18px;
+    font-weight:600;
+    line-height:1.3;
     color:#fff;
-    font-size:20px;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
 .data-card .small{
     margin-top:6px;
-    color:#69717e;
-    font-size:10px;
-    letter-spacing:1px;
+    color:#68717e;
+    font-size:8px;
+    line-height:1.4;
+    letter-spacing:.8px;
 }
 
+/* ================= PROGRESS ================= */
+
 .progress-box{
-    margin-top:15px;
-    padding:18px;
-    border:1px solid rgba(0,246,255,.18);
-    border-radius:15px;
-    background:rgba(255,255,255,.02);
+    margin-top:12px;
+    padding:17px;
+    border:1px solid rgba(0,246,255,.15);
+    border-radius:14px;
+    background:rgba(255,255,255,.018);
 }
 
 .progress-head{
     display:flex;
     justify-content:space-between;
-    margin-bottom:10px;
-    font-size:11px;
-    color:#89919d;
+    gap:10px;
+    margin-bottom:9px;
+    color:#7f8793;
+    font-size:9px;
+    letter-spacing:.5px;
 }
 
 .progress-bar{
-    height:8px;
+    height:7px;
     background:#11151d;
-    border-radius:10px;
+    border-radius:20px;
     overflow:hidden;
 }
 
 .progress-fill{
     height:100%;
-    width:0%;
-    background:linear-gradient(
-        90deg,
-        #00f6ff,
-        #8d4dff
-    );
-    box-shadow:0 0 15px rgba(0,246,255,.6);
-    border-radius:10px;
+    width:0;
+    background:linear-gradient(90deg,#00f6ff,#8d4dff);
+    border-radius:20px;
+    transition:width .3s linear;
 }
 
-.timeline{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
+/* ================= EMPTY ================= */
+
+.empty{
+    padding:24px 18px;
+    text-align:center;
+    border:1px dashed rgba(255,255,255,.12);
+    border-radius:14px;
+    color:#68717e;
+    font-size:10px;
+    line-height:1.7;
 }
 
-.timeline-card{
-    padding:20px;
-    border:1px solid rgba(0,246,255,.14);
-    border-radius:15px;
-    background:rgba(255,255,255,.02);
-}
-
-.timeline-card h3{
-    font-family:Orbitron,sans-serif;
-    font-size:12px;
-    color:#00f6ff;
-    letter-spacing:1px;
-    margin-bottom:8px;
-}
-
-.timeline-card p{
-    font-size:12px;
-    color:#89919d;
-    line-height:1.6;
-}
-
-/* SETTINGS */
+/* ================= SETTINGS ================= */
 
 .settings{
-    margin-top:45px;
-    padding:22px;
-    border:1px solid rgba(0,246,255,.2);
-    border-radius:18px;
-    background:rgba(255,255,255,.025);
+    padding:20px;
+    border:1px solid rgba(0,246,255,.15);
+    border-radius:17px;
+    background:rgba(255,255,255,.022);
 }
 
 .setting-row{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    gap:15px;
-    padding:14px 0;
-    border-bottom:1px solid rgba(255,255,255,.06);
+    gap:20px;
+    padding:17px 0;
+    border-bottom:1px solid rgba(255,255,255,.055);
+}
+
+.setting-row:first-child{
+    padding-top:0;
 }
 
 .setting-row:last-child{
     border-bottom:0;
+    padding-bottom:0;
 }
 
 .setting-info{
     flex:1;
+    min-width:0;
 }
 
 .setting-title{
     font-family:Orbitron,sans-serif;
-    font-size:11px;
-    letter-spacing:1px;
-    color:#fff;
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:1.2px;
+    color:#f4f6fa;
 }
 
 .setting-sub{
-    margin-top:5px;
-    color:#69717e;
-    font-size:10px;
+    margin-top:6px;
+    color:#68717e;
+    font-size:9px;
+    line-height:1.6;
 }
+
+.setting-control{
+    width:min(270px,45%);
+}
+
+/* ================= INPUT ================= */
 
 input,
 select{
     width:100%;
-    padding:12px 13px;
-    background:#0b0d13;
-    border:1px solid rgba(0,246,255,.2);
-    border-radius:10px;
+    padding:11px 12px;
+    background:#0a0c12;
+    border:1px solid rgba(0,246,255,.17);
+    border-radius:9px;
     color:#fff;
     outline:none;
     font-family:Inter,sans-serif;
+    font-size:12px;
+}
+
+input::placeholder{
+    color:#4e5661;
 }
 
 input:focus,
 select:focus{
     border-color:#00f6ff;
-    box-shadow:0 0 15px rgba(0,246,255,.15);
+    box-shadow:0 0 14px rgba(0,246,255,.12);
 }
 
-.setting-control{
-    width:min(260px,48%);
-}
+/* ================= BUTTON ================= */
 
 button{
-    border:1px solid rgba(0,246,255,.35);
-    background:rgba(0,246,255,.08);
-    color:#00f6ff;
-    padding:11px 16px;
-    border-radius:10px;
-    font-family:Orbitron,sans-serif;
-    font-size:10px;
-    letter-spacing:1px;
+    border:1px solid rgba(0,246,255,.28);
+    background:rgba(0,246,255,.065);
+    color:#00eaf3;
+    padding:10px 14px;
+    border-radius:9px;
+    font-family:Inter,sans-serif;
+    font-size:9px;
+    font-weight:600;
+    letter-spacing:.7px;
     cursor:pointer;
     transition:.2s;
 }
 
 button:hover{
-    background:rgba(0,246,255,.15);
-    box-shadow:0 0 18px rgba(0,246,255,.18);
+    background:rgba(0,246,255,.12);
+    border-color:rgba(0,246,255,.5);
+}
+
+button:disabled{
+    opacity:.5;
+    cursor:not-allowed;
 }
 
 button.danger{
     color:#ff5277;
-    border-color:rgba(255,82,119,.3);
-    background:rgba(255,82,119,.06);
+    border-color:rgba(255,82,119,.28);
+    background:rgba(255,82,119,.05);
 }
 
-/* ADMISSION */
+.back-button{
+    margin-bottom:22px;
+}
 
-.admission-form{
+/* ================= MENU ================= */
+
+.menu-grid{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:repeat(2,1fr);
     gap:12px;
-    margin-bottom:20px;
 }
 
-.admission-form .full{
-    grid-column:1/-1;
+.menu-card{
+    padding:20px;
+    border:1px solid rgba(0,246,255,.13);
+    border-radius:16px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0,246,255,.045),
+            rgba(130,0,255,.025)
+        );
+    cursor:pointer;
+    transition:.2s;
+}
+
+.menu-card:hover{
+    transform:translateY(-2px);
+    border-color:rgba(0,246,255,.35);
+}
+
+.menu-icon{
+    font-size:22px;
+    margin-bottom:12px;
+}
+
+.menu-card h3{
+    font-family:Orbitron,sans-serif;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:1.2px;
+}
+
+.menu-card p{
+    color:#68717e;
+    font-size:9px;
+    line-height:1.6;
+    margin-top:6px;
+}
+
+/* ================= ADMISSION ================= */
+
+.admission-section{
+    margin-top:35px;
+}
+
+.admission-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+}
+
+.admission-header .section-title{
+    margin:0;
 }
 
 .exam-list{
     display:grid;
-    gap:15px;
+    gap:12px;
 }
 
 .exam-card{
     position:relative;
-    padding:20px;
-    border:1px solid rgba(0,246,255,.2);
-    border-radius:18px;
+    padding:18px;
+    border:1px solid rgba(0,246,255,.17);
+    border-radius:17px;
     background:
         linear-gradient(
             145deg,
-            rgba(0,246,255,.055),
-            rgba(130,0,255,.035)
+            rgba(0,246,255,.045),
+            rgba(130,0,255,.03)
         );
     overflow:hidden;
 }
 
-.exam-card:before{
+.exam-card::before{
     content:"";
     position:absolute;
     left:0;
     top:0;
     bottom:0;
-    width:3px;
-    background:linear-gradient(
-        to bottom,
-        #00f6ff,
-        #8d4dff
-    );
+    width:2px;
+    background:linear-gradient(to bottom,#00f6ff,#8d4dff);
 }
 
 .exam-top{
     display:flex;
     justify-content:space-between;
     align-items:flex-start;
-    gap:10px;
-    margin-bottom:18px;
+    gap:12px;
+    margin-bottom:15px;
 }
 
 .exam-name{
     font-family:Orbitron,sans-serif;
-    font-size:15px;
-    letter-spacing:1px;
+    font-size:13px;
+    font-weight:600;
+    line-height:1.4;
+    letter-spacing:.7px;
 }
 
 .exam-category{
     color:#00f6ff;
-    font-size:9px;
-    letter-spacing:2px;
+    font-size:8px;
+    font-weight:600;
+    letter-spacing:1.5px;
     margin-top:5px;
 }
 
 .exam-date{
-    color:#777f8b;
-    font-size:10px;
+    color:#747d89;
+    font-size:9px;
     margin-top:5px;
 }
 
 .exam-actions{
     display:flex;
-    gap:6px;
+    gap:5px;
+    flex-shrink:0;
 }
 
 .exam-actions button{
@@ -431,80 +553,73 @@ button.danger{
 .admission-clock{
     display:grid;
     grid-template-columns:repeat(5,1fr);
-    gap:8px;
+    gap:6px;
 }
 
 .admission-clock .unit{
-    padding:14px 5px;
+    padding:12px 3px;
 }
 
 .admission-clock .number{
-    font-size:clamp(18px,4vw,29px);
+    font-size:clamp(15px,3.5vw,25px);
+}
+
+.admission-clock .label{
+    font-size:6px;
+    letter-spacing:.8px;
 }
 
 .completed{
     text-align:center;
-    padding:20px 10px;
-    font-family:Orbitron,sans-serif;
+    padding:16px;
+    border-radius:10px;
+    background:rgba(255,82,119,.04);
     color:#ff5277;
-    letter-spacing:2px;
-    font-size:13px;
-    text-shadow:0 0 15px rgba(255,82,119,.4);
+    font-family:Orbitron,sans-serif;
+    letter-spacing:1.5px;
+    font-size:10px;
 }
 
-.empty{
-    padding:30px;
-    text-align:center;
-    border:1px dashed rgba(255,255,255,.12);
-    border-radius:15px;
-    color:#626a76;
-    font-size:12px;
-}
-
-/* CATEGORY FILTER */
+/* ================= FILTERS ================= */
 
 .filters{
     display:flex;
-    gap:8px;
+    gap:6px;
     flex-wrap:wrap;
-    margin-bottom:18px;
+    margin-bottom:14px;
 }
 
 .filter-btn{
-    padding:8px 13px;
-    font-size:9px;
+    padding:7px 11px;
+    font-size:8px;
 }
 
 .filter-btn.active{
-    background:rgba(0,246,255,.18);
+    background:rgba(0,246,255,.15);
     border-color:#00f6ff;
 }
 
-/* FOOTER */
+/* ================= FOOTER ================= */
 
 footer{
     text-align:center;
-    padding:30px 20px 50px;
-    color:#3f4650;
-    font-size:9px;
-    letter-spacing:2px;
+    padding:35px 15px 20px;
+    color:#3e4651;
+    font-size:8px;
+    letter-spacing:1.5px;
 }
 
-footer span{
-    color:#00f6ff;
-}
-
-/* MODAL */
+/* ================= MODAL ================= */
 
 .modal{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.75);
+    background:rgba(0,0,0,.78);
     backdrop-filter:blur(10px);
     display:none;
     align-items:center;
     justify-content:center;
-    padding:20px;
+    padding:18px;
     z-index:1000;
 }
 
@@ -514,31 +629,46 @@ footer span{
 
 .modal-box{
     width:min(450px,100%);
+    max-height:90vh;
+    overflow-y:auto;
     background:#090b11;
-    border:1px solid rgba(0,246,255,.25);
-    border-radius:20px;
-    padding:24px;
+    border:1px solid rgba(0,246,255,.22);
+    border-radius:18px;
+    padding:21px;
     box-shadow:0 0 50px rgba(0,246,255,.08);
 }
 
 .modal-box h2{
     font-family:Orbitron,sans-serif;
     color:#00f6ff;
-    font-size:14px;
-    letter-spacing:2px;
-    margin-bottom:20px;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:1.5px;
+    margin-bottom:18px;
+}
+
+.modal-label{
+    color:#68717e;
+    font-size:8px;
+    letter-spacing:.7px;
+    margin-bottom:5px;
+}
+
+.form-group{
+    margin-bottom:12px;
 }
 
 .modal-actions{
     display:flex;
     justify-content:flex-end;
-    gap:8px;
-    margin-top:18px;
+    gap:7px;
+    margin-top:16px;
 }
 
-/* RESPONSIVE */
+/* ================= RESPONSIVE ================= */
 
 @media(max-width:800px){
+
     .clock{
         grid-template-columns:repeat(3,1fr);
     }
@@ -547,78 +677,52 @@ footer span{
         grid-template-columns:repeat(2,1fr);
     }
 
-    .timeline{
-        grid-template-columns:1fr;
-    }
-
-    .admission-clock{
-        grid-template-columns:repeat(5,1fr);
-    }
 }
 
-@media(max-width:520px){
-    header{
-        padding:17px 13px;
-    }
-
-    .logo{
-        font-size:9px;
-        letter-spacing:1.3px;
-    }
-
-    .name{
-        font-size:9px;
-    }
+@media(max-width:600px){
 
     main{
-        width:92%;
-        padding-top:30px;
+        width:93%;
+        padding-top:27px;
     }
 
-    .clock{
-        gap:6px;
+    .brand{
+        font-size:8px;
     }
 
-    .unit{
-        padding:14px 4px;
+    .header-name{
+        display:none;
     }
 
-    .label{
-        font-size:7px;
-        letter-spacing:1px;
+    .hero{
+        margin-bottom:28px;
     }
 
-    .data-grid{
-        grid-template-columns:1fr 1fr;
+    .hero h1{
+        font-size:25px;
+        letter-spacing:1.5px;
+    }
+
+    .hero p{
+        font-size:9px;
     }
 
     .setting-row{
         flex-direction:column;
         align-items:stretch;
+        gap:12px;
     }
 
     .setting-control{
         width:100%;
     }
 
-    .admission-form{
+    .menu-grid{
         grid-template-columns:1fr;
     }
 
-    .admission-form .full{
-        grid-column:auto;
-    }
-
-    .admission-clock{
-        gap:4px;
-    }
-
-    .admission-clock .unit{
-        padding:11px 2px;
-    }
-
-    .admission-clock .label{
-        font-size:6px;
+    .admission-header{
+        align-items:flex-end;
     }
 
     .exam-top{
@@ -628,291 +732,946 @@ footer span{
     .exam-actions{
         width:100%;
     }
+
+    .exam-actions button{
+        flex:1;
+    }
+
 }
+
+@media(max-width:400px){
+
+    .clock{
+        gap:5px;
+    }
+
+    .unit{
+        padding:13px 3px;
+    }
+
+    .number{
+        font-size:17px;
+    }
+
+    .label{
+        font-size:6px;
+        letter-spacing:.7px;
+    }
+
+    .data-card{
+        padding:13px;
+    }
+
+    .data-card .value{
+        font-size:15px;
+    }
+
+    .admission-clock{
+        gap:3px;
+    }
+
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
-    <div class="logo">CREATED BY MEHEDI HASAN</div>
-    <div class="name" id="displayName">MEHEDI HASAN</div>
+
+    <div class="brand">
+        PERSONAL TRACKER
+    </div>
+
+    <div class="header-right">
+
+        <div
+            class="header-name"
+            id="displayName"
+        ></div>
+
+        <button
+            class="menu-button"
+            onclick="openPage('menu')"
+        >
+            ☰ MENU
+        </button>
+
+    </div>
+
 </header>
+
 
 <main>
 
-<section class="hero">
-    <h1>LIFE.OS</h1>
-    <p>PERSONAL LIFE TRACKER OF <span id="heroName">MEHEDI HASAN</span></p>
-</section>
 
-<div class="section-title">// LIVE AGE</div>
+<!-- ================= HOME ================= -->
 
-<section class="clock">
+<section
+    id="homePage"
+    class="page active"
+>
 
-    <div class="unit">
-        <div class="number" id="years">00</div>
-        <div class="label">YEARS</div>
-    </div>
+    <section class="hero">
 
-    <div class="unit">
-        <div class="number" id="months">00</div>
-        <div class="label">MONTHS</div>
-    </div>
+        <h1>PERSONAL LIFE TRACKER</h1>
 
-    <div class="unit">
-        <div class="number" id="days">00</div>
-        <div class="label">DAYS</div>
-    </div>
-
-    <div class="unit">
-        <div class="number" id="hours">00</div>
-        <div class="label">HOURS</div>
-    </div>
-
-    <div class="unit">
-        <div class="number" id="minutes">00</div>
-        <div class="label">MINUTES</div>
-    </div>
-
-    <div class="unit">
-        <div class="number" id="seconds">00</div>
-        <div class="label">SECONDS</div>
-    </div>
-
-</section>
-
-<div style="
-    text-align:center;
-    margin-top:10px;
-    font-family:Orbitron,sans-serif;
-    color:#00f6ff;
-    font-size:22px;
-">
-    .
-    <span id="milliseconds">000</span>
-    <span style="
-        font-family:Inter,sans-serif;
-        color:#69717e;
-        font-size:8px;
-        letter-spacing:2px;
-    ">MILLISECONDS</span>
-</div>
-
-<div class="section-title">// EXISTENCE DATA</div>
-
-<section class="data-grid">
-
-    <div class="data-card">
-        <div class="value" id="totalDays">0</div>
-        <div class="small">TOTAL DAYS LIVED</div>
-    </div>
-
-    <div class="data-card">
-        <div class="value" id="totalHours">0</div>
-        <div class="small">TOTAL HOURS LIVED</div>
-    </div>
-
-    <div class="data-card">
-        <div class="value" id="totalMinutes">0</div>
-        <div class="small">TOTAL MINUTES LIVED</div>
-    </div>
-
-    <div class="data-card">
-        <div class="value" id="totalSeconds">0</div>
-        <div class="small">TOTAL SECONDS LIVED</div>
-    </div>
-
-</section>
-
-<div class="progress-box">
-
-    <div class="progress-head">
-        <span>CURRENT LIFE YEAR PROGRESS</span>
-        <span id="yearProgressText">0%</span>
-    </div>
-
-    <div class="progress-bar">
-        <div class="progress-fill" id="yearProgress"></div>
-    </div>
-
-</div>
-
-<div class="section-title">// LIFE TIMELINE</div>
-
-<section class="timeline">
-
-    <div class="timeline-card">
-        <h3>BIRTH</h3>
         <p>
-            <span id="timelineName">MEHEDI HASAN</span>
-            entered this world on
-            <span id="birthDateText">12 MAY 2005</span>.
+            <span id="heroName"></span>
         </p>
+
+    </section>
+
+
+    <div class="section-title">
+        LIVE AGE
     </div>
 
-    <div class="timeline-card">
-        <h3>NOW</h3>
-        <p>
-            Every millisecond becomes part of the
-            permanent timeline of existence.
-        </p>
+
+    <div
+        id="setupMessage"
+        class="empty"
+        style="margin-bottom:14px;"
+    >
+        SET YOUR NAME AND DATE OF BIRTH FROM SETTINGS TO START.
     </div>
 
-    <div class="timeline-card">
-        <h3>FUTURE</h3>
-        <p>
-            The next second has not happened yet.
-            Make it count.
-        </p>
-    </div>
 
-</section>
+    <section
+        class="clock"
+        id="ageClock"
+    >
 
-
-<!-- ================= ADMISSION.OS ================= -->
-
-<div class="section-title">// ADMISSION.OS</div>
-
-<section class="settings">
-
-    <div class="setting-row">
-        <div class="setting-info">
-            <div class="setting-title">ADD EXAM</div>
-            <div class="setting-sub">
-                Create a live admission countdown.
-            </div>
+        <div class="unit">
+            <div class="number" id="years">00</div>
+            <div class="label">YEARS</div>
         </div>
 
-        <button onclick="openExamModal()">
-            + ADD EXAM
+        <div class="unit">
+            <div class="number" id="months">00</div>
+            <div class="label">MONTHS</div>
+        </div>
+
+        <div class="unit">
+            <div class="number" id="days">00</div>
+            <div class="label">DAYS</div>
+        </div>
+
+        <div class="unit">
+            <div class="number" id="hours">00</div>
+            <div class="label">HOURS</div>
+        </div>
+
+        <div class="unit">
+            <div class="number" id="minutes">00</div>
+            <div class="label">MINUTES</div>
+        </div>
+
+        <div class="unit">
+            <div class="number" id="seconds">00</div>
+            <div class="label">SECONDS</div>
+        </div>
+
+    </section>
+
+
+    <div class="milliseconds">
+
+        <span class="ms-number">
+            <span id="milliseconds">000</span>
+        </span>
+
+        <span class="ms-label">
+            MILLISECONDS
+        </span>
+
+    </div>
+
+
+    <div class="section-title">
+        EXISTENCE DATA
+    </div>
+
+
+    <section class="data-grid">
+
+        <div class="data-card">
+            <div class="value" id="totalDays">0</div>
+            <div class="small">TOTAL DAYS LIVED</div>
+        </div>
+
+        <div class="data-card">
+            <div class="value" id="totalHours">0</div>
+            <div class="small">TOTAL HOURS LIVED</div>
+        </div>
+
+        <div class="data-card">
+            <div class="value" id="totalMinutes">0</div>
+            <div class="small">TOTAL MINUTES LIVED</div>
+        </div>
+
+        <div class="data-card">
+            <div class="value" id="totalSeconds">0</div>
+            <div class="small">TOTAL SECONDS LIVED</div>
+        </div>
+
+    </section>
+
+
+    <div class="progress-box">
+
+        <div class="progress-head">
+
+            <span>CURRENT LIFE YEAR PROGRESS</span>
+
+            <span id="yearProgressText">0%</span>
+
+        </div>
+
+        <div class="progress-bar">
+
+            <div
+                class="progress-fill"
+                id="yearProgress"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= ADMISSION ON HOME ================= -->
+
+    <section class="admission-section">
+
+        <div class="admission-header">
+
+            <div class="section-title">
+                ADMISSION EXAMS
+            </div>
+
+        </div>
+
+
+        <div class="filters">
+
+            <button
+                class="filter-btn active"
+                id="filterAll"
+                onclick="setFilter('ALL')"
+            >
+                ALL
+            </button>
+
+            <button
+                class="filter-btn"
+                id="filterEngineering"
+                onclick="setFilter('ENGINEERING')"
+            >
+                ENGINEERING
+            </button>
+
+            <button
+                class="filter-btn"
+                id="filterUniversity"
+                onclick="setFilter('UNIVERSITY')"
+            >
+                UNIVERSITY
+            </button>
+
+            <button
+                class="filter-btn"
+                id="filterMedical"
+                onclick="setFilter('MEDICAL')"
+            >
+                MEDICAL
+            </button>
+
+        </div>
+
+
+        <div
+            id="homeExamList"
+            class="exam-list"
+        ></div>
+
+    </section>
+
+
+    <footer>
+        PERSONAL LIFE TRACKER
+    </footer>
+
+</section>
+
+
+<!-- ================= MENU ================= -->
+
+<section
+    id="menuPage"
+    class="page"
+>
+
+    <button
+        class="back-button"
+        onclick="openPage('home')"
+    >
+        ← HOME
+    </button>
+
+    <div class="hero">
+
+        <h1>MENU</h1>
+
+        <p>
+            CONTROL CENTER
+        </p>
+
+    </div>
+
+
+    <div class="menu-grid">
+
+        <div
+            class="menu-card"
+            onclick="openPage('settings')"
+        >
+            <div class="menu-icon">⚙️</div>
+
+            <h3>SETTINGS</h3>
+
+            <p>
+                Manage your name, date of birth
+                and admission information.
+            </p>
+        </div>
+
+
+        <div
+            class="menu-card"
+            onclick="openPage('lifeData')"
+        >
+            <div class="menu-icon">📊</div>
+
+            <h3>LIFE DATA</h3>
+
+            <p>
+                View your total lived time
+                and life-year progress.
+            </p>
+        </div>
+
+
+        <div
+            class="menu-card"
+            onclick="openPage('goals')"
+        >
+            <div class="menu-icon">🎯</div>
+
+            <h3>GOALS</h3>
+
+            <p>
+                Personal goals and future targets.
+            </p>
+        </div>
+
+
+        <div
+            class="menu-card"
+            onclick="openPage('appearance')"
+        >
+            <div class="menu-icon">🎨</div>
+
+            <h3>APPEARANCE</h3>
+
+            <p>
+                Visual settings and interface options.
+            </p>
+        </div>
+
+
+        <div
+            class="menu-card"
+            onclick="openPage('backup')"
+        >
+            <div class="menu-icon">💾</div>
+
+            <h3>DATA & BACKUP</h3>
+
+            <p>
+                Export or reset your local data.
+            </p>
+        </div>
+
+
+        <div
+            class="menu-card"
+            onclick="openPage('about')"
+        >
+            <div class="menu-icon">ℹ️</div>
+
+            <h3>ABOUT</h3>
+
+            <p>
+                App information and system details.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SETTINGS ================= -->
+
+<section
+    id="settingsPage"
+    class="page"
+>
+
+    <button
+        class="back-button"
+        onclick="openPage('menu')"
+    >
+        ← MENU
+    </button>
+
+    <div class="hero">
+
+        <h1>SETTINGS</h1>
+
+        <p>
+            PERSONAL & ADMISSION SETTINGS
+        </p>
+
+    </div>
+
+
+    <section class="settings">
+
+        <!-- NAME -->
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <div class="setting-title">
+                    DISPLAY NAME
+                </div>
+
+                <div class="setting-sub">
+                    Choose the name displayed on the home screen.
+                </div>
+
+            </div>
+
+            <div class="setting-control">
+
+                <input
+                    type="text"
+                    id="nameInput"
+                    placeholder="Enter your name"
+                >
+
+                <div style="height:7px"></div>
+
+                <button onclick="saveName()">
+                    SAVE NAME
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- DOB -->
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <div class="setting-title">
+                    DATE OF BIRTH
+                </div>
+
+                <div class="setting-sub">
+                    Used to calculate your live age and total time.
+                </div>
+
+            </div>
+
+            <div class="setting-control">
+
+                <input
+                    type="date"
+                    id="dobInput"
+                >
+
+                <div style="height:7px"></div>
+
+                <button onclick="saveDOB()">
+                    SAVE DOB
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROFILE -->
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <div class="setting-title">
+                    CURRENT PROFILE
+                </div>
+
+                <div class="setting-sub">
+
+                    Name:
+                    <span id="settingsName">
+                        Not set
+                    </span>
+
+                    <br>
+
+                    Date of Birth:
+                    <span id="settingsDOB">
+                        Not set
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= ADMISSION SETTINGS ================= -->
+
+    <div class="section-title">
+        ADMISSION SETTINGS
+    </div>
+
+
+    <section class="settings">
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <div class="setting-title">
+                    ADMISSION EXAMS
+                </div>
+
+                <div class="setting-sub">
+                    Add, edit or delete your engineering,
+                    university and medical admission dates.
+                    These dates will appear on the Home page.
+                </div>
+
+            </div>
+
+            <button onclick="openExamModal()">
+                + ADD EXAM
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <div style="height:15px"></div>
+
+
+    <div class="filters">
+
+        <button
+            class="filter-btn active"
+            id="settingsFilterAll"
+            onclick="setFilter('ALL')"
+        >
+            ALL
         </button>
+
+        <button
+            class="filter-btn"
+            id="settingsFilterEngineering"
+            onclick="setFilter('ENGINEERING')"
+        >
+            ENGINEERING
+        </button>
+
+        <button
+            class="filter-btn"
+            id="settingsFilterUniversity"
+            onclick="setFilter('UNIVERSITY')"
+        >
+            UNIVERSITY
+        </button>
+
+        <button
+            class="filter-btn"
+            id="settingsFilterMedical"
+            onclick="setFilter('MEDICAL')"
+        >
+            MEDICAL
+        </button>
+
+    </div>
+
+
+    <div
+        id="settingsExamList"
+        class="exam-list"
+    ></div>
+
+</section>
+
+
+<!-- ================= LIFE DATA ================= -->
+
+<section
+    id="lifeDataPage"
+    class="page"
+>
+
+    <button
+        class="back-button"
+        onclick="openPage('menu')"
+    >
+        ← MENU
+    </button>
+
+    <div class="hero">
+
+        <h1>LIFE DATA</h1>
+
+        <p>
+            YOUR EXISTENCE STATISTICS
+        </p>
+
+    </div>
+
+
+    <section class="data-grid">
+
+        <div class="data-card">
+            <div class="value" id="dataDays">0</div>
+            <div class="small">TOTAL DAYS</div>
+        </div>
+
+        <div class="data-card">
+            <div class="value" id="dataHours">0</div>
+            <div class="small">TOTAL HOURS</div>
+        </div>
+
+        <div class="data-card">
+            <div class="value" id="dataMinutes">0</div>
+            <div class="small">TOTAL MINUTES</div>
+        </div>
+
+        <div class="data-card">
+            <div class="value" id="dataSeconds">0</div>
+            <div class="small">TOTAL SECONDS</div>
+        </div>
+
+    </section>
+
+
+    <div class="section-title">
+        LIFE YEAR PROGRESS
+    </div>
+
+
+    <div class="progress-box">
+
+        <div class="progress-head">
+
+            <span>CURRENT LIFE YEAR</span>
+
+            <span id="dataProgressText">
+                0%
+            </span>
+
+        </div>
+
+        <div class="progress-bar">
+
+            <div
+                class="progress-fill"
+                id="dataProgress"
+            ></div>
+
+        </div>
+
     </div>
 
 </section>
 
-<div style="height:15px"></div>
 
-<div class="filters">
+<!-- ================= GOALS ================= -->
 
-    <button
-        class="filter-btn active"
-        id="filterAll"
-        onclick="setFilter('ALL')"
-    >
-        ALL
-    </button>
+<section
+    id="goalsPage"
+    class="page"
+>
 
     <button
-        class="filter-btn"
-        id="filterEngineering"
-        onclick="setFilter('ENGINEERING')"
+        class="back-button"
+        onclick="openPage('menu')"
     >
-        ENGINEERING
+        ← MENU
     </button>
+
+    <div class="hero">
+
+        <h1>GOALS</h1>
+
+        <p>
+            PERSONAL TARGET SYSTEM
+        </p>
+
+    </div>
+
+    <div class="empty">
+
+        GOALS SYSTEM READY.
+
+        <br><br>
+
+        CUSTOM GOALS CAN BE ADDED IN A FUTURE UPDATE.
+
+    </div>
+
+</section>
+
+
+<!-- ================= APPEARANCE ================= -->
+
+<section
+    id="appearancePage"
+    class="page"
+>
 
     <button
-        class="filter-btn"
-        id="filterUniversity"
-        onclick="setFilter('UNIVERSITY')"
+        class="back-button"
+        onclick="openPage('menu')"
     >
-        UNIVERSITY
+        ← MENU
     </button>
 
-    <button
-        class="filter-btn"
-        id="filterMedical"
-        onclick="setFilter('MEDICAL')"
-    >
-        MEDICAL
-    </button>
+    <div class="hero">
 
-</div>
+        <h1>APPEARANCE</h1>
 
-<div id="examList" class="exam-list"></div>
-
-
-<!-- ================= PERSONAL SETTINGS ================= -->
-
-<div class="section-title">// PERSONAL SETTINGS</div>
-
-<section class="settings">
-
-    <!-- NAME -->
-
-    <div class="setting-row">
-
-        <div class="setting-info">
-            <div class="setting-title">DISPLAY NAME</div>
-            <div class="setting-sub">
-                Change the name shown throughout LIFE.OS.
-            </div>
-        </div>
-
-        <div class="setting-control">
-            <input
-                type="text"
-                id="nameInput"
-                placeholder="Enter name"
-            >
-            <div style="height:8px"></div>
-
-            <button onclick="saveName()">
-                SAVE NAME
-            </button>
-
-        </div>
+        <p>
+            VISUAL SYSTEM
+        </p>
 
     </div>
 
 
-    <!-- DOB -->
+    <section class="settings">
 
-    <div class="setting-row">
+        <div class="setting-row">
 
-        <div class="setting-info">
+            <div class="setting-info">
 
-            <div class="setting-title">
-                DATE OF BIRTH
+                <div class="setting-title">
+                    CURRENT THEME
+                </div>
+
+                <div class="setting-sub">
+                    Futuristic dark interface.
+                </div>
+
             </div>
 
-            <div class="setting-sub">
-                Set your own date of birth. This changes the LIFE.OS age clock.
-            </div>
-
-        </div>
-
-        <div class="setting-control">
-
-            <input
-                type="date"
-                id="dobInput"
-            >
-
-            <div style="height:8px"></div>
-
-            <button onclick="saveDOB()">
-                SAVE DOB
+            <button disabled>
+                DARK
             </button>
 
         </div>
 
+    </section>
+
+</section>
+
+
+<!-- ================= BACKUP ================= -->
+
+<section
+    id="backupPage"
+    class="page"
+>
+
+    <button
+        class="back-button"
+        onclick="openPage('menu')"
+    >
+        ← MENU
+    </button>
+
+    <div class="hero">
+
+        <h1>DATA & BACKUP</h1>
+
+        <p>
+            LOCAL DATA MANAGEMENT
+        </p>
+
     </div>
+
+
+    <section class="settings">
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <div class="setting-title">
+                    EXPORT DATA
+                </div>
+
+                <div class="setting-sub">
+                    Download your personal data and
+                    admission information as JSON.
+                </div>
+
+            </div>
+
+            <button onclick="exportData()">
+                EXPORT
+            </button>
+
+        </div>
+
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <div class="setting-title">
+                    RESET DATA
+                </div>
+
+                <div class="setting-sub">
+                    Remove your name, date of birth
+                    and admission data.
+                </div>
+
+            </div>
+
+            <button
+                class="danger"
+                onclick="resetData()"
+            >
+                RESET
+            </button>
+
+        </div>
+
+    </section>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section
+    id="aboutPage"
+    class="page"
+>
+
+    <button
+        class="back-button"
+        onclick="openPage('menu')"
+    >
+        ← MENU
+    </button>
+
+    <div class="hero">
+
+        <h1>ABOUT</h1>
+
+        <p>
+            PERSONAL TRACKING SYSTEM
+        </p>
+
+    </div>
+
+
+    <section class="settings">
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <div class="setting-title">
+                    PERSONAL LIFE TRACKER
+                </div>
+
+                <div class="setting-sub">
+                    A futuristic offline personal life
+                    tracking and admission management system.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <div class="setting-title">
+                    CREATED BY
+                </div>
+
+                <div class="setting-sub">
+                    MEHEDI HASAN
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+
+                <div class="setting-title">
+                    VERSION
+                </div>
+
+                <div class="setting-sub">
+                    1.0
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
 
 </section>
 
 </main>
 
 
-<footer>
-    LIFE.OS // CREATED BY
-    <span id="footerName">MEHEDI HASAN</span>
-</footer>
-
-
 <!-- ================= EXAM MODAL ================= -->
 
-<div class="modal" id="examModal">
+<div
+    class="modal"
+    id="examModal"
+>
 
     <div class="modal-box">
 
@@ -925,9 +1684,10 @@ footer span{
             id="editExamId"
         >
 
-        <div style="margin-bottom:12px">
 
-            <div class="setting-sub" style="margin-bottom:6px">
+        <div class="form-group">
+
+            <div class="modal-label">
                 CATEGORY
             </div>
 
@@ -950,9 +1710,9 @@ footer span{
         </div>
 
 
-        <div style="margin-bottom:12px">
+        <div class="form-group">
 
-            <div class="setting-sub" style="margin-bottom:6px">
+            <div class="modal-label">
                 EXAM / UNIVERSITY NAME
             </div>
 
@@ -965,9 +1725,9 @@ footer span{
         </div>
 
 
-        <div style="margin-bottom:12px">
+        <div class="form-group">
 
-            <div class="setting-sub" style="margin-bottom:6px">
+            <div class="modal-label">
                 EXAM DATE
             </div>
 
@@ -979,9 +1739,9 @@ footer span{
         </div>
 
 
-        <div>
+        <div class="form-group">
 
-            <div class="setting-sub" style="margin-bottom:6px">
+            <div class="modal-label">
                 EXACT EXAM TIME
             </div>
 
@@ -1013,27 +1773,67 @@ footer span{
 
 <script>
 
-/* =========================================================
-   LIFE.OS
-   DEFAULT DOB = 12 MAY 2005
-   USER CAN CHANGE DOB FROM PERSONAL SETTINGS
-========================================================= */
+/* ================= PAGE NAVIGATION ================= */
 
-const DEFAULT_DOB = "2005-05-12";
+const pages = [
+    "home",
+    "menu",
+    "settings",
+    "lifeData",
+    "goals",
+    "appearance",
+    "backup",
+    "about"
+];
+
+
+function openPage(page){
+
+    pages.forEach(name => {
+
+        const element =
+            document.getElementById(name + "Page");
+
+        if(element){
+            element.classList.remove("active");
+        }
+
+    });
+
+
+    const target =
+        document.getElementById(page + "Page");
+
+
+    if(target){
+        target.classList.add("active");
+    }
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+
+    if(page === "settings"){
+        updateSettingsUI();
+        renderSettingsExams();
+    }
+
+}
+
+
+/* ================= PERSONAL DATA ================= */
 
 let savedDOB =
-    localStorage.getItem("lifeos_dob") ||
-    DEFAULT_DOB;
-
-
-/* =========================================================
-   NAME
-========================================================= */
+    localStorage.getItem("lifeos_dob") || "";
 
 let savedName =
-    localStorage.getItem("lifeos_display_name") ||
-    "MEHEDI HASAN";
+    localStorage.getItem("lifeos_display_name") || "";
 
+
+/* ================= NAME ================= */
 
 function updateNameUI(){
 
@@ -1041,28 +1841,35 @@ function updateNameUI(){
         savedName;
 
     document.getElementById("heroName").textContent =
-        savedName;
-
-    document.getElementById("timelineName").textContent =
-        savedName;
-
-    document.getElementById("footerName").textContent =
-        savedName;
+        savedName
+            ? "WELCOME, " + savedName.toUpperCase()
+            : "";
 
     document.getElementById("nameInput").value =
         savedName;
+
+    document.getElementById("settingsName").textContent =
+        savedName || "Not set";
+
 }
 
 
 function saveName(){
 
     const value =
-        document.getElementById("nameInput").value.trim();
+        document
+            .getElementById("nameInput")
+            .value
+            .trim();
+
 
     if(!value){
-        alert("Please enter a name.");
+
+        alert("Please enter your name.");
+
         return;
     }
+
 
     savedName = value;
 
@@ -1071,18 +1878,27 @@ function saveName(){
         savedName
     );
 
+
     updateNameUI();
+    updateSetupState();
+
+    alert("Name saved successfully.");
+
 }
 
 
-/* =========================================================
-   DOB
-========================================================= */
+/* ================= DOB ================= */
 
 function getBirthDate(){
 
+    if(!savedDOB){
+        return null;
+    }
+
+
     const parts =
         savedDOB.split("-").map(Number);
+
 
     return new Date(
         parts[0],
@@ -1093,13 +1909,20 @@ function getBirthDate(){
         0,
         0
     );
+
 }
 
 
 function formatDOB(dateString){
 
+    if(!dateString){
+        return "NOT SET";
+    }
+
+
     const date =
         new Date(dateString + "T00:00:00");
+
 
     return date.toLocaleDateString(
         "en-GB",
@@ -1109,6 +1932,7 @@ function formatDOB(dateString){
             year:"numeric"
         }
     ).toUpperCase();
+
 }
 
 
@@ -1117,8 +1941,11 @@ function updateDOBUI(){
     document.getElementById("dobInput").value =
         savedDOB;
 
-    document.getElementById("birthDateText").textContent =
-        formatDOB(savedDOB);
+    document.getElementById("settingsDOB").textContent =
+        savedDOB
+            ? formatDOB(savedDOB)
+            : "Not set";
+
 }
 
 
@@ -1127,21 +1954,26 @@ function saveDOB(){
     const value =
         document.getElementById("dobInput").value;
 
+
     if(!value){
+
         alert("Please select your date of birth.");
+
         return;
     }
+
 
     const selected =
         new Date(value + "T00:00:00");
 
-    const now =
-        new Date();
 
-    if(selected > now){
+    if(selected > new Date()){
+
         alert("Date of birth cannot be in the future.");
+
         return;
     }
+
 
     savedDOB = value;
 
@@ -1150,23 +1982,101 @@ function saveDOB(){
         savedDOB
     );
 
-    updateDOBUI();
 
+    updateDOBUI();
     updateLife();
+    updateSetupState();
+
+    alert("Date of birth saved successfully.");
+
 }
 
 
-/* =========================================================
-   LIFE AGE CALCULATION
-========================================================= */
+/* ================= SETTINGS UI ================= */
+
+function updateSettingsUI(){
+
+    document.getElementById("nameInput").value =
+        savedName;
+
+    document.getElementById("dobInput").value =
+        savedDOB;
+
+    document.getElementById("settingsName").textContent =
+        savedName || "Not set";
+
+    document.getElementById("settingsDOB").textContent =
+        savedDOB
+            ? formatDOB(savedDOB)
+            : "Not set";
+
+}
+
+
+/* ================= SETUP ================= */
+
+function updateSetupState(){
+
+    const ready =
+        savedName && savedDOB;
+
+
+    document.getElementById("setupMessage").style.display =
+        ready ? "none" : "block";
+
+
+    document.getElementById("ageClock").style.opacity =
+        ready ? "1" : ".35";
+
+}
+
+
+/* ================= LIFE CALCULATION ================= */
 
 function updateLife(){
 
-    const birth =
-        getBirthDate();
+    if(!savedDOB){
 
-    const now =
-        new Date();
+        [
+            "years",
+            "months",
+            "days",
+            "hours",
+            "minutes",
+            "seconds"
+        ].forEach(id => {
+            document.getElementById(id).textContent = "00";
+        });
+
+
+        document.getElementById("milliseconds").textContent =
+            "000";
+
+        [
+            "totalSeconds",
+            "totalMinutes",
+            "totalHours",
+            "totalDays"
+        ].forEach(id => {
+            document.getElementById(id).textContent = "0";
+        });
+
+
+        document.getElementById("yearProgress").style.width =
+            "0%";
+
+        document.getElementById("yearProgressText").textContent =
+            "0%";
+
+        updateLifeDataPage();
+
+        return;
+    }
+
+
+    const birth = getBirthDate();
+    const now = new Date();
+
 
     if(birth > now){
         return;
@@ -1177,15 +2087,12 @@ function updateLife(){
         now.getFullYear() -
         birth.getFullYear();
 
+
     let anniversary =
         new Date(
             birth.getFullYear() + years,
             birth.getMonth(),
-            birth.getDate(),
-            birth.getHours(),
-            birth.getMinutes(),
-            birth.getSeconds(),
-            birth.getMilliseconds()
+            birth.getDate()
         );
 
 
@@ -1197,18 +2104,16 @@ function updateLife(){
             new Date(
                 birth.getFullYear() + years,
                 birth.getMonth(),
-                birth.getDate(),
-                birth.getHours(),
-                birth.getMinutes(),
-                birth.getSeconds(),
-                birth.getMilliseconds()
+                birth.getDate()
             );
+
     }
 
 
     let months =
         now.getMonth() -
         anniversary.getMonth();
+
 
     if(months < 0){
         months += 12;
@@ -1219,11 +2124,7 @@ function updateLife(){
         new Date(
             anniversary.getFullYear(),
             anniversary.getMonth() + months,
-            anniversary.getDate(),
-            anniversary.getHours(),
-            anniversary.getMinutes(),
-            anniversary.getSeconds(),
-            anniversary.getMilliseconds()
+            anniversary.getDate()
         );
 
 
@@ -1235,12 +2136,9 @@ function updateLife(){
             new Date(
                 anniversary.getFullYear(),
                 anniversary.getMonth() + months,
-                anniversary.getDate(),
-                anniversary.getHours(),
-                anniversary.getMinutes(),
-                anniversary.getSeconds(),
-                anniversary.getMilliseconds()
+                anniversary.getDate()
             );
+
     }
 
 
@@ -1249,17 +2147,10 @@ function updateLife(){
         monthStart.getTime();
 
 
-    const dayMs =
-        24 * 60 * 60 * 1000;
-
-    const hourMs =
-        60 * 60 * 1000;
-
-    const minuteMs =
-        60 * 1000;
-
-    const secondMs =
-        1000;
+    const dayMs = 86400000;
+    const hourMs = 3600000;
+    const minuteMs = 60000;
+    const secondMs = 1000;
 
 
     const days =
@@ -1282,6 +2173,7 @@ function updateLife(){
 
     const seconds =
         Math.floor(remaining / secondMs);
+
 
     const milliseconds =
         remaining % secondMs;
@@ -1309,40 +2201,23 @@ function updateLife(){
         String(milliseconds).padStart(3,"0");
 
 
-    /* TOTAL TIME */
-
     const totalMs =
         now.getTime() -
         birth.getTime();
 
 
-    const totalSeconds =
-        Math.floor(totalMs / 1000);
-
-    const totalMinutes =
-        Math.floor(totalMs / (60 * 1000));
-
-    const totalHours =
-        Math.floor(totalMs / (60 * 60 * 1000));
-
-    const totalDays =
-        Math.floor(totalMs / (24 * 60 * 60 * 1000));
-
-
     document.getElementById("totalSeconds").textContent =
-        totalSeconds.toLocaleString();
+        Math.floor(totalMs / 1000).toLocaleString();
 
     document.getElementById("totalMinutes").textContent =
-        totalMinutes.toLocaleString();
+        Math.floor(totalMs / 60000).toLocaleString();
 
     document.getElementById("totalHours").textContent =
-        totalHours.toLocaleString();
+        Math.floor(totalMs / 3600000).toLocaleString();
 
     document.getElementById("totalDays").textContent =
-        totalDays.toLocaleString();
+        Math.floor(totalMs / 86400000).toLocaleString();
 
-
-    /* CURRENT LIFE YEAR PROGRESS */
 
     const currentYearStart =
         new Date(
@@ -1368,10 +2243,7 @@ function updateLife(){
 
 
     const safeProgress =
-        Math.max(
-            0,
-            Math.min(100,progress)
-        );
+        Math.max(0,Math.min(100,progress));
 
 
     document.getElementById("yearProgress").style.width =
@@ -1379,17 +2251,43 @@ function updateLife(){
 
     document.getElementById("yearProgressText").textContent =
         safeProgress.toFixed(4) + "%";
+
+
+    updateLifeDataPage();
+
 }
 
 
-/* =========================================================
-   ADMISSION.OS
-========================================================= */
+/* ================= LIFE DATA ================= */
+
+function updateLifeDataPage(){
+
+    document.getElementById("dataDays").textContent =
+        document.getElementById("totalDays").textContent;
+
+    document.getElementById("dataHours").textContent =
+        document.getElementById("totalHours").textContent;
+
+    document.getElementById("dataMinutes").textContent =
+        document.getElementById("totalMinutes").textContent;
+
+    document.getElementById("dataSeconds").textContent =
+        document.getElementById("totalSeconds").textContent;
+
+    document.getElementById("dataProgress").style.width =
+        document.getElementById("yearProgress").style.width;
+
+    document.getElementById("dataProgressText").textContent =
+        document.getElementById("yearProgressText").textContent;
+
+}
+
+
+/* ================= ADMISSION DATA ================= */
 
 let exams =
     JSON.parse(
-        localStorage.getItem("lifeos_exams") ||
-        "[]"
+        localStorage.getItem("lifeos_exams") || "[]"
     );
 
 let currentFilter = "ALL";
@@ -1401,50 +2299,46 @@ function saveExams(){
         "lifeos_exams",
         JSON.stringify(exams)
     );
+
+}
+
+
+function examTimestamp(date,time){
+
+    return new Date(`${date}T${time}`).getTime();
+
 }
 
 
 function getCountdownParts(remaining){
 
-    let ms =
-        remaining;
-
-    const dayMs =
-        24 * 60 * 60 * 1000;
-
-    const hourMs =
-        60 * 60 * 1000;
-
-    const minuteMs =
-        60 * 1000;
-
-    const secondMs =
-        1000;
+    let ms = remaining;
 
 
     const days =
-        Math.floor(ms / dayMs);
+        Math.floor(ms / 86400000);
 
-    ms %= dayMs;
+    ms %= 86400000;
 
 
     const hours =
-        Math.floor(ms / hourMs);
+        Math.floor(ms / 3600000);
 
-    ms %= hourMs;
+    ms %= 3600000;
 
 
     const minutes =
-        Math.floor(ms / minuteMs);
+        Math.floor(ms / 60000);
 
-    ms %= minuteMs;
+    ms %= 60000;
 
 
     const seconds =
-        Math.floor(ms / secondMs);
+        Math.floor(ms / 1000);
+
 
     const milliseconds =
-        ms % secondMs;
+        ms % 1000;
 
 
     return {
@@ -1454,6 +2348,7 @@ function getCountdownParts(remaining){
         seconds,
         milliseconds
     };
+
 }
 
 
@@ -1493,150 +2388,11 @@ function countdownHTML(parts){
             <div class="number">
                 ${String(parts.milliseconds).padStart(3,"0")}
             </div>
-            <div class="label">MILLISECONDS</div>
+            <div class="label">MS</div>
         </div>
 
     `;
-}
 
-
-function examTimestamp(date,time){
-
-    return new Date(
-        `${date}T${time}`
-    ).getTime();
-}
-
-
-function renderExams(){
-
-    const list =
-        document.getElementById("examList");
-
-
-    let filtered =
-        exams.filter(exam => {
-
-            if(currentFilter === "ALL"){
-                return true;
-            }
-
-            return exam.category === currentFilter;
-        });
-
-
-    filtered.sort(
-        (a,b) =>
-            a.timestamp -
-            b.timestamp
-    );
-
-
-    if(filtered.length === 0){
-
-        list.innerHTML = `
-            <div class="empty">
-                NO EXAMS ADDED YET.
-            </div>
-        `;
-
-        return;
-    }
-
-
-    list.innerHTML =
-        filtered.map(exam => {
-
-            const remaining =
-                exam.timestamp -
-                Date.now();
-
-
-            let countdown;
-
-
-            if(remaining <= 0){
-
-                countdown = `
-                    <div
-                        class="completed"
-                        data-status="completed"
-                    >
-                        EXAM COMPLETED
-                    </div>
-                `;
-
-            }else{
-
-                const parts =
-                    getCountdownParts(remaining);
-
-                countdown = `
-                    <div
-                        class="admission-clock"
-                        id="countdown-${exam.id}"
-                        data-status="running"
-                    >
-                        ${countdownHTML(parts)}
-                    </div>
-                `;
-            }
-
-
-            return `
-
-                <div
-                    class="exam-card"
-                    id="exam-card-${exam.id}"
-                >
-
-                    <div class="exam-top">
-
-                        <div>
-
-                            <div class="exam-name">
-                                ${escapeHTML(exam.name)}
-                            </div>
-
-                            <div class="exam-category">
-                                ${escapeHTML(exam.category)}
-                            </div>
-
-                            <div class="exam-date">
-                                ${formatExamDate(
-                                    exam.date,
-                                    exam.time
-                                )}
-                            </div>
-
-                        </div>
-
-
-                        <div class="exam-actions">
-
-                            <button
-                                onclick="editExam('${exam.id}')"
-                            >
-                                EDIT
-                            </button>
-
-                            <button
-                                class="danger"
-                                onclick="deleteExam('${exam.id}')"
-                            >
-                                DELETE
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                    ${countdown}
-
-                </div>
-            `;
-
-        }).join("");
 }
 
 
@@ -1644,6 +2400,7 @@ function formatExamDate(date,time){
 
     const d =
         new Date(`${date}T${time}`);
+
 
     return d.toLocaleString(
         "en-GB",
@@ -1657,6 +2414,7 @@ function formatExamDate(date,time){
             hour12:false
         }
     );
+
 }
 
 
@@ -1668,166 +2426,351 @@ function escapeHTML(value){
         .replaceAll(">","&gt;")
         .replaceAll('"',"&quot;")
         .replaceAll("'","&#039;");
+
 }
 
+
+/* ================= EXAM CARD ================= */
+
+function buildExamCard(exam,manage=false){
+
+    const remaining =
+        exam.timestamp - Date.now();
+
+
+    let countdown;
+
+
+    if(remaining <= 0){
+
+        countdown = `
+            <div class="completed">
+                EXAM COMPLETED
+            </div>
+        `;
+
+    }else{
+
+        const parts =
+            getCountdownParts(remaining);
+
+
+        countdown = `
+            <div
+                class="admission-clock"
+                id="${manage ? "settings-" : "home-"}countdown-${exam.id}"
+            >
+                ${countdownHTML(parts)}
+            </div>
+        `;
+
+    }
+
+
+    const actions =
+        manage
+        ? `
+            <div class="exam-actions">
+
+                <button onclick="editExam('${exam.id}')">
+                    EDIT
+                </button>
+
+                <button
+                    class="danger"
+                    onclick="deleteExam('${exam.id}')"
+                >
+                    DELETE
+                </button>
+
+            </div>
+        `
+        : "";
+
+
+    return `
+
+        <div class="exam-card">
+
+            <div class="exam-top">
+
+                <div>
+
+                    <div class="exam-name">
+                        ${escapeHTML(exam.name)}
+                    </div>
+
+                    <div class="exam-category">
+                        ${escapeHTML(exam.category)}
+                    </div>
+
+                    <div class="exam-date">
+                        ${formatExamDate(
+                            exam.date,
+                            exam.time
+                        )}
+                    </div>
+
+                </div>
+
+                ${actions}
+
+            </div>
+
+            ${countdown}
+
+        </div>
+
+    `;
+
+}
+
+
+/* ================= FILTER ================= */
+
+function filteredExams(){
+
+    return exams
+        .filter(exam => {
+
+            return currentFilter === "ALL"
+                ? true
+                : exam.category === currentFilter;
+
+        })
+        .sort(
+            (a,b) =>
+                a.timestamp - b.timestamp
+        );
+
+}
+
+
+/* ================= HOME EXAMS ================= */
+
+function renderHomeExams(){
+
+    const list =
+        document.getElementById("homeExamList");
+
+
+    const filtered =
+        filteredExams();
+
+
+    if(!filtered.length){
+
+        list.innerHTML = `
+            <div class="empty">
+                NO ADMISSION EXAMS ADDED YET.
+                <br><br>
+                ADD YOUR EXAMS FROM SETTINGS.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    list.innerHTML =
+        filtered
+            .map(exam =>
+                buildExamCard(exam,false)
+            )
+            .join("");
+
+}
+
+
+/* ================= SETTINGS EXAMS ================= */
+
+function renderSettingsExams(){
+
+    const list =
+        document.getElementById(
+            "settingsExamList"
+        );
+
+
+    if(!list){
+        return;
+    }
+
+
+    const filtered =
+        filteredExams();
+
+
+    if(!filtered.length){
+
+        list.innerHTML = `
+            <div class="empty">
+                NO ADMISSION EXAMS ADDED YET.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    list.innerHTML =
+        filtered
+            .map(exam =>
+                buildExamCard(exam,true)
+            )
+            .join("");
+
+}
+
+
+function renderAllExams(){
+
+    renderHomeExams();
+    renderSettingsExams();
+
+}
+
+
+/* ================= COUNTDOWN UPDATE ================= */
 
 function updateExamCountdowns(){
 
     const now =
         Date.now();
 
-    let needsRender =
-        false;
-
 
     exams.forEach(exam => {
 
-        const box =
+        const remaining =
+            exam.timestamp - now;
+
+
+        const homeBox =
             document.getElementById(
-                `countdown-${exam.id}`
+                `home-countdown-${exam.id}`
             );
 
 
-        if(!box){
-            return;
-        }
-
-
-        const remaining =
-            exam.timestamp -
-            now;
+        const settingsBox =
+            document.getElementById(
+                `settings-countdown-${exam.id}`
+            );
 
 
         if(remaining <= 0){
 
             if(
-                box.dataset.status !==
-                "completed"
+                homeBox ||
+                settingsBox
             ){
-                needsRender = true;
+
+                renderAllExams();
+
             }
 
             return;
         }
 
 
-        box.dataset.status =
-            "running";
-
-
         const parts =
-            getCountdownParts(
-                remaining
-            );
+            getCountdownParts(remaining);
 
 
-        box.innerHTML =
-            countdownHTML(parts);
+        if(homeBox){
+            homeBox.innerHTML =
+                countdownHTML(parts);
+        }
+
+
+        if(settingsBox){
+            settingsBox.innerHTML =
+                countdownHTML(parts);
+        }
 
     });
 
-
-    if(needsRender){
-        renderExams();
-    }
 }
 
 
+/* ================= MODAL ================= */
+
 function openExamModal(){
 
-    document.getElementById(
-        "examModal"
-    ).classList.add("show");
+    document.getElementById("examModal")
+        .classList.add("show");
 
 
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
+    document.getElementById("modalTitle")
+        .textContent =
         "ADD ADMISSION EXAM";
 
 
-    document.getElementById(
-        "editExamId"
-    ).value = "";
+    document.getElementById("editExamId")
+        .value = "";
 
 
-    document.getElementById(
-        "examName"
-    ).value = "";
+    document.getElementById("examName")
+        .value = "";
 
 
-    document.getElementById(
-        "examDate"
-    ).value = "";
+    document.getElementById("examDate")
+        .value = "";
 
 
-    document.getElementById(
-        "examTime"
-    ).value = "00:00:00";
+    document.getElementById("examTime")
+        .value = "00:00:00";
 
 
-    document.getElementById(
-        "examCategory"
-    ).value =
-        "ENGINEERING";
+    document.getElementById("examCategory")
+        .value = "ENGINEERING";
+
 }
 
 
 function closeExamModal(){
 
-    document.getElementById(
-        "examModal"
-    ).classList.remove("show");
+    document.getElementById("examModal")
+        .classList.remove("show");
+
 }
 
 
 function saveExam(){
 
     const category =
-        document.getElementById(
-            "examCategory"
-        ).value;
-
+        document.getElementById("examCategory").value;
 
     const name =
-        document.getElementById(
-            "examName"
-        ).value.trim();
-
+        document.getElementById("examName").value.trim();
 
     const date =
-        document.getElementById(
-            "examDate"
-        ).value;
-
+        document.getElementById("examDate").value;
 
     const time =
-        document.getElementById(
-            "examTime"
-        ).value;
-
+        document.getElementById("examTime").value;
 
     const editId =
-        document.getElementById(
-            "editExamId"
-        ).value;
+        document.getElementById("editExamId").value;
 
 
     if(!name || !date || !time){
 
-        alert(
-            "Please fill in all exam details."
-        );
+        alert("Please fill in all exam details.");
 
         return;
     }
 
 
     const timestamp =
-        examTimestamp(
-            date,
-            time
-        );
+        examTimestamp(date,time);
+
+
+    if(timestamp <= 0){
+
+        alert("Please enter a valid exam date and time.");
+
+        return;
+    }
 
 
     if(editId){
@@ -1841,28 +2784,19 @@ function saveExam(){
 
         if(exam){
 
-            exam.category =
-                category;
+            exam.category = category;
+            exam.name = name;
+            exam.date = date;
+            exam.time = time;
+            exam.timestamp = timestamp;
 
-            exam.name =
-                name;
-
-            exam.date =
-                date;
-
-            exam.time =
-                time;
-
-            exam.timestamp =
-                timestamp;
         }
 
     }else{
 
         exams.push({
 
-            id:
-                Date.now().toString(),
+            id:Date.now().toString(),
 
             category,
 
@@ -1875,6 +2809,7 @@ function saveExam(){
             timestamp
 
         });
+
     }
 
 
@@ -1882,7 +2817,8 @@ function saveExam(){
 
     closeExamModal();
 
-    renderExams();
+    renderAllExams();
+
 }
 
 
@@ -1900,45 +2836,39 @@ function editExam(id){
     }
 
 
-    document.getElementById(
-        "examModal"
-    ).classList.add("show");
+    document.getElementById("examModal")
+        .classList.add("show");
 
 
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
+    document.getElementById("modalTitle")
+        .textContent =
         "EDIT ADMISSION EXAM";
 
 
-    document.getElementById(
-        "editExamId"
-    ).value =
+    document.getElementById("editExamId")
+        .value =
         exam.id;
 
 
-    document.getElementById(
-        "examCategory"
-    ).value =
+    document.getElementById("examCategory")
+        .value =
         exam.category;
 
 
-    document.getElementById(
-        "examName"
-    ).value =
+    document.getElementById("examName")
+        .value =
         exam.name;
 
 
-    document.getElementById(
-        "examDate"
-    ).value =
+    document.getElementById("examDate")
+        .value =
         exam.date;
 
 
-    document.getElementById(
-        "examTime"
-    ).value =
+    document.getElementById("examTime")
+        .value =
         exam.time;
+
 }
 
 
@@ -1946,7 +2876,7 @@ function deleteExam(id){
 
     if(
         !confirm(
-            "Delete this exam?"
+            "Delete this admission exam?"
         )
     ){
         return;
@@ -1962,55 +2892,178 @@ function deleteExam(id){
 
     saveExams();
 
-    renderExams();
+    renderAllExams();
+
 }
 
+
+/* ================= FILTER BUTTONS ================= */
 
 function setFilter(filter){
 
-    currentFilter =
-        filter;
+    currentFilter = filter;
 
 
-    document.querySelectorAll(
-        ".filter-btn"
-    ).forEach(
-        btn =>
-            btn.classList.remove(
-                "active"
-            )
-    );
+    document.querySelectorAll(".filter-btn")
+        .forEach(btn =>
+            btn.classList.remove("active")
+        );
 
 
-    const id =
-        filter === "ALL"
-            ? "filterAll"
-            : filter === "ENGINEERING"
-                ? "filterEngineering"
-                : filter === "UNIVERSITY"
-                    ? "filterUniversity"
-                    : "filterMedical";
+    const buttons = {
+
+        ALL:[
+            "filterAll",
+            "settingsFilterAll"
+        ],
+
+        ENGINEERING:[
+            "filterEngineering",
+            "settingsFilterEngineering"
+        ],
+
+        UNIVERSITY:[
+            "filterUniversity",
+            "settingsFilterUniversity"
+        ],
+
+        MEDICAL:[
+            "filterMedical",
+            "settingsFilterMedical"
+        ]
+
+    };
 
 
-    document.getElementById(id)
-        .classList.add("active");
+    (buttons[filter] || [])
+        .forEach(id => {
+
+            const button =
+                document.getElementById(id);
+
+            if(button){
+                button.classList.add("active");
+            }
+
+        });
 
 
-    renderExams();
+    renderAllExams();
+
 }
 
 
-/* =========================================================
-   START
-========================================================= */
+/* ================= BACKUP ================= */
+
+function exportData(){
+
+    const data = {
+
+        name:savedName,
+
+        dob:savedDOB,
+
+        exams:exams,
+
+        exportedAt:
+            new Date().toISOString()
+
+    };
+
+
+    const blob =
+        new Blob(
+            [
+                JSON.stringify(
+                    data,
+                    null,
+                    2
+                )
+            ],
+            {
+                type:"application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.href = url;
+
+    link.download =
+        "personal-life-tracker-backup.json";
+
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+function resetData(){
+
+    const confirmed =
+        confirm(
+            "This will remove your name, date of birth and all admission exams. Continue?"
+        );
+
+
+    if(!confirmed){
+        return;
+    }
+
+
+    localStorage.removeItem(
+        "lifeos_display_name"
+    );
+
+    localStorage.removeItem(
+        "lifeos_dob"
+    );
+
+    localStorage.removeItem(
+        "lifeos_exams"
+    );
+
+
+    savedName = "";
+    savedDOB = "";
+    exams = [];
+
+
+    updateNameUI();
+    updateDOBUI();
+    updateSetupState();
+    updateLife();
+    renderAllExams();
+
+    openPage("home");
+
+}
+
+
+/* ================= START ================= */
 
 updateNameUI();
 
 updateDOBUI();
 
+updateSetupState();
+
 updateLife();
 
-renderExams();
+renderAllExams();
 
 
 /* LIFE CLOCK */
@@ -2029,20 +3082,16 @@ setInterval(
 );
 
 
-/* SERVICE WORKER */
+/* ================= SERVICE WORKER ================= */
 
-if(
-    "serviceWorker" in navigator
-){
+if("serviceWorker" in navigator){
 
     window.addEventListener(
         "load",
         () => {
 
             navigator.serviceWorker
-                .register(
-                    "service-worker.js"
-                )
+                .register("service-worker.js")
                 .catch(
                     error =>
                         console.log(
@@ -2053,7 +3102,23 @@ if(
 
         }
     );
+
 }
+
+
+/* ================= CLOSE MODAL ================= */
+
+document.getElementById("examModal")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(event.target === this){
+                closeExamModal();
+            }
+
+        }
+    );
 
 </script>
 
