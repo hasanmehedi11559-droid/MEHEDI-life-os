@@ -1,0 +1,6 @@
+Admission Tracker V7
+
+Community V7 UI/account foundation is included.
+Important: true cross-device realtime accounts, messages, files and notifications require a production backend (authentication + database + realtime + file storage). This package does NOT contain owner credentials or pretend that localStorage is an online backend.
+
+Current V7 client provides: mandatory signup/login gate, name/mobile/password/gender/age/profile picture fields, automatic Boys/Girls group lock, WhatsApp-style chat UI, search, reply, reactions, pin, poll, quiz, attachments, notifications hooks, and removal of the old lower feed area.
