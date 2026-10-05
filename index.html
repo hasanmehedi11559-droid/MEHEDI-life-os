@@ -67,7 +67,12 @@ main{padding:18px}
 .empty{text-align:center;color:var(--muted);font-size:9px;padding:25px;border:1px dashed rgba(255,255,255,.08);border-radius:15px}
 footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;padding:28px 0 10px}
 @media(min-width:650px){.clock{grid-template-columns:repeat(6,1fr)}.grid2{grid-template-columns:repeat(4,1fr)}}
-.welcome-overlay{position:fixed;inset:0;z-index:1000;background:rgba(5,6,10,.86);backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;padding:24px}.welcome-overlay.show{display:flex}.welcome-card{width:min(520px,100%);text-align:center;padding:30px 22px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,rgba(0,246,255,.08),rgba(141,77,255,.08));box-shadow:0 0 40px rgba(0,246,255,.12)}.welcome-kicker{font-family:Orbitron;color:var(--cyan);font-size:9px;letter-spacing:2px;margin-bottom:14px}.welcome-title{font-family:Orbitron;font-size:clamp(22px,7vw,34px);letter-spacing:1.5px;line-height:1.25}.welcome-name{color:var(--cyan)}.welcome-sub{color:var(--muted);font-size:10px;letter-spacing:1px;margin:10px 0 22px}.welcome-close{min-width:130px}.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:12px}.switch{position:relative;width:48px;height:26px;display:inline-block}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;inset:0;border:1px solid var(--line);border-radius:30px;background:rgba(255,255,255,.06);transition:.2s}.slider:before{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;border-radius:50%;background:var(--muted);transition:.2s}.switch input:checked+.slider{background:rgba(0,246,255,.15);border-color:var(--cyan)}.switch input:checked+.slider:before{transform:translateX(22px);background:var(--cyan);box-shadow:0 0 10px rgba(0,246,255,.4)}.guide-countdown{margin-top:13px;padding:12px;border:1px solid rgba(0,246,255,.14);border-radius:14px;background:rgba(0,246,255,.035)}.guide-countdown-title{font-family:Orbitron;color:var(--cyan);font-size:9px;letter-spacing:1.5px;margin-bottom:9px}.guide-countdown-time{font-family:Orbitron;font-size:clamp(13px,3.8vw,20px);letter-spacing:1px}.guide-completed{color:var(--danger);font-family:Orbitron;font-size:11px;letter-spacing:1.2px;padding:9px 0}.guide-note{margin-top:10px;color:var(--muted);font-size:8px;line-height:1.5}</style>
+.welcome-overlay{position:fixed;inset:0;z-index:1000;background:rgba(5,6,10,.86);backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;padding:24px}.welcome-overlay.show{display:flex}.welcome-card{width:min(520px,100%);text-align:center;padding:30px 22px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,rgba(0,246,255,.08),rgba(141,77,255,.08));box-shadow:0 0 40px rgba(0,246,255,.12)}.welcome-kicker{font-family:Orbitron;color:var(--cyan);font-size:9px;letter-spacing:2px;margin-bottom:14px}.welcome-title{font-family:Orbitron;font-size:clamp(22px,7vw,34px);letter-spacing:1.5px;line-height:1.25}.welcome-name{color:var(--cyan)}.welcome-sub{color:var(--muted);font-size:10px;letter-spacing:1px;margin:10px 0 22px}.welcome-close{min-width:130px}.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:12px}.switch{position:relative;width:48px;height:26px;display:inline-block}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;inset:0;border:1px solid var(--line);border-radius:30px;background:rgba(255,255,255,.06);transition:.2s}.slider:before{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;border-radius:50%;background:var(--muted);transition:.2s}.switch input:checked+.slider{background:rgba(0,246,255,.15);border-color:var(--cyan)}.switch input:checked+.slider:before{transform:translateX(22px);background:var(--cyan);box-shadow:0 0 10px rgba(0,246,255,.4)}.guide-countdown{margin-top:13px;padding:12px;border:1px solid rgba(0,246,255,.14);border-radius:14px;background:rgba(0,246,255,.035)}.guide-countdown-title{font-family:Orbitron;color:var(--cyan);font-size:9px;letter-spacing:1.5px;margin-bottom:9px}.guide-countdown-time{font-family:Orbitron;font-size:clamp(13px,3.8vw,20px);letter-spacing:1px}.guide-completed{color:var(--danger);font-family:Orbitron;font-size:11px;letter-spacing:1.2px;padding:9px 0}.guide-note{margin-top:10px;color:var(--muted);font-size:8px;line-height:1.5}
+
+.update-bar{position:fixed;left:12px;right:12px;top:12px;z-index:1200;display:none;align-items:center;gap:10px;padding:11px 12px;border:1px solid var(--cyan);border-radius:14px;background:var(--card);box-shadow:0 10px 30px rgba(0,0,0,.35)}.update-bar.show{display:flex}.update-bar span{flex:1;font-size:8px;color:var(--text);line-height:1.35}.update-bar .btn{padding:9px 11px;white-space:nowrap}.theme-white .update-bar{box-shadow:0 10px 30px rgba(20,35,55,.12)}
+/* Sudoku */
+.sudoku-toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:0 0 18px}.sudoku-tabs,.sudoku-levels{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}.sudoku-tab,.level-btn{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:12px;padding:10px 13px;font:600 9px Orbitron;letter-spacing:1px;cursor:pointer}.sudoku-tab.active,.level-btn.active{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 18px rgba(0,246,255,.08)}.sudoku-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px}.sudoku-stat{border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center;background:rgba(0,246,255,.025)}.sudoku-stat b{display:block;font:700 18px Orbitron;color:var(--cyan)}.sudoku-stat span{display:block;margin-top:5px;color:var(--muted);font-size:7px;letter-spacing:1.3px}.sudoku-board{width:min(94vw,430px);aspect-ratio:1;margin:0 auto 16px;display:grid;grid-template-columns:repeat(9,1fr);border:2px solid var(--cyan);border-radius:12px;overflow:hidden;background:var(--card);box-shadow:0 0 30px rgba(0,246,255,.08)}.sudoku-cell{appearance:none;border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:transparent;color:var(--text);font:700 clamp(15px,5vw,25px) Orbitron;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}.sudoku-cell:nth-child(3n){border-right:2px solid rgba(0,246,255,.35)}.sudoku-cell:nth-child(9n){border-right:0}.sudoku-cell:nth-child(n+19):nth-child(-n+27),.sudoku-cell:nth-child(n+46):nth-child(-n+54){border-bottom:2px solid rgba(0,246,255,.35)}.sudoku-cell.fixed{color:var(--cyan);background:rgba(0,246,255,.045);cursor:default}.sudoku-cell.selected{background:rgba(141,77,255,.16);box-shadow:inset 0 0 0 1px var(--purple)}.sudoku-cell.same{background:rgba(0,246,255,.07)}.sudoku-cell.error{color:var(--danger);background:rgba(255,82,119,.13);animation:sudokuShake .18s linear}.sudoku-pad{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;width:min(94vw,430px);margin:0 auto}.sudoku-pad button{min-height:45px}.sudoku-message{text-align:center;min-height:24px;margin:10px 0;color:var(--muted);font-size:9px}.sudoku-message.success{color:var(--cyan);font-family:Orbitron}.sudoku-message.error{color:var(--danger)}.sudoku-help{text-align:center;color:var(--muted);font-size:8px;line-height:1.6;margin:14px auto 0;max-width:520px}@keyframes sudokuShake{25%{transform:translateX(-2px)}75%{transform:translateX(2px)}}@media(max-width:390px){.sudoku-stats{grid-template-columns:repeat(3,1fr)}.sudoku-stat{padding:9px}.sudoku-stat b{font-size:15px}.sudoku-cell{font-size:14px}.sudoku-pad button{min-height:40px}}
+</style>
 </head>
 <body>
 <div id="welcomeOverlay" class="welcome-overlay" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
@@ -78,6 +83,7 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
     <button class="btn primary welcome-close" onclick="closeWelcome()">CONTINUE</button>
   </div>
 </div>
+<div id="updateBar" class="update-bar" role="status"><span>🆕 NEW UPDATE AVAILABLE</span><button class="btn primary" onclick="applyAppUpdate()">UPDATE NOW</button></div>
 <div class="app">
 <header class="header">
   <div class="brand">ADMISSION TRACKER</div>
@@ -124,10 +130,9 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
     <button class="menu-card" onclick="openPage('liveAge')"><strong>⏱️ LIVE AGE</strong><span>Real-time age counter, milliseconds and life progress.</span></button>
     <button class="menu-card" onclick="openPage('goals')"><strong>🎯 MY TARGETS</strong><span>Personal goals workspace.</span></button>
     <button class="menu-card" onclick="openPage('examCenter')"><strong>⏳ EXAM COUNTDOWN CENTER</strong><span>View live admission exam countdown results.</span></button>
-    <button class="menu-card" onclick="openPage('admissionGuide')"><strong>🔎 SEARCH</strong><span>Search admission information quickly.</span></button>
-    <button class="menu-card" onclick="openPage('admissionGuide')"><strong>⚖️ COMPARE INSTITUTIONS</strong><span>Compare admission options and institutions.</span></button>
     <button class="menu-card" onclick="openPage('admissionGuide')"><strong>🔔 ADMISSION UPDATES</strong><span>Latest admission information and updates.</span></button>
     <button class="menu-card" onclick="openPage('admissionGuide')"><strong>📚 ADMISSION GUIDE</strong><span>Engineering, university, medical and dental admission information.</span></button>
+    <button class="menu-card" onclick="openPage('sudoku')"><strong>🧩 SUDOKU</strong><span>Professional Sudoku with difficulty levels and many puzzles.</span></button>
     <button class="menu-card" onclick="openPage('settings')"><strong>⚙️ SETTINGS</strong><span>Profile, DOB and admission exams.</span></button>
     <button class="menu-card" onclick="openPage('appearance')"><strong>🌙 APPEARANCE</strong><span>Visual preferences.</span></button>
     <button class="menu-card" onclick="openPage('backup')"><strong>💾 DATA & BACKUP</strong><span>Export or reset local data.</span></button>
@@ -189,6 +194,31 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
   </div>
   <input id="guideSearch" class="search" oninput="renderAdmissionGuide()" placeholder="Search institution, unit or group...">
   <div id="guideList" class="guide-list"></div>
+</section>
+
+<section id="sudokuPage" class="page">
+  <button class="back-button" onclick="openPage('menu')">← MENU</button>
+  <div class="hero"><h1>SUDOKU</h1><p>PROFESSIONAL PUZZLE CENTER</p></div>
+  <div class="sudoku-tabs">
+    <button class="sudoku-tab active" data-diff="EASY" onclick="setSudokuDifficulty('EASY')">EASY</button>
+    <button class="sudoku-tab" data-diff="MEDIUM" onclick="setSudokuDifficulty('MEDIUM')">MEDIUM</button>
+    <button class="sudoku-tab" data-diff="HARD" onclick="setSudokuDifficulty('HARD')">HARD</button>
+  </div>
+  <div class="sudoku-levels" id="sudokuLevels"></div>
+  <div class="sudoku-stats">
+    <div class="sudoku-stat"><b id="sudokuLevelLabel">1</b><span>LEVEL</span></div>
+    <div class="sudoku-stat"><b id="sudokuTimer">00:00</b><span>TIME</span></div>
+    <div class="sudoku-stat"><b id="sudokuMistakes">0</b><span>MISTAKES</span></div>
+  </div>
+  <div id="sudokuBoard" class="sudoku-board" aria-label="Sudoku board"></div>
+  <div id="sudokuMessage" class="sudoku-message">SELECT A CELL, THEN CHOOSE A NUMBER.</div>
+  <div class="sudoku-pad" id="sudokuPad"></div>
+  <div class="btn-row" style="justify-content:center;margin-top:14px">
+    <button class="btn" onclick="sudokuClearSelected()">CLEAR</button>
+    <button class="btn" onclick="sudokuHint()">HINT</button>
+    <button class="btn" onclick="newSudokuPuzzle()">NEW PUZZLE</button>
+  </div>
+  <div class="sudoku-help">Complete every row, column and 3×3 box with numbers 1–9. Fixed numbers cannot be changed. Complete a puzzle to unlock the next level.</div>
 </section>
 
 <section id="lifeDataPage" class="page">
@@ -269,7 +299,7 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
 </div>
 
 <script>
-const pages=["liveAge","menu","settings","examCenter","admissionGuide","lifeData","goals","appearance","backup","about"];
+const pages=["liveAge","menu","settings","examCenter","admissionGuide","lifeData","goals","appearance","backup","about","sudoku"];
 let savedDOB=localStorage.getItem("lifeos_dob")||"";
 let savedName=localStorage.getItem("lifeos_display_name")||"";
 let welcomeEnabled=localStorage.getItem("lifeos_welcome_enabled")!=="0";
@@ -396,6 +426,36 @@ function saveExam(){
 }
 function editExam(id){openExamModal(id)}
 function deleteExam(id){if(!confirm("Delete this admission exam?"))return;exams=exams.filter(e=>String(e.id)!==String(id));localStorage.setItem("lifeos_exams",JSON.stringify(exams));renderAllExams()}
+// ==================== SUDOKU GAME ====================
+const SUDOKU_TOTAL_LEVELS=30;
+const sudokuState={difficulty:localStorage.getItem("lifeos_sudoku_difficulty")||"EASY",level:Number(localStorage.getItem("lifeos_sudoku_level")||1),board:[],solution:[],fixed:[],selected:-1,mistakes:0,startedAt:0,paused:false,completed:false};
+function sudokuDifficultyClues(){return {EASY:43,MEDIUM:36,HARD:30}[sudokuState.difficulty]||43}
+function sudokuSeed(){let d={EASY:1,MEDIUM:2,HARD:3}[sudokuState.difficulty]||1;return d*1000+sudokuState.level*7919}
+function seededRand(seed){let x=seed>>>0;return function(){x=(x*1664525+1013904223)>>>0;return x/4294967296}}
+function shuffleArr(a,r){for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function sudokuBaseSolution(){return Array.from({length:9},(_,r)=>Array.from({length:9},(_,c)=>((r*3+Math.floor(r/3)+c)%9)+1))}
+function sudokuGenerateSolution(seed){
+ const r=seededRand(seed), base=sudokuBaseSolution();
+ const nums=shuffleArr([1,2,3,4,5,6,7,8,9],r);const bands=shuffleArr([0,1,2],r);const rows=[];bands.forEach(b=>shuffleArr([0,1,2],r).forEach(x=>rows.push(b*3+x)));
+ const stacks=shuffleArr([0,1,2],r);const cols=[];stacks.forEach(b=>shuffleArr([0,1,2],r).forEach(x=>cols.push(b*3+x)));
+ const out=Array.from({length:9},()=>Array(9));for(let r0=0;r0<9;r0++)for(let c=0;c<9;c++)out[r0][c]=nums[base[rows[r0]][cols[c]]-1];return out.flat()
+}
+function sudokuPuzzleFromSolution(sol,seed,clues){const r=seededRand(seed+77);const p=sol.slice();const idx=shuffleArr(Array.from({length:81},(_,i)=>i),r);let keep=new Set(idx.slice(0,clues));for(let i=0;i<81;i++)if(!keep.has(i))p[i]=0;return p}
+function setSudokuDifficulty(d){sudokuState.difficulty=d;sudokuState.level=Number(localStorage.getItem("lifeos_sudoku_level_"+d)||1);localStorage.setItem("lifeos_sudoku_difficulty",d);localStorage.setItem("lifeos_sudoku_level",sudokuState.level);sudokuLoadLevel()}
+function sudokuRenderLevels(){const el=document.getElementById("sudokuLevels");if(!el)return;el.innerHTML=Array.from({length:SUDOKU_TOTAL_LEVELS},(_,i)=>`<button class="level-btn ${i+1===sudokuState.level?"active":""}" ${i+1>Number(localStorage.getItem("lifeos_sudoku_unlocked_"+sudokuState.difficulty)||1)?"disabled":""} onclick="sudokuChooseLevel(${i+1})">${i+1}</button>`).join("")}
+function sudokuChooseLevel(n){const unlocked=Number(localStorage.getItem("lifeos_sudoku_unlocked_"+sudokuState.difficulty)||1);if(n>unlocked)return;sudokuState.level=n;localStorage.setItem("lifeos_sudoku_level",n);sudokuLoadLevel()}
+function sudokuLoadLevel(){sudokuState.solution=sudokuGenerateSolution(sudokuSeed());sudokuState.board=sudokuPuzzleFromSolution(sudokuState.solution,sudokuSeed(),sudokuDifficultyClues());sudokuState.fixed=sudokuState.board.map(v=>v!==0);sudokuState.selected=-1;sudokuState.mistakes=0;sudokuState.completed=false;sudokuState.startedAt=Date.now();sudokuState.paused=false;sudokuRenderLevels();sudokuRenderBoard();sudokuRenderPad();sudokuUpdateStats();sudokuMessage("SELECT A CELL, THEN CHOOSE A NUMBER.")}
+function sudokuRenderBoard(){const el=document.getElementById("sudokuBoard");if(!el)return;el.innerHTML=sudokuState.board.map((v,i)=>{const fixed=sudokuState.fixed[i],selected=i===sudokuState.selected,same=v&&sudokuState.selected>=0&&sudokuState.board[sudokuState.selected]===v;return `<button class="sudoku-cell ${fixed?"fixed ":""}${selected?"selected ":""}${same?"same":""}" onclick="sudokuSelect(${i})">${v||""}</button>`}).join("")}
+function sudokuRenderPad(){const el=document.getElementById("sudokuPad");if(!el)return;el.innerHTML=Array.from({length:9},(_,i)=>`<button class="btn" onclick="sudokuInput(${i+1})">${i+1}</button>`).join("")+`<button class="btn" onclick="sudokuClearSelected()">⌫</button>`+`<button class="btn" onclick="sudokuHint()">💡</button>`}
+function sudokuSelect(i){if(sudokuState.completed||sudokuState.fixed[i])return;sudokuState.selected=i;sudokuRenderBoard()}
+function sudokuInput(n){const i=sudokuState.selected;if(i<0||sudokuState.completed)return;if(sudokuState.fixed[i])return;if(n!==sudokuState.solution[i]){sudokuState.mistakes++;sudokuUpdateStats();sudokuMessage("WRONG NUMBER — TRY AGAIN.",true);const cell=document.querySelectorAll(".sudoku-cell")[i];cell?.classList.add("error");setTimeout(()=>cell?.classList.remove("error"),220);return}sudokuState.board[i]=n;sudokuRenderBoard();if(sudokuState.board.every((v,j)=>v===sudokuState.solution[j]))sudokuComplete()}
+function sudokuClearSelected(){const i=sudokuState.selected;if(i<0||sudokuState.fixed[i]||sudokuState.completed)return;sudokuState.board[i]=0;sudokuRenderBoard()}
+function sudokuHint(){const i=sudokuState.selected;if(i<0){sudokuMessage("SELECT AN EMPTY CELL FIRST.",true);return}if(sudokuState.fixed[i])return;sudokuState.board[i]=sudokuState.solution[i];sudokuRenderBoard();sudokuMessage("HINT APPLIED.");if(sudokuState.board.every((v,j)=>v===sudokuState.solution[j]))sudokuComplete()}
+function sudokuComplete(){sudokuState.completed=true;const key="lifeos_sudoku_unlocked_"+sudokuState.difficulty;const unlocked=Number(localStorage.getItem(key)||1);if(sudokuState.level>=unlocked&&sudokuState.level<SUDOKU_TOTAL_LEVELS)localStorage.setItem(key,String(sudokuState.level+1));sudokuRenderLevels();sudokuMessage(`🎉 LEVEL ${sudokuState.level} COMPLETE — NEXT LEVEL UNLOCKED!`);sudokuUpdateStats()}
+function sudokuMessage(msg,error=false){const el=document.getElementById("sudokuMessage");if(el){el.textContent=msg;el.className="sudoku-message "+(error?"error":sudokuState.completed?"success":"")}}
+function sudokuUpdateStats(){const t=document.getElementById("sudokuLevelLabel"),m=document.getElementById("sudokuMistakes"),tm=document.getElementById("sudokuTimer");if(t)t.textContent=sudokuState.level;if(m)m.textContent=sudokuState.mistakes;if(tm){const sec=Math.floor((Date.now()-sudokuState.startedAt)/1000);tm.textContent=String(Math.floor(sec/60)).padStart(2,"0")+":"+String(sec%60).padStart(2,"0")}}
+function newSudokuPuzzle(){sudokuLoadLevel()}
+
 function setGuideFilter(f){guideFilter=f;document.querySelectorAll("#guideFilters .filter-btn").forEach(b=>b.classList.toggle("active",b.textContent===f));renderAdmissionGuide()}
 function guideExamTimestamp(g){const rawDate=g.examDate||g.date;if(!rawDate)return null;const rawTime=g.examTime||g.time;if(!rawTime)return null;const ts=new Date(rawDate+"T"+rawTime+":00").getTime();return Number.isFinite(ts)?ts:null}
 function formatGuideDate(g){const ts=guideExamTimestamp(g);if(ts===null)return g.examDate?String(g.examDate):"Not specified in official circular";return new Date(ts).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"})}
@@ -415,6 +475,9 @@ function renderAdmissionGuide(){
 function applyTheme(theme){const allowed=["dark","white","blue","purple","green","red","orange"];savedTheme=allowed.includes(theme)?theme:"dark";document.body.classList.remove(...allowed.filter(x=>x!=="dark").map(x=>"theme-"+x));if(savedTheme!=="dark")document.body.classList.add("theme-"+savedTheme);localStorage.setItem("lifeos_theme",savedTheme);updateThemeButtons()}
 function setTheme(theme){applyTheme(theme)}
 function updateThemeButtons(){document.querySelectorAll(".theme-btn").forEach(b=>b.classList.toggle("active",b.dataset.theme===savedTheme))}
+function showAppUpdate(){document.getElementById("updateBar")?.classList.add("show")}
+function applyAppUpdate(){if(window.__pendingSW){window.__pendingSW.postMessage({type:"SKIP_WAITING"});return}location.reload()}
+function setupAppUpdate(){if(!("serviceWorker" in navigator))return;navigator.serviceWorker.register("./service-worker.js").then(reg=>{window.__swReg=reg;reg.update();if(reg.waiting)showAppUpdate();reg.addEventListener("updatefound",()=>{const nw=reg.installing;if(!nw)return;nw.addEventListener("statechange",()=>{if(nw.state==="installed"&&navigator.serviceWorker.controller){window.__pendingSW=nw;showAppUpdate()}})})}).catch(e=>console.log("Service Worker Error:",e));navigator.serviceWorker.addEventListener("controllerchange",()=>{if(window.__reloadedForUpdate)return;window.__reloadedForUpdate=true;location.reload()})}
 function exportData(){
  const data={name:savedName,dob:savedDOB,exams:exams,welcomeEnabled,exportedAt:new Date().toISOString()};
  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
@@ -425,9 +488,9 @@ function resetData(){
  localStorage.removeItem("lifeos_dob");localStorage.removeItem("lifeos_display_name");localStorage.removeItem("lifeos_exams");localStorage.removeItem("lifeos_welcome_enabled");
  savedDOB="";savedName="";exams=[];welcomeEnabled=true;updateNameUI();updateDOBUI();updateSetupState();renderAllExams();openPage("menu")
 }
-applyTheme(savedTheme);updateNameUI();updateDOBUI();updateSetupState();renderAllExams();renderAdmissionGuide();updateLife();updateWelcomeTitle();setTimeout(showWelcome,350);
-setInterval(updateLife,50);setInterval(updateExamCountdowns,50);setInterval(updateGuideCountdowns,1000);
-if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(e=>console.log("Service Worker Error:",e)))}
+applyTheme(savedTheme);sudokuLoadLevel();updateNameUI();updateDOBUI();updateSetupState();renderAllExams();renderAdmissionGuide();updateLife();updateWelcomeTitle();setTimeout(showWelcome,350);
+setInterval(updateLife,50);setInterval(updateExamCountdowns,50);setInterval(updateGuideCountdowns,1000);setInterval(()=>{if(document.getElementById("sudokuPage")?.classList.contains("active")&&!sudokuState.completed)sudokuUpdateStats()},1000);
+window.addEventListener("load",setupAppUpdate);
 </script>
 </body>
 </html>
