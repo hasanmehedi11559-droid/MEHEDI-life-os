@@ -11,6 +11,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700&display=swap');
 *{box-sizing:border-box}
 :root{--bg:#05060a;--card:#0a0d14;--line:rgba(0,246,255,.16);--cyan:#00f6ff;--purple:#8d4dff;--muted:#747d89;--text:#edf5ff;--danger:#ff5277}
+body.theme-white{--bg:#f6f8fb;--card:#ffffff;--line:rgba(20,35,55,.14);--cyan:#087f9b;--purple:#7048c8;--muted:#66717e;--text:#15202b;--danger:#d9365f}body.theme-blue{--bg:#071321;--card:#0b1d31;--line:rgba(54,173,255,.2);--cyan:#36adff;--purple:#6f7cff}body.theme-purple{--bg:#100a18;--card:#171022;--line:rgba(180,112,255,.2);--cyan:#c078ff;--purple:#7b5cff}body.theme-green{--bg:#07120d;--card:#0c1c14;--line:rgba(52,220,139,.2);--cyan:#39d98a;--purple:#79c95b}body.theme-red{--bg:#16090c;--card:#211013;--line:rgba(255,82,119,.2);--cyan:#ff5277;--purple:#ff9b55}body.theme-orange{--bg:#171006;--card:#21170b;--line:rgba(255,166,66,.2);--cyan:#ffad45;--purple:#ff6b4a}
+.theme-white .header{background:rgba(246,248,251,.9)}.theme-white .search,.theme-white .input{background:#fff;color:var(--text)}.theme-white .progress{background:#dfe5eb}.theme-white .welcome-overlay{background:rgba(245,247,250,.86)}.theme-white .welcome-card{background:linear-gradient(145deg,rgba(8,127,155,.08),rgba(112,72,200,.08))}
 html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;min-height:100%}
 body{background:
 radial-gradient(circle at 20% 0%,rgba(0,246,255,.07),transparent 30%),
@@ -52,7 +54,7 @@ main{padding:18px}
 .search{width:100%;padding:12px 13px;border-radius:11px;border:1px solid var(--line);outline:none;background:#080b11;color:var(--text);margin-bottom:13px;font-size:11px}.search:focus,input:focus,select:focus{border-color:var(--cyan)}
 .about-profile{text-align:center;padding:20px 0 8px}.about-photo{width:122px;height:122px;object-fit:cover;object-position:center top;border-radius:50%;border:2px solid var(--cyan);box-shadow:0 0 22px rgba(0,246,255,.18);display:block;margin:0 auto 13px}.about-name{font-family:Orbitron;font-size:13px;letter-spacing:1.6px}.about-role{color:var(--muted);font-size:8px;letter-spacing:1.2px;margin-top:6px}.settings{padding:4px 16px}.setting-row{padding:17px 0;border-bottom:1px solid rgba(255,255,255,.06)}.setting-row:last-child{border-bottom:0}.setting-title{font-family:Orbitron;font-size:10px;letter-spacing:1px}.setting-sub{font-size:9px;color:var(--muted);margin-top:5px;line-height:1.5}
 .input{width:100%;margin-top:9px;padding:11px;border-radius:10px;border:1px solid var(--line);background:#080b11;color:var(--text);outline:none}
-.btn-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.primary{background:rgba(0,246,255,.13);border-color:rgba(0,246,255,.5);color:var(--cyan)}.danger{color:#ff7894;border-color:rgba(255,82,119,.3)}
+.btn-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.theme-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}.theme-btn{padding:12px 9px;border-radius:11px;border:1px solid var(--line);background:rgba(255,255,255,.035);color:var(--text);font-size:9px;text-align:left}.theme-btn.active{border-color:var(--cyan);color:var(--cyan);background:rgba(0,246,255,.09);box-shadow:0 0 12px rgba(0,246,255,.08)}.primary{background:rgba(0,246,255,.13);border-color:rgba(0,246,255,.5);color:var(--cyan)}.danger{color:#ff7894;border-color:rgba(255,82,119,.3)}
 .menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.menu-card{padding:20px 14px;min-height:92px;text-align:left}.menu-card strong{font-family:Orbitron;font-size:10px;letter-spacing:1px;color:var(--text)}.menu-card span{display:block;color:var(--muted);font-size:8px;margin-top:7px;line-height:1.5}
 .back-button{border:0;background:none;color:var(--cyan);font-size:9px;letter-spacing:1px;padding:7px 0}
 .guide-card{padding:17px}.guide-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.guide-name{font-family:Orbitron;font-size:13px}.guide-cat{font-size:7px;color:var(--cyan);letter-spacing:1.4px;margin-top:5px}.guide-badge{font-size:7px;color:var(--muted);border:1px solid rgba(255,255,255,.08);padding:5px 7px;border-radius:7px}
@@ -83,7 +85,7 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
 </header>
 
 <main>
-<section id="homePage" class="page">
+<section id="liveAgePage" class="page">
   <div class="hero"><h1>ADMISSION TRACKER</h1><p>PRIVATE OFFLINE TIME INTELLIGENCE</p></div>
   <div class="live-card">
     <div class="section-title">LIVE AGE</div>
@@ -111,16 +113,6 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
     <div class="progress"><i id="yearProgress"></i></div>
   </div>
 
-  <section class="admission-section">
-    <div class="admission-header"><h2 class="section-title">ADMISSION EXAMS</h2><button class="btn primary" onclick="openPage('settings')">MANAGE</button></div>
-    <div class="filters" id="homeExamFilters">
-      <button class="filter-btn active" onclick="setExamFilter('ALL')">ALL</button>
-      <button class="filter-btn" onclick="setExamFilter('ENGINEERING')">ENGINEERING</button>
-      <button class="filter-btn" onclick="setExamFilter('UNIVERSITY')">UNIVERSITY</button>
-      <button class="filter-btn" onclick="setExamFilter('MEDICAL')">MEDICAL</button>
-    </div>
-    <div id="homeExamList" class="exam-list"></div>
-  </section>
 
   <footer>TIME COUNTER • PRIVATE OFFLINE APP</footer>
 </section>
@@ -129,10 +121,9 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
   
   <div class="hero"><h1>MENU</h1><p>CONTROL CENTER</p></div>
   <div class="menu-grid">
-    <button class="menu-card" onclick="openPage('home')"><strong>🏠 HOME / DASHBOARD</strong><span>Current dashboard and admission overview.</span></button>
-    <button class="menu-card" onclick="openPage('home');setTimeout(()=>document.getElementById('liveClock')?.scrollIntoView({behavior:'smooth'}),100)"><strong>⏱️ LIVE AGE</strong><span>Real-time age counter, milliseconds and life progress.</span></button>
+    <button class="menu-card" onclick="openPage('liveAge')"><strong>⏱️ LIVE AGE</strong><span>Real-time age counter, milliseconds and life progress.</span></button>
     <button class="menu-card" onclick="openPage('goals')"><strong>🎯 MY TARGETS</strong><span>Personal goals workspace.</span></button>
-    <button class="menu-card" onclick="openPage('settings')"><strong>⏳ EXAM COUNTDOWN CENTER</strong><span>Create and manage live admission exam countdowns.</span></button>
+    <button class="menu-card" onclick="openPage('examCenter')"><strong>⏳ EXAM COUNTDOWN CENTER</strong><span>View live admission exam countdown results.</span></button>
     <button class="menu-card" onclick="openPage('admissionGuide')"><strong>🔎 SEARCH</strong><span>Search admission information quickly.</span></button>
     <button class="menu-card" onclick="openPage('admissionGuide')"><strong>⚖️ COMPARE INSTITUTIONS</strong><span>Compare admission options and institutions.</span></button>
     <button class="menu-card" onclick="openPage('admissionGuide')"><strong>🔔 ADMISSION UPDATES</strong><span>Latest admission information and updates.</span></button>
@@ -161,7 +152,7 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
     </div>
     <div class="setting-row">
       <div class="setting-title">ADMISSION EXAMS</div>
-      <div class="setting-sub">Create, edit and delete your live admission countdowns.</div>
+      <div class="setting-sub">Create, edit and delete your live admission countdowns from Settings.</div>
       <div class="btn-row"><button class="btn primary" onclick="openExamModal()">+ ADD EXAM</button></div>
       <div class="filters" style="margin-top:12px" id="settingsExamFilters">
         <button class="filter-btn active" onclick="setExamFilter('ALL')">ALL</button>
@@ -172,6 +163,19 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
       <div id="settingsExamList" class="exam-list"></div>
     </div>
   </section>
+</section>
+
+<section id="examCenterPage" class="page">
+  <button class="back-button" onclick="openPage('menu')">← MENU</button>
+  <div class="hero"><h1>EXAM COUNTDOWN</h1><p>LIVE ADMISSION EXAM RESULTS</p></div>
+  <div class="filters" id="centerExamFilters">
+    <button class="filter-btn active" onclick="setExamFilter('ALL')">ALL</button>
+    <button class="filter-btn" onclick="setExamFilter('ENGINEERING')">ENGINEERING</button>
+    <button class="filter-btn" onclick="setExamFilter('UNIVERSITY')">UNIVERSITY</button>
+    <button class="filter-btn" onclick="setExamFilter('MEDICAL')">MEDICAL</button>
+    <button class="filter-btn" onclick="setExamFilter('DENTAL')">DENTAL</button>
+  </div>
+  <div id="centerExamList" class="exam-list"></div>
 </section>
 
 <section id="admissionGuidePage" class="page">
@@ -207,7 +211,19 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
 <section id="appearancePage" class="page">
   <button class="back-button" onclick="openPage('menu')">← MENU</button>
   <div class="hero"><h1>APPEARANCE</h1><p>VISUAL SYSTEM</p></div>
-  <div class="settings"><div class="setting-row"><div class="setting-title">FUTURISTIC DARK MODE</div><div class="setting-sub">The current Time Counter visual system is locked to the dark futuristic interface.</div></div></div>
+  <div class="settings">
+    <div class="setting-row"><div class="setting-title">THEME</div><div class="setting-sub">Choose your preferred app color. Your choice is saved on this device.</div>
+      <div class="theme-grid" id="themeGrid">
+        <button class="theme-btn" data-theme="dark" onclick="setTheme('dark')">🌑 DARK</button>
+        <button class="theme-btn" data-theme="white" onclick="setTheme('white')">☀️ WHITE</button>
+        <button class="theme-btn" data-theme="blue" onclick="setTheme('blue')">🔵 BLUE</button>
+        <button class="theme-btn" data-theme="purple" onclick="setTheme('purple')">🟣 PURPLE</button>
+        <button class="theme-btn" data-theme="green" onclick="setTheme('green')">🟢 GREEN</button>
+        <button class="theme-btn" data-theme="red" onclick="setTheme('red')">🔴 RED</button>
+        <button class="theme-btn" data-theme="orange" onclick="setTheme('orange')">🟠 ORANGE</button>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="backupPage" class="page">
@@ -253,10 +269,11 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
 </div>
 
 <script>
-const pages=["home","menu","settings","admissionGuide","lifeData","goals","appearance","backup","about"];
+const pages=["liveAge","menu","settings","examCenter","admissionGuide","lifeData","goals","appearance","backup","about"];
 let savedDOB=localStorage.getItem("lifeos_dob")||"";
 let savedName=localStorage.getItem("lifeos_display_name")||"";
 let welcomeEnabled=localStorage.getItem("lifeos_welcome_enabled")!=="0";
+let savedTheme=localStorage.getItem("lifeos_theme")||"dark";
 let exams=JSON.parse(localStorage.getItem("lifeos_exams")||"[]");
 let currentFilter="ALL";
 let guideFilter="ALL";
@@ -274,7 +291,8 @@ function openPage(page){
  pages.forEach(p=>document.getElementById(p+"Page")?.classList.remove("active"));
  document.getElementById(page+"Page")?.classList.add("active");
  window.scrollTo({top:0,behavior:"smooth"});
- if(page==="settings"){updateNameUI();updateDOBUI();renderSettingsExams()}
+ if(page==="settings"){updateNameUI();updateDOBUI();renderSettingsExams();updateThemeButtons()}
+ if(page==="examCenter")renderExamCenter();
  if(page==="admissionGuide")renderAdmissionGuide();
  if(page==="lifeData")updateLife();
 }
@@ -333,11 +351,11 @@ function countdownParts(ms){
  let h=Math.floor(total/3600000);total%=3600000;let m=Math.floor(total/60000);total%=60000;let s=Math.floor(total/1000);let milli=total%1000;
  return [days,h,m,s,milli]
 }
-function buildExamCard(e){
+function buildExamCard(e,viewOnly=false){
  const id=esc(e.id), done=Date.now()>=examTimestamp(e),p=countdownParts(examTimestamp(e)-Date.now());
  return `<article class="exam-card" data-exam-id="${id}">
   <div class="exam-top"><div><div class="exam-name">${esc(e.name)}</div><div class="exam-category">${esc(e.category)}</div><div class="exam-date">${esc(formatExamDate(e))}</div></div>
-  <div class="exam-actions"><button class="btn" onclick="editExam('${id}')">EDIT</button><button class="btn danger" onclick="deleteExam('${id}')">×</button></div></div>
+  ${viewOnly?"":`<div class="exam-actions"><button class="btn" onclick="editExam('${id}')">EDIT</button><button class="btn danger" onclick="deleteExam('${id}')">×</button></div>`}</div>
   ${done?'<div class="completed">EXAM COMPLETED</div>':`<div class="admission-clock">${["DAYS","HOURS","MINUTES","SECONDS","MS"].map((l,i)=>`<div class="unit"><div class="number countdown-number" data-part="${i}">${String(p[i]).padStart(i===4?3:2,"0")}</div><div class="label">${l}</div></div>`).join("")}</div>`}
  </article>`
 }
@@ -346,10 +364,11 @@ function renderExamList(targetId){
  const filtered=exams.filter(e=>currentFilter==="ALL"||e.category===currentFilter);
  list.innerHTML=filtered.length?filtered.map(buildExamCard).join(""):'<div class="empty">NO ADMISSION EXAMS ADDED YET.</div>';
 }
-function renderAllExams(){renderExamList("homeExamList");renderSettingsExams()}
+function renderAllExams(){renderExamCenter();renderSettingsExams()}
+function renderExamCenter(){renderExamList("centerExamList",true);updateFilterButtons()}
 function renderSettingsExams(){renderExamList("settingsExamList");updateFilterButtons()}
 function updateFilterButtons(){
- document.querySelectorAll("#homeExamFilters .filter-btn,#settingsExamFilters .filter-btn").forEach(b=>b.classList.toggle("active",b.textContent===currentFilter))
+ document.querySelectorAll("#centerExamFilters .filter-btn,#settingsExamFilters .filter-btn").forEach(b=>b.classList.toggle("active",b.textContent===currentFilter))
 }
 function setExamFilter(f){currentFilter=f;renderAllExams()}
 function updateExamCountdowns(){
@@ -393,6 +412,9 @@ function renderAdmissionGuide(){
  });
  document.getElementById("guideList").innerHTML=data.length?data.map(buildGuideCard).join(""):'<div class="empty">NO MATCHING INSTITUTION FOUND.</div>';
 }
+function applyTheme(theme){const allowed=["dark","white","blue","purple","green","red","orange"];savedTheme=allowed.includes(theme)?theme:"dark";document.body.classList.remove(...allowed.filter(x=>x!=="dark").map(x=>"theme-"+x));if(savedTheme!=="dark")document.body.classList.add("theme-"+savedTheme);localStorage.setItem("lifeos_theme",savedTheme);updateThemeButtons()}
+function setTheme(theme){applyTheme(theme)}
+function updateThemeButtons(){document.querySelectorAll(".theme-btn").forEach(b=>b.classList.toggle("active",b.dataset.theme===savedTheme))}
 function exportData(){
  const data={name:savedName,dob:savedDOB,exams:exams,welcomeEnabled,exportedAt:new Date().toISOString()};
  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
@@ -401,9 +423,9 @@ function exportData(){
 function resetData(){
  if(!confirm("Reset all saved personal data and admission countdowns on this device?"))return;
  localStorage.removeItem("lifeos_dob");localStorage.removeItem("lifeos_display_name");localStorage.removeItem("lifeos_exams");localStorage.removeItem("lifeos_welcome_enabled");
- savedDOB="";savedName="";exams=[];welcomeEnabled=true;updateNameUI();updateDOBUI();updateSetupState();renderAllExams();openPage("home")
+ savedDOB="";savedName="";exams=[];welcomeEnabled=true;updateNameUI();updateDOBUI();updateSetupState();renderAllExams();openPage("menu")
 }
-updateNameUI();updateDOBUI();updateSetupState();renderAllExams();renderAdmissionGuide();updateLife();updateWelcomeTitle();setTimeout(showWelcome,350);
+applyTheme(savedTheme);updateNameUI();updateDOBUI();updateSetupState();renderAllExams();renderAdmissionGuide();updateLife();updateWelcomeTitle();setTimeout(showWelcome,350);
 setInterval(updateLife,50);setInterval(updateExamCountdowns,50);setInterval(updateGuideCountdowns,1000);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(e=>console.log("Service Worker Error:",e)))}
 </script>
