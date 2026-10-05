@@ -98,7 +98,6 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
     <button class="btn primary welcome-close" onclick="closeWelcome()">CONTINUE</button>
   </div>
 </div>
-<div id="updateBar" class="update-bar" role="status"><span>🆕 NEW UPDATE AVAILABLE</span><button class="btn primary" onclick="applyAppUpdate()">UPDATE NOW</button></div>
 <div class="app">
 <header class="header">
   <div class="brand">ADMISSION TRACKER</div>
@@ -373,7 +372,7 @@ let notifications=JSON.parse(localStorage.getItem("lifeos_notifications")||"[]")
 let passwordEnabled=localStorage.getItem("lifeos_password_enabled")==="1";
 let passwordHash=localStorage.getItem("lifeos_password_hash")||"";
 let pinBuffer="";
-const APP_VERSION="3.1";
+const APP_VERSION="3.2";
 let currentFilter="ALL";
 let guideFilter="ALL";
 
@@ -422,9 +421,8 @@ function readNotification(id){const n=notifications.find(x=>x.id===id);if(n){n.u
 function markAllNotificationsRead(){notifications.forEach(n=>n.unread=false);localStorage.setItem("lifeos_notifications",JSON.stringify(notifications));renderNotifications();updateNotificationBadge()}
 function clearNotifications(){if(!confirm("Clear all notifications?"))return;notifications=[];localStorage.setItem("lifeos_notifications","[]");renderNotifications();updateNotificationBadge()}
 function updateNotificationBadge(){const c=notifications.filter(n=>n.unread).length,b=document.getElementById("notificationBadge");if(b){b.textContent=c;b.style.display=c?"inline-flex":"none"}}
-function checkAppUpdate(){const key="lifeos_last_seen_app_version";const old=localStorage.getItem(key);if(old&&old!==APP_VERSION){addNotification("New Update Available","Admission Tracker has been updated to version "+APP_VERSION+". Reload to activate the latest version.");document.getElementById("updateBar")?.classList.add("show")}localStorage.setItem(key,APP_VERSION)}
-function activateAppUpdate(){location.reload(true)}
-function watchServiceWorkerUpdate(){if(!("serviceWorker" in navigator))return;navigator.serviceWorker.addEventListener("controllerchange",()=>{document.getElementById("updateBar")?.classList.remove("show");location.reload()});navigator.serviceWorker.ready.then(reg=>{if(reg.waiting){addNotification("New Update Available","A newer app version is ready. Tap UPDATE NOW to activate it.");document.getElementById("updateBar")?.classList.add("show")}reg.addEventListener("updatefound",()=>{const nw=reg.installing;if(!nw)return;nw.addEventListener("statechange",()=>{if(nw.state==="installed"&&navigator.serviceWorker.controller){addNotification("New Update Available","A newer app version is ready. Tap UPDATE NOW to activate it.");document.getElementById("updateBar")?.classList.add("show")}})})})}
+function checkAppUpdate(){localStorage.setItem("lifeos_last_seen_app_version",APP_VERSION)} function activateAppUpdate(){if(window.__pendingSW){window.__pendingSW.postMessage({type:"SKIP_WAITING"});return} location.reload()}
+function watchServiceWorkerUpdate(){if(!("serviceWorker" in navigator))return;navigator.serviceWorker.addEventListener("controllerchange",()=>{document.getElementById("updateBar")?.classList.remove("show");location.reload()});navigator.serviceWorker.ready.then(reg=>{if(reg.waiting){window.__pendingSW=reg.waiting;addNotification("New Update Available","A newer app version is ready. Tap UPDATE NOW to activate it.");document.getElementById("updateBar")?.classList.add("show")}reg.addEventListener("updatefound",()=>{const nw=reg.installing;if(!nw)return;nw.addEventListener("statechange",()=>{if(nw.state==="installed"&&navigator.serviceWorker.controller){window.__pendingSW=nw;addNotification("New Update Available","A newer app version is ready. Tap UPDATE NOW to activate it.");document.getElementById("updateBar")?.classList.add("show")}})})})}
 function activateWaitingWorker(){navigator.serviceWorker?.ready.then(reg=>{if(reg.waiting){reg.waiting.postMessage({type:"SKIP_WAITING"})}else{location.reload()}})}
 
 function saveDOB(){savedDOB=document.getElementById("dobInput").value;localStorage.setItem("lifeos_dob",savedDOB);updateSetupState();updateLife()}
