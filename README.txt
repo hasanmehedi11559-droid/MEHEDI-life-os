@@ -1,22 +1,22 @@
-MEHEDI HASAN — LIFE.OS OFFLINE APP
+TIME COUNTER
+============
 
-This is an installable offline-ready PWA.
+Files:
+- index.html
+- manifest.json
+- service-worker.js
 
-FEATURES
-- Live age in years, months, days, hours, minutes and seconds
-- Change DOB anytime from Settings
-- DOB is saved on the device
-- Works offline after the first successful load
-- Premium dark LIFE.OS interface
+Put these three files in the same web/PWA folder.
 
-IMPORTANT
-For a true installable PWA, the files must be opened from an HTTPS website.
-A file opened directly as file:// cannot reliably run the service worker.
+IMPORTANT:
+- Existing personal-data localStorage keys are preserved:
+  lifeos_dob
+  lifeos_display_name
+  lifeos_exams
+- Admission Guide data is static and separate from personal data.
+- The included guide structure deliberately marks marks/seats/rules as "See official circular" where current-year verification is required. Do not publish those fields as factual current data until they are filled from the latest official circulars.
+- Service worker version is time-counter-v2. It does not clear localStorage.
 
-ANDROID INSTALL
-1. Upload these files to an HTTPS static host (GitHub Pages, Netlify, Vercel, etc.).
-2. Open the HTTPS address in Chrome.
-3. Chrome menu (⋮) -> Install app / Add to Home screen.
-4. Open LIFE.OS from your Home Screen.
 
-The DOB stays in browser localStorage on that device and is not sent to a server by this app.
+ABOUT PHOTO:
+- mehedi.jpg is included and shown in the About section.
