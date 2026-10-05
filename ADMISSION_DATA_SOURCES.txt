@@ -1,0 +1,8 @@
+Time Counter Admission Guide — verification notes (5 Oct 2026)
+
+University baseline/count: Bangladesh UGC current homepage reports 59 public, 116 private and 3 international universities. Names in the public/private directory are cross-checked against current 2026 directory sources; current admission details must still be checked at each institution.
+Medical/MBBS: DGME government pages and portal were used for the public/private medical college list and seat figures.
+Dental/BDS: DGME government page for public/private dental colleges and dental units was used.
+Engineering/technology: institution-specific official admission portals were used where identified (BUET, CUET, KUET, RUET, DUET, BUTEX, MIST, IUT).
+Year rule: 2026–27 is used only where a current 2026–27 circular was verified; otherwise the card is labelled 2025–26/latest verified listing.
+No invented admission marks, eligibility, duration or negative-marking values are inserted; fields without an official verified value say “See official circular” or “Not specified”.
