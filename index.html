@@ -65,6 +65,10 @@ main{padding:18px}
 .empty{text-align:center;color:var(--muted);font-size:9px;padding:25px;border:1px dashed rgba(255,255,255,.08);border-radius:15px}
 footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;padding:28px 0 10px}
 @media(min-width:650px){.clock{grid-template-columns:repeat(6,1fr)}.grid2{grid-template-columns:repeat(4,1fr)}}
+
+/* ADMISSION TRACKER 2.0 DASHBOARD */
+.dashboard-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:12px}.dash-card{padding:15px;position:relative;overflow:hidden}.dash-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(var(--cyan),var(--purple))}.dash-label{color:var(--muted);font-size:7px;letter-spacing:1.2px}.dash-value{font-family:Orbitron;font-size:18px;margin-top:8px}.dash-sub{color:var(--muted);font-size:8px;margin-top:5px;line-height:1.4}.dash-wide{grid-column:1/-1}.quick-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.quick-actions button{padding:11px 6px}.target-grid{display:grid;gap:9px}.target-item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.02)}.target-name{font-family:Orbitron;font-size:10px}.target-cat{font-size:7px;color:var(--cyan);margin-top:4px;letter-spacing:1px}.star-btn{border:1px solid var(--line);background:rgba(0,246,255,.05);color:var(--cyan);border-radius:9px;padding:7px 9px}.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.compare-box{padding:12px;border:1px solid var(--line);border-radius:13px}.compare-box select{width:100%;margin-bottom:9px}.compare-row{display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:8px}.compare-row span:first-child{color:var(--muted)}.update-item{padding:11px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:9px;line-height:1.45}.update-item b{color:var(--cyan)}.empty-small{padding:15px;text-align:center;color:var(--muted);font-size:8px;border:1px dashed rgba(255,255,255,.08);border-radius:13px}
+@media(max-width:480px){.quick-actions{grid-template-columns:1fr 1fr 1fr}.compare-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -102,6 +106,45 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
     <div class="progress-top"><span>CURRENT LIFE YEAR</span><span id="yearProgressText">0%</span></div>
     <div class="progress"><i id="yearProgress"></i></div>
   </div>
+
+  <section class="admission-section">
+    <div class="admission-header"><h2 class="section-title">SMART DASHBOARD</h2><button class="btn primary" onclick="openPage('admissionGuide')">GUIDE</button></div>
+    <div class="dashboard-grid">
+      <div class="dash-card"><div class="dash-label">NEXT EXAM</div><div id="dashNextName" class="dash-value">—</div><div id="dashNextDate" class="dash-sub">No upcoming exam</div></div>
+      <div class="dash-card"><div class="dash-label">COUNTDOWN</div><div id="dashNextCountdown" class="dash-value">—</div><div class="dash-sub">Live exam countdown</div></div>
+      <div class="dash-card"><div class="dash-label">UPCOMING</div><div id="dashUpcoming" class="dash-value">0</div><div class="dash-sub">Scheduled exams</div></div>
+      <div class="dash-card"><div class="dash-label">COMPLETED</div><div id="dashCompleted" class="dash-value">0</div><div class="dash-sub">Finished exams</div></div>
+      <div class="dash-card dash-wide"><div class="dash-label">MY TARGETS</div><div id="dashTargets" class="dash-sub">No targets selected yet.</div></div>
+    </div>
+    <div class="quick-actions">
+      <button class="btn" onclick="openPage('settings')">＋ ADD EXAM</button>
+      <button class="btn" onclick="openPage('admissionGuide')">🔎 SEARCH</button>
+      <button class="btn" onclick="document.getElementById('targetsSection').scrollIntoView({behavior:'smooth'})">⭐ TARGETS</button>
+    </div>
+  </section>
+
+  <section id="countdownCenter" class="admission-section">
+    <div class="admission-header"><h2 class="section-title">EXAM COUNTDOWN CENTER</h2></div>
+    <div id="dashboardCountdownList" class="exam-list"></div>
+  </section>
+
+  <section id="targetsSection" class="admission-section">
+    <div class="admission-header"><h2 class="section-title">MY TARGETS</h2><button class="btn" onclick="openPage('admissionGuide')">ADD TARGET</button></div>
+    <div id="dashboardTargetsList" class="target-grid"></div>
+  </section>
+
+  <section class="admission-section">
+    <div class="admission-header"><h2 class="section-title">COMPARE INSTITUTIONS</h2></div>
+    <div class="compare-grid">
+      <div class="compare-box"><select id="compareA" class="input"></select><div id="compareAData"></div></div>
+      <div class="compare-box"><select id="compareB" class="input"></select><div id="compareBData"></div></div>
+    </div>
+  </section>
+
+  <section class="admission-section">
+    <div class="admission-header"><h2 class="section-title">LATEST ADMISSION UPDATES</h2></div>
+    <div id="dashboardUpdates"></div>
+  </section>
 
   <section class="admission-section">
     <div class="admission-header"><h2 class="section-title">ADMISSION EXAMS</h2><button class="btn primary" onclick="openPage('settings')">MANAGE</button></div>
@@ -371,7 +414,7 @@ function formatGuideCountdown(g){
 }
 function buildGuideCard(item){
  return `<article class="guide-card">
-  <div class="guide-head"><div><div class="guide-name">${esc(item.institution)}</div><div class="guide-cat">${esc(item.category)}</div><div class="year-badge">🗓️ DATA: ${esc(item.dataYear||"2025–26")}</div></div><div class="guide-badge">${esc(item.shortName)}</div></div>
+  <div class="guide-head"><div><div class="guide-name">${esc(item.institution)}</div><div class="guide-cat">${esc(item.category)}</div><div class="year-badge">🗓️ DATA: ${esc(item.dataYear||"2025–26")}</div></div><div style="display:flex;gap:6px;align-items:center"><button class="star-btn" onclick="toggleTarget('${esc(item.institution)}')" title="Add or remove target">${isTarget(item.institution)?'★':'☆'}</button><div class="guide-badge">${esc(item.shortName)}</div></div></div>
   ${item.groups.map(g=>`<div class="group"><div class="group-title">${esc(g.name)}</div>
    <div class="guide-meta">
     <div class="meta"><b>📅 EXAM DATE</b><span>${esc(g.examDate||"Not specified in official circular")}</span></div>
@@ -392,6 +435,25 @@ function buildGuideCard(item){
   </div>`).join("")}
  </article>`
 }
+function updateDashboardClock(){const n=[...exams].filter(e=>dt(e)>new Date()).sort((a,b)=>dt(a)-dt(b))[0];const el=document.getElementById('dashNextCountdown');if(el)el.textContent=n?(cd(dt(n))||'EXAM COMPLETED'):'—'}
+function getTargets(){try{return JSON.parse(localStorage.getItem('admission_tracker_targets')||'[]')}catch(e){return[]}}
+function isTarget(name){return getTargets().includes(name)}
+function toggleTarget(name){let a=getTargets();a=a.includes(name)?a.filter(x=>x!==name):[...a,name];localStorage.setItem('admission_tracker_targets',JSON.stringify(a));renderAdmissionGuide();renderDashboard()}
+function guideByName(name){return admissionGuideData.find(x=>x.institution===name)}
+function renderDashboard(){
+ const now=new Date(); const sorted=[...exams].sort((a,b)=>dt(a)-dt(b)); const upcoming=sorted.filter(e=>dt(e)>now); const completed=sorted.filter(e=>dt(e)<=now);
+ const n=upcoming[0];
+ const q=id=>document.getElementById(id); if(!q('dashNextName'))return;
+ q('dashNextName').textContent=n?esc(n.name):'—'; q('dashNextDate').textContent=n?dt(n).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}).toUpperCase():'No upcoming exam'; q('dashNextCountdown').textContent=n?(cd(dt(n))||'EXAM COMPLETED'):'—'; q('dashUpcoming').textContent=upcoming.length; q('dashCompleted').textContent=completed.length;
+ const targets=getTargets(); q('dashTargets').textContent=targets.length?targets.join('  •  '):'No targets selected yet.';
+ q('dashboardTargetsList').innerHTML=targets.length?targets.map(name=>{const g=guideByName(name);return `<div class="target-item"><div><div class="target-name">${esc(name)}</div><div class="target-cat">${esc(g?.category||'ADMISSION')}</div></div><button class="star-btn" onclick="toggleTarget('${esc(name)}')">★</button></div>`}).join(''):'<div class="empty-small">Open Admission Guide and tap ☆ to add your target institutions.</div>';
+ q('dashboardCountdownList').innerHTML=upcoming.slice(0,4).map(e=>`<div class="exam-card"><div class="exam-top"><div><div class="exam-name">${esc(e.name)}</div><div class="exam-category">${esc(e.cat)}</div><div class="exam-date">${dt(e).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}).toUpperCase()}</div></div><div class="dash-value">${cd(dt(e))}</div></div></div>`).join('')||'<div class="empty-small">No upcoming personal exams. Add one from Settings.</div>';
+ renderCompare(); renderUpdates();
+}
+function fillCompareSelects(){const a=document.getElementById('compareA'),b=document.getElementById('compareB');if(!a||!b)return;const names=admissionGuideData.map(x=>x.institution);const opts=names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');a.innerHTML=opts;b.innerHTML=opts;if(names.length>1){a.value=names[0];b.value=names[1]}a.onchange=renderCompare;b.onchange=renderCompare}
+function compareHtml(name){const x=guideByName(name),g=x?.groups?.[0];if(!x||!g)return '';const rows=[['EXAM',g.examDate||'Not specified in official circular'],['TIME',g.examTime||'Not specified in official circular'],['TYPE',g.type],['MARKS',g.total],['DURATION',g.duration],['NEGATIVE',g.negative],['SEATS',g.seats],['ELIGIBILITY',g.eligibility]];return rows.map(r=>`<div class="compare-row"><span>${esc(r[0])}</span><b>${esc(r[1]||'Not specified in official circular')}</b></div>`).join('')}
+function renderCompare(){const a=document.getElementById('compareA'),b=document.getElementById('compareB');if(!a||!b)return;document.getElementById('compareAData').innerHTML=compareHtml(a.value);document.getElementById('compareBData').innerHTML=compareHtml(b.value)}
+function renderUpdates(){const box=document.getElementById('dashboardUpdates');if(!box)return;const rows=admissionGuideData.slice(0,6).map(x=>`<div class="update-item"><b>${esc(x.institution)}</b> · ${esc(x.category)} · Data ${esc(x.dataYear||'official')}<br><span>${esc(x.dataNote||'Latest verified admission information available in this build.')}</span></div>`);box.innerHTML=rows.join('')}
 function renderAdmissionGuide(){
  const q=(document.getElementById("guideSearch")?.value||"").trim().toLowerCase();
  const data=admissionGuideData.filter(x=>{
@@ -408,10 +470,10 @@ function exportData(){
 function resetData(){
  if(!confirm("Reset all saved personal data and admission countdowns on this device?"))return;
  localStorage.removeItem("lifeos_dob");localStorage.removeItem("lifeos_display_name");localStorage.removeItem("lifeos_exams");
- savedDOB="";savedName="";exams=[];updateNameUI();updateDOBUI();updateSetupState();renderAllExams();openPage("home")
+ savedDOB="";savedName="";exams=[];updateNameUI();updateDOBUI();updateSetupState();renderAllExams();renderDashboard();openPage("home")
 }
-updateNameUI();updateDOBUI();updateSetupState();renderAllExams();renderAdmissionGuide();updateLife();
-setInterval(updateLife,50);setInterval(updateExamCountdowns,50);
+updateNameUI();updateDOBUI();updateSetupState();renderAllExams();renderAdmissionGuide();fillCompareSelects();renderDashboard();updateLife();
+setInterval(()=>{updateLife();updateDashboardClock();},50);setInterval(updateExamCountdowns,50);
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(e=>console.log("Service Worker Error:",e)))}
 </script>
 </body>
