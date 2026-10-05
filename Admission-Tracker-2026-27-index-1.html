@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#05060a">
+<meta name="description" content="Private offline age, admission countdown and admission guide app.">
+<link rel="manifest" href="manifest.json">
+<title>Admission Tracker</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700&display=swap');
+*{box-sizing:border-box}
+:root{--bg:#05060a;--card:#0a0d14;--line:rgba(0,246,255,.16);--cyan:#00f6ff;--purple:#8d4dff;--muted:#747d89;--text:#edf5ff;--danger:#ff5277}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;min-height:100%}
+body{background:
+radial-gradient(circle at 20% 0%,rgba(0,246,255,.07),transparent 30%),
+radial-gradient(circle at 90% 15%,rgba(141,77,255,.07),transparent 28%),var(--bg)}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{width:min(760px,100%);margin:auto;min-height:100vh;padding-bottom:30px}
+.header{height:62px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.05);position:sticky;top:0;z-index:20;background:rgba(5,6,10,.88);backdrop-filter:blur(14px)}
+.brand{font-family:Orbitron;font-size:12px;letter-spacing:1.6px;color:var(--cyan)}
+.menu-btn{border:1px solid var(--line);background:rgba(0,246,255,.04);color:var(--cyan);border-radius:10px;padding:8px 11px;font-size:11px}
+main{padding:18px}
+.page{display:none}.page.active{display:block}
+.hero{text-align:center;padding:26px 8px 24px}
+.hero h1{font-family:Orbitron;margin:0;font-size:clamp(21px,6vw,34px);letter-spacing:2px}
+.hero p{margin:9px 0 0;color:var(--muted);font-size:9px;letter-spacing:2px}
+.section-title{font-family:Orbitron;font-size:10px;letter-spacing:1.5px;color:var(--cyan);margin:0 0 13px}
+.live-card,.data-card,.settings,.exam-card,.guide-card,.menu-card{background:linear-gradient(145deg,rgba(0,246,255,.045),rgba(141,77,255,.035));border:1px solid var(--line);border-radius:18px}
+.live-card{padding:20px}
+.setup{text-align:center;color:var(--muted);font-size:11px;line-height:1.6;padding:18px}
+.clock{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.unit{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:12px 5px;text-align:center}
+.number{font-family:Orbitron;font-size:clamp(18px,5vw,31px);letter-spacing:1px}
+.label{color:var(--muted);font-size:7px;letter-spacing:1.2px;margin-top:5px}
+.ms{text-align:center;margin-top:10px;color:var(--cyan);font-family:Orbitron;font-size:10px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:12px}
+.data-card{padding:15px}.data-value{font-family:Orbitron;font-size:17px}.data-label{color:var(--muted);font-size:7px;letter-spacing:1px;margin-top:5px}
+.progress-wrap{margin-top:12px;padding:15px;border:1px solid var(--line);border-radius:16px}
+.progress-top{display:flex;justify-content:space-between;color:var(--muted);font-size:8px}
+.progress{height:7px;background:#111722;border-radius:99px;overflow:hidden;margin-top:10px}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--purple));box-shadow:0 0 12px rgba(0,246,255,.5)}
+.admission-section{margin-top:35px}.admission-header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}.admission-header .section-title{margin:0}
+.exam-list,.guide-list{display:grid;gap:12px}
+.exam-card,.guide-card{position:relative;padding:18px;overflow:hidden}
+.exam-card:before,.guide-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(#00f6ff,#8d4dff)}
+.exam-top{display:flex;justify-content:space-between;gap:12px;margin-bottom:15px}.exam-name{font-family:Orbitron;font-size:12px;line-height:1.4}.exam-category{color:var(--cyan);font-size:8px;letter-spacing:1.5px;margin-top:5px}.exam-date{color:var(--muted);font-size:9px;margin-top:5px}.exam-actions{display:flex;gap:5px}.exam-actions button{padding:7px 9px;font-size:8px}
+.admission-clock{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.admission-clock .unit{padding:11px 3px}.admission-clock .number{font-size:clamp(14px,3.5vw,24px)}.admission-clock .label{font-size:6px}
+.completed{text-align:center;padding:16px;border-radius:10px;background:rgba(255,82,119,.04);color:var(--danger);font-family:Orbitron;letter-spacing:1.5px;font-size:10px}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:13px}.filter-btn,.btn{padding:8px 11px;border-radius:9px;border:1px solid var(--line);background:rgba(0,246,255,.04);color:var(--text);font-size:8px}.filter-btn.active{background:rgba(0,246,255,.15);border-color:var(--cyan);color:var(--cyan)}
+.search{width:100%;padding:12px 13px;border-radius:11px;border:1px solid var(--line);outline:none;background:#080b11;color:var(--text);margin-bottom:13px;font-size:11px}.search:focus,input:focus,select:focus{border-color:var(--cyan)}
+.about-profile{text-align:center;padding:20px 0 8px}.about-photo{width:122px;height:122px;object-fit:cover;object-position:center top;border-radius:50%;border:2px solid var(--cyan);box-shadow:0 0 22px rgba(0,246,255,.18);display:block;margin:0 auto 13px}.about-name{font-family:Orbitron;font-size:13px;letter-spacing:1.6px}.about-role{color:var(--muted);font-size:8px;letter-spacing:1.2px;margin-top:6px}.settings{padding:4px 16px}.setting-row{padding:17px 0;border-bottom:1px solid rgba(255,255,255,.06)}.setting-row:last-child{border-bottom:0}.setting-title{font-family:Orbitron;font-size:10px;letter-spacing:1px}.setting-sub{font-size:9px;color:var(--muted);margin-top:5px;line-height:1.5}
+.input{width:100%;margin-top:9px;padding:11px;border-radius:10px;border:1px solid var(--line);background:#080b11;color:var(--text);outline:none}
+.btn-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.primary{background:rgba(0,246,255,.13);border-color:rgba(0,246,255,.5);color:var(--cyan)}.danger{color:#ff7894;border-color:rgba(255,82,119,.3)}
+.menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.menu-card{padding:20px 14px;min-height:92px;text-align:left}.menu-card strong{font-family:Orbitron;font-size:10px;letter-spacing:1px;color:var(--text)}.menu-card span{display:block;color:var(--muted);font-size:8px;margin-top:7px;line-height:1.5}
+.back-button{border:0;background:none;color:var(--cyan);font-size:9px;letter-spacing:1px;padding:7px 0}
+.guide-card{padding:17px}.guide-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.guide-name{font-family:Orbitron;font-size:13px}.guide-cat{font-size:7px;color:var(--cyan);letter-spacing:1.4px;margin-top:5px}.guide-badge{font-size:7px;color:var(--muted);border:1px solid rgba(255,255,255,.08);padding:5px 7px;border-radius:7px}
+.year-badge{display:inline-block;margin-top:6px;padding:4px 8px;border:1px solid rgba(255,255,255,.14);border-radius:999px;font-size:10px;letter-spacing:.7px;color:var(--muted);background:rgba(255,255,255,.03)}
+.data-note{margin-top:10px;padding:8px 10px;border-left:2px solid var(--accent);font-size:11px;color:var(--muted);line-height:1.45}
+
+.guide-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:14px}.meta{padding:10px;border-radius:9px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05)}.meta b{display:block;font-size:7px;color:var(--muted);letter-spacing:.8px;margin-bottom:4px}.meta span{font-size:9px}
+.group{margin-top:13px;border-top:1px solid rgba(255,255,255,.07);padding-top:13px}.group-title{font-family:Orbitron;font-size:10px;color:var(--text);letter-spacing:.7px}.subjects{margin-top:9px;border:1px solid rgba(255,255,255,.06);border-radius:9px;overflow:hidden}.subject{display:flex;justify-content:space-between;gap:10px;padding:8px 10px;font-size:8px;background:rgba(255,255,255,.015)}.subject:nth-child(even){background:rgba(255,255,255,.03)}.subject span:last-child{color:var(--cyan);font-family:Orbitron}.guide-note{color:var(--muted);font-size:8px;line-height:1.6;margin-top:11px}.source{font-size:7px;color:#65707c;margin-top:9px}.source a{color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(0,246,255,.28);cursor:pointer}.source a:hover{color:#fff;border-bottom-color:var(--cyan)}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:50;align-items:flex-end;justify-content:center}.modal.show{display:flex}.modal-box{width:min(760px,100%);background:#080b11;border:1px solid var(--line);border-bottom:0;border-radius:20px 20px 0 0;padding:20px}.modal-title{font-family:Orbitron;font-size:12px;margin-bottom:15px}
+.empty{text-align:center;color:var(--muted);font-size:9px;padding:25px;border:1px dashed rgba(255,255,255,.08);border-radius:15px}
+footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;padding:28px 0 10px}
+@media(min-width:650px){.clock{grid-template-columns:repeat(6,1fr)}.grid2{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="header">
+  <div class="brand">ADMISSION TRACKER</div>
+  <button class="menu-btn" onclick="openPage('menu')">MENU</button>
+</header>
+
+<main>
+<section id="homePage" class="page active">
+  <div class="hero"><h1>ADMISSION TRACKER</h1><p>PRIVATE OFFLINE TIME INTELLIGENCE</p></div>
+  <div class="live-card">
+    <div class="section-title">LIVE AGE</div>
+    <div id="setupState" class="setup">SET YOUR NAME AND DATE OF BIRTH FROM SETTINGS.</div>
+    <div id="liveClock" class="clock">
+      <div class="unit"><div id="years" class="number">0</div><div class="label">YEARS</div></div>
+      <div class="unit"><div id="months" class="number">0</div><div class="label">MONTHS</div></div>
+      <div class="unit"><div id="days" class="number">0</div><div class="label">DAYS</div></div>
+      <div class="unit"><div id="hours" class="number">0</div><div class="label">HOURS</div></div>
+      <div class="unit"><div id="minutes" class="number">0</div><div class="label">MINUTES</div></div>
+      <div class="unit"><div id="seconds" class="number">0</div><div class="label">SECONDS</div></div>
+    </div>
+    <div id="milliseconds" class="ms">000 MS</div>
+  </div>
+
+  <div class="grid2">
+    <div class="data-card"><div id="totalDays" class="data-value">0</div><div class="data-label">TOTAL DAYS</div></div>
+    <div class="data-card"><div id="totalHours" class="data-value">0</div><div class="data-label">TOTAL HOURS</div></div>
+    <div class="data-card"><div id="totalMinutes" class="data-value">0</div><div class="data-label">TOTAL MINUTES</div></div>
+    <div class="data-card"><div id="totalSeconds" class="data-value">0</div><div class="data-label">TOTAL SECONDS</div></div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-top"><span>CURRENT LIFE YEAR</span><span id="yearProgressText">0%</span></div>
+    <div class="progress"><i id="yearProgress"></i></div>
+  </div>
+
+  <section class="admission-section">
+    <div class="admission-header"><h2 class="section-title">ADMISSION EXAMS</h2><button class="btn primary" onclick="openPage('settings')">MANAGE</button></div>
+    <div class="filters" id="homeExamFilters">
+      <button class="filter-btn active" onclick="setExamFilter('ALL')">ALL</button>
+      <button class="filter-btn" onclick="setExamFilter('ENGINEERING')">ENGINEERING</button>
+      <button class="filter-btn" onclick="setExamFilter('UNIVERSITY')">UNIVERSITY</button>
+      <button class="filter-btn" onclick="setExamFilter('MEDICAL')">MEDICAL</button>
+    </div>
+    <div id="homeExamList" class="exam-list"></div>
+  </section>
+
+  <footer>ADMISSION TRACKER • PRIVATE OFFLINE APP</footer>
+</section>
+
+<section id="menuPage" class="page">
+  <button class="back-button" onclick="openPage('home')">← HOME</button>
+  <div class="hero"><h1>MENU</h1><p>CONTROL CENTER</p></div>
+  <div class="menu-grid">
+    <button class="menu-card" onclick="openPage('settings')"><strong>SETTINGS</strong><span>Profile, DOB and admission exams.</span></button>
+    <button class="menu-card" onclick="openPage('admissionGuide')"><strong>ADMISSION GUIDE</strong><span>Engineering, university and medical admission information.</span></button>
+    <button class="menu-card" onclick="openPage('lifeData')"><strong>LIFE DATA</strong><span>Detailed time and existence data.</span></button>
+    <button class="menu-card" onclick="openPage('goals')"><strong>GOALS</strong><span>Personal goals workspace.</span></button>
+    <button class="menu-card" onclick="openPage('appearance')"><strong>APPEARANCE</strong><span>Visual preferences.</span></button>
+    <button class="menu-card" onclick="openPage('backup')"><strong>DATA & BACKUP</strong><span>Export or reset local data.</span></button>
+    <button class="menu-card" onclick="openPage('about')"><strong>ABOUT</strong><span>App and creator information.</span></button>
+  </div>
+</section>
+
+<section id="settingsPage" class="page">
+  <button class="back-button" onclick="openPage('menu')">← MENU</button>
+  <div class="hero"><h1>SETTINGS</h1><p>PROFILE & ADMISSION CONTROL</p></div>
+  <section class="settings">
+    <div class="setting-row">
+      <div class="setting-title">DISPLAY NAME</div>
+      <input id="nameInput" class="input" placeholder="Your name">
+      <div class="btn-row"><button class="btn primary" onclick="saveName()">SAVE NAME</button></div>
+    </div>
+    <div class="setting-row">
+      <div class="setting-title">DATE OF BIRTH</div>
+      <input id="dobInput" class="input" type="date">
+      <div class="btn-row"><button class="btn primary" onclick="saveDOB()">SAVE DOB</button></div>
+    </div>
+    <div class="setting-row">
+      <div class="setting-title">ADMISSION EXAMS</div>
+      <div class="setting-sub">Create, edit and delete your live admission countdowns.</div>
+      <div class="btn-row"><button class="btn primary" onclick="openExamModal()">+ ADD EXAM</button></div>
+      <div class="filters" style="margin-top:12px" id="settingsExamFilters">
+        <button class="filter-btn active" onclick="setExamFilter('ALL')">ALL</button>
+        <button class="filter-btn" onclick="setExamFilter('ENGINEERING')">ENGINEERING</button>
+        <button class="filter-btn" onclick="setExamFilter('UNIVERSITY')">UNIVERSITY</button>
+        <button class="filter-btn" onclick="setExamFilter('MEDICAL')">MEDICAL</button>
+      </div>
+      <div id="settingsExamList" class="exam-list"></div>
+    </div>
+  </section>
+</section>
+
+<section id="admissionGuidePage" class="page">
+  <button class="back-button" onclick="openPage('menu')">← MENU</button>
+  <div class="hero"><h1>ADMISSION GUIDE</h1><p>BANGLADESH ADMISSION INTELLIGENCE</p></div>
+  <div class="filters" id="guideFilters">
+    <button class="filter-btn active" onclick="setGuideFilter('ALL')">ALL</button>
+    <button class="filter-btn" onclick="setGuideFilter('ENGINEERING')">ENGINEERING</button>
+    <button class="filter-btn" onclick="setGuideFilter('UNIVERSITY')">UNIVERSITY</button>
+    <button class="filter-btn" onclick="setGuideFilter('MEDICAL')">MEDICAL</button>
+  </div>
+  <input id="guideSearch" class="search" oninput="renderAdmissionGuide()" placeholder="Search institution, unit or group...">
+  <div id="guideList" class="guide-list"></div>
+</section>
+
+<section id="lifeDataPage" class="page">
+  <button class="back-button" onclick="openPage('menu')">← MENU</button>
+  <div class="hero"><h1>LIFE DATA</h1><p>DETAILED TIME INTELLIGENCE</p></div>
+  <div class="grid2">
+    <div class="data-card"><div id="ldDays" class="data-value">0</div><div class="data-label">TOTAL DAYS</div></div>
+    <div class="data-card"><div id="ldHours" class="data-value">0</div><div class="data-label">TOTAL HOURS</div></div>
+    <div class="data-card"><div id="ldMinutes" class="data-value">0</div><div class="data-label">TOTAL MINUTES</div></div>
+    <div class="data-card"><div id="ldSeconds" class="data-value">0</div><div class="data-label">TOTAL SECONDS</div></div>
+  </div>
+</section>
+
+<section id="goalsPage" class="page">
+  <button class="back-button" onclick="openPage('menu')">← MENU</button>
+  <div class="hero"><h1>GOALS</h1><p>PERSONAL WORKSPACE</p></div>
+  <div class="settings"><div class="setting-row"><div class="setting-title">GOALS</div><div class="setting-sub">Goal management can be added here without affecting your existing personal data.</div></div></div>
+</section>
+
+<section id="appearancePage" class="page">
+  <button class="back-button" onclick="openPage('menu')">← MENU</button>
+  <div class="hero"><h1>APPEARANCE</h1><p>VISUAL SYSTEM</p></div>
+  <div class="settings"><div class="setting-row"><div class="setting-title">FUTURISTIC DARK MODE</div><div class="setting-sub">The current Time Counter visual system is locked to the dark futuristic interface.</div></div></div>
+</section>
+
+<section id="backupPage" class="page">
+  <button class="back-button" onclick="openPage('menu')">← MENU</button>
+  <div class="hero"><h1>DATA & BACKUP</h1><p>LOCAL DATA CONTROL</p></div>
+  <div class="settings">
+    <div class="setting-row"><div class="setting-title">EXPORT BACKUP</div><div class="setting-sub">Exports your existing name, DOB and admission countdown data. Your data stays on the device unless you export it.</div><div class="btn-row"><button class="btn primary" onclick="exportData()">EXPORT JSON</button></div></div>
+    <div class="setting-row"><div class="setting-title">RESET LOCAL DATA</div><div class="setting-sub">This removes saved personal data and admission countdowns from this device.</div><div class="btn-row"><button class="btn danger" onclick="resetData()">RESET DATA</button></div></div>
+  </div>
+</section>
+
+<section id="aboutPage" class="page">
+  <button class="back-button" onclick="openPage('menu')">← MENU</button>
+  <div class="hero"><h1>ABOUT</h1><p>ADMISSION TRACKER</p></div>
+  <section class="settings">
+    <div class="about-profile">
+      <img src="mehedi.jpg" alt="Mehedi Hasan" class="about-photo">
+      <div class="about-name">MEHEDI HASAN</div>
+      <div class="about-role">Creator &amp; Developer</div>
+    </div>
+    <div class="setting-row"><div class="setting-title">ADMISSION TRACKER</div><div class="setting-sub">A futuristic offline personal time tracking and admission management system.</div></div>
+    <div class="setting-row"><div class="setting-title">CREATED BY</div><div class="setting-sub">MEHEDI HASAN</div></div>
+    <div class="setting-row"><div class="setting-title">VERSION</div><div class="setting-sub">1.0</div></div>
+  </section>
+</section>
+</main>
+</div>
+
+<div id="examModal" class="modal" onclick="if(event.target===this)closeExamModal()">
+  <div class="modal-box">
+    <div class="modal-title" id="modalTitle">ADD ADMISSION EXAM</div>
+    <input type="hidden" id="editExamId">
+    <select id="examCategory" class="input">
+      <option value="ENGINEERING">ENGINEERING</option>
+      <option value="UNIVERSITY">UNIVERSITY</option>
+      <option value="MEDICAL">MEDICAL</option>
+    </select>
+    <input id="examName" class="input" placeholder="Exam name">
+    <input id="examDate" class="input" type="date">
+    <input id="examTime" class="input" type="time">
+    <div class="btn-row"><button class="btn primary" onclick="saveExam()">SAVE EXAM</button><button class="btn" onclick="closeExamModal()">CANCEL</button></div>
+  </div>
+</div>
+
+<script>
+const pages=["home","menu","settings","admissionGuide","lifeData","goals","appearance","backup","about"];
+let savedDOB=localStorage.getItem("lifeos_dob")||"";
+let savedName=localStorage.getItem("lifeos_display_name")||"";
+let exams=JSON.parse(localStorage.getItem("lifeos_exams")||"[]");
+let currentFilter="ALL";
+let guideFilter="ALL";
+
+/*
+  IMPORTANT:
+  Admission Guide data is intentionally kept separate from personal localStorage.
+  Replace/update these entries only with verified official admission circular data.
+  This prevents an app update from touching lifeos_dob, lifeos_display_name or lifeos_exams.
+*/
+const admissionGuideData=[{"category":"ENGINEERING","institution":"Bangladesh University of Engineering and Technology (BUET)","shortName":"BUET","dataYear":"2026–27","dataNote":"2026–27 admission test date announced. Other unit-wise details will be shown only after the official circular publishes them.","groups":[{"name":"Undergraduate Admission","eligibility":"Not announced in 2026–27 circular yet","seats":"Not announced","subjects":[["Admission Test","Details pending official circular"]],"total":"Not announced","type":"Written / official format pending","duration":"Not announced","negative":"Not announced","examDate":"2027-01-16","examTime":"Not announced","status":"ANNOUNCED","sourceUrl":"https://ugadmission.buet.ac.bd/"}]},{"category":"ENGINEERING","institution":"Khulna University of Engineering & Technology (KUET)","shortName":"KUET","dataYear":"2026–27","dataNote":"2026–27 admission test date announced. Application, eligibility, seat and detailed exam instructions are to be published in the admission circular.","groups":[{"name":"Undergraduate Admission","eligibility":"Not announced in 2026–27 circular yet","seats":"Not announced","subjects":[["Admission Test","MCQ"]],"total":"Not announced","type":"MCQ","duration":"Not announced","negative":"Not announced","examDate":"2027-01-08","examTime":"Not announced","status":"ANNOUNCED","sourceUrl":"https://admission.kuet.ac.bd/"}]},{"category":"ENGINEERING","institution":"Rajshahi University of Engineering & Technology (RUET)","shortName":"RUET","dataYear":"2026–27","dataNote":"2026–27 date was provisionally fixed by the admission test steering committee; detailed circular is pending.","groups":[{"name":"Undergraduate Admission","eligibility":"Not announced in 2026–27 circular yet","seats":"Not announced","subjects":[["Admission Test","MCQ"]],"total":"Not announced","type":"MCQ","duration":"Not announced","negative":"Not announced","examDate":"2027-01-14","examTime":"Not announced","status":"PROVISIONAL","sourceUrl":"https://admission.ruet.ac.bd/"}]},{"category":"ENGINEERING","institution":"Chittagong University of Engineering & Technology (CUET)","shortName":"CUET","dataYear":"2026–27","dataNote":"2026–27 Level-1 undergraduate admission test date is announced as a probable/tentative date. Detailed circular is pending.","groups":[{"name":"Level-1 Undergraduate Admission","eligibility":"Not announced in 2026–27 circular yet","seats":"Not announced","subjects":[["Admission Test","Details pending official circular"]],"total":"Not announced","type":"Official format pending","duration":"Not announced","negative":"Not announced","examDate":"2027-01-23","examTime":"Not announced","status":"TENTATIVE","sourceUrl":"https://cuet.ac.bd/admission"}]},{"category":"ENGINEERING","institution":"Military Institute of Science and Technology (MIST)","shortName":"MIST","dataYear":"2026–27","dataNote":"2026–27 undergraduate admission dates announced for Units C and A/B.","groups":[{"name":"Unit C — Science","eligibility":"Science group; 2026–27 detailed eligibility pending/verify official notice","seats":"Not announced","subjects":[["MCQ","Science Unit"]],"total":"Not announced","type":"MCQ","duration":"Not announced","negative":"Not announced","examDate":"2026-12-18","examTime":"Morning","status":"ANNOUNCED","sourceUrl":"https://www.mist.ac.bd/"},{"name":"Unit A/B — Engineering & Architecture","eligibility":"Science group; 2026–27 detailed eligibility pending/verify official notice","seats":"Not announced","subjects":[["Written Test","Engineering / Architecture"]],"total":"Not announced","type":"Written","duration":"Not announced","negative":"Not announced","examDate":"2026-12-19","examTime":"Not announced","status":"ANNOUNCED","sourceUrl":"https://www.mist.ac.bd/"}]},{"category":"UNIVERSITY","institution":"University of Dhaka (DU)","shortName":"DU","dataYear":"2026–27","dataNote":"Official DU schedule for 2026–27.","groups":[{"name":"IBA Unit","eligibility":"See official admission circular","seats":"See official circular","subjects":[["Admission Test","See official circular"]],"total":"See official circular","type":"See official circular","duration":"Not stated here","negative":"Not stated here","examDate":"2026-12-05","examTime":"Not stated here","status":"ANNOUNCED","sourceUrl":"https://admission.eis.du.ac.bd/"},{"name":"Science Unit","eligibility":"See official admission circular","seats":"See official circular","subjects":[["Admission Test","See official circular"]],"total":"See official circular","type":"See official circular","duration":"90 minutes","negative":"See official circular","examDate":"2026-12-12","examTime":"11:00 AM–12:30 PM","status":"ANNOUNCED","sourceUrl":"https://admission.eis.du.ac.bd/"},{"name":"Arts, Law & Social Sciences Unit","eligibility":"See official admission circular","seats":"See official circular","subjects":[["Admission Test","See official circular"]],"total":"See official circular","type":"See official circular","duration":"90 minutes","negative":"See official circular","examDate":"2026-12-19","examTime":"11:00 AM–12:30 PM","status":"ANNOUNCED","sourceUrl":"https://admission.eis.du.ac.bd/"},{"name":"Fine Arts Unit","eligibility":"See official admission circular","seats":"See official circular","subjects":[["General Knowledge & Drawing","See official circular"]],"total":"See official circular","type":"See official circular","duration":"See official circular","negative":"See official circular","examDate":"2026-12-22","examTime":"11:00 AM–12:30 PM","status":"ANNOUNCED","sourceUrl":"https://admission.eis.du.ac.bd/"},{"name":"Business Studies Unit","eligibility":"See official admission circular","seats":"See official circular","subjects":[["Admission Test","See official circular"]],"total":"See official circular","type":"See official circular","duration":"90 minutes","negative":"See official circular","examDate":"2026-12-26","examTime":"11:00 AM–12:30 PM","status":"ANNOUNCED","sourceUrl":"https://admission.eis.du.ac.bd/"}]},{"category":"UNIVERSITY","institution":"University of Rajshahi (RU)","shortName":"RU","dataYear":"2026–27","dataNote":"2026–27 initial schedule announced.","groups":[{"name":"Unit B","eligibility":"See official admission circular","seats":"See official circular","subjects":[["Admission Test","See official circular"]],"total":"See official circular","type":"See official circular","duration":"See official circular","negative":"See official circular","examDate":"2027-01-08","examTime":"Not announced","status":"ANNOUNCED","sourceUrl":"https://admission.ru.ac.bd/"},{"name":"Unit C","eligibility":"See official admission circular","seats":"See official circular","subjects":[["Admission Test","See official circular"]],"total":"See official circular","type":"See official circular","duration":"See official circular","negative":"See official circular","examDate":"2027-01-09","examTime":"Not announced","status":"ANNOUNCED","sourceUrl":"https://admission.ru.ac.bd/"},{"name":"Unit A","eligibility":"See official admission circular","seats":"See official circular","subjects":[["Admission Test","See official circular"]],"total":"See official circular","type":"See official circular","duration":"See official circular","negative":"See official circular","examDate":"2027-01-16","examTime":"Not announced","status":"ANNOUNCED","sourceUrl":"https://admission.ru.ac.bd/"}]},{"category":"UNIVERSITY","institution":"Jagannath University (JnU)","shortName":"JnU","dataYear":"2026–27","dataNote":"Official university schedule for five units.","groups":[{"name":"Unit A — Science & Life/Earth Sciences","eligibility":"See official admission circular","seats":"See official circular","subjects":[["MCQ","See official circular"]],"total":"See official circular","type":"MCQ","duration":"60 minutes","negative":"See official circular","examDate":"2027-01-01","examTime":"10:00–11:00 AM","status":"ANNOUNCED","sourceUrl":"https://jnu.ac.bd/newsite/newsdetails/138749"},{"name":"Unit E — Fine Arts","eligibility":"See official admission circular","seats":"See official circular","subjects":[["MCQ","See official circular"]],"total":"See official circular","type":"MCQ","duration":"60 minutes","negative":"See official circular","examDate":"2027-01-08","examTime":"10:00–11:00 AM","status":"ANNOUNCED","sourceUrl":"https://jnu.ac.bd/newsite/newsdetails/138749"},{"name":"Unit B — Arts & Law","eligibility":"See official admission circular","seats":"See official circular","subjects":[["MCQ","See official circular"]],"total":"See official circular","type":"MCQ","duration":"60 minutes","negative":"See official circular","examDate":"2027-01-15","examTime":"10:00–11:00 AM","status":"ANNOUNCED","sourceUrl":"https://jnu.ac.bd/newsite/newsdetails/138749"},{"name":"Unit C — Business Studies","eligibility":"See official admission circular","seats":"See official circular","subjects":[["MCQ","See official circular"]],"total":"See official circular","type":"MCQ","duration":"60 minutes","negative":"See official circular","examDate":"2027-01-22","examTime":"10:00–11:00 AM","status":"ANNOUNCED","sourceUrl":"https://jnu.ac.bd/newsite/newsdetails/138749"},{"name":"Unit D — Social Sciences","eligibility":"See official admission circular","seats":"See official circular","subjects":[["MCQ","See official circular"]],"total":"See official circular","type":"MCQ","duration":"60 minutes","negative":"See official circular","examDate":"2027-01-23","examTime":"10:00–11:00 AM","status":"ANNOUNCED","sourceUrl":"https://jnu.ac.bd/newsite/newsdetails/138749"}]},{"category":"UNIVERSITY","institution":"University of Khulna (KU)","shortName":"KU","dataYear":"2026–27","dataNote":"2026–27 official schedule: C/D on Dec 17; A/B on Dec 18.","groups":[{"name":"Unit C","eligibility":"Not announced in 2026–27 circular yet","seats":"Not announced","subjects":[["Admission Test","See official circular"]],"total":"Not announced","type":"See official circular","duration":"Not announced","negative":"Not announced","examDate":"2026-12-17","examTime":"Not announced","status":"ANNOUNCED","sourceUrl":"https://ku.ac.bd/"},{"name":"Unit D","eligibility":"Not announced in 2026–27 circular yet","seats":"Not announced","subjects":[["Admission Test","See official circular"]],"total":"Not announced","type":"See official circular","duration":"Not announced","negative":"Not announced","examDate":"2026-12-17","examTime":"Not announced","status":"ANNOUNCED","sourceUrl":"https://ku.ac.bd/"},{"name":"Unit A","eligibility":"Not announced in 2026–27 circular yet","seats":"Not announced","subjects":[["Admission Test","See official circular"]],"total":"Not announced","type":"See official circular","duration":"Not announced","negative":"Not announced","examDate":"2026-12-18","examTime":"Not announced","status":"ANNOUNCED","sourceUrl":"https://ku.ac.bd/"},{"name":"Unit B","eligibility":"Not announced in 2026–27 circular yet","seats":"Not announced","subjects":[["Admission Test","See official circular"]],"total":"Not announced","type":"See official circular","duration":"Not announced","negative":"Not announced","examDate":"2026-12-18","examTime":"Not announced","status":"ANNOUNCED","sourceUrl":"https://ku.ac.bd/"}]},{"category":"UNIVERSITY","institution":"Shahjalal University of Science & Technology (SUST)","shortName":"SUST","dataYear":"2026–27","dataNote":"2026–27 admission tests announced for January 26–27. Unit-wise day is pending.","groups":[{"name":"Undergraduate Admission","eligibility":"Unit-wise eligibility not announced yet","seats":"Not announced for 2026–27","subjects":[["Unit A/B","Unit-wise details pending"]],"total":"Not announced","type":"Not announced","duration":"Not announced","negative":"Not announced","examDate":"2027-01-26","examTime":"Not announced","status":"ANNOUNCED","sourceUrl":"https://admission.sust.edu.bd/"},{"name":"Undergraduate Admission — second test day","eligibility":"Unit-wise eligibility not announced yet","seats":"Not announced for 2026–27","subjects":[["Unit-wise details","Pending official notice"]],"total":"Not announced","type":"Not announced","duration":"Not announced","negative":"Not announced","examDate":"2027-01-27","examTime":"Not announced","status":"ANNOUNCED","sourceUrl":"https://admission.sust.edu.bd/"}]},{"category":"UNIVERSITY","institution":"University of Chittagong (CU)","shortName":"CU","dataYear":"2026–27","dataNote":"2026–27 tentative schedule announced for seven units/sub-units.","groups":[{"name":"Unit C","eligibility":"Not announced in final circular","seats":"Not announced","subjects":[["Admission Test","See official circular"]],"total":"Not announced","type":"See official circular","duration":"Not announced","negative":"Not announced","examDate":"2027-01-29","examTime":"Not announced","status":"TENTATIVE","sourceUrl":"https://cu.ac.bd/"},{"name":"Unit A","eligibility":"Not announced in final circular","seats":"Not announced","subjects":[["Admission Test","See official circular"]],"total":"Not announced","type":"See official circular","duration":"Not announced","negative":"Not announced","examDate":"2027-01-30","examTime":"Not announced","status":"TENTATIVE","sourceUrl":"https://cu.ac.bd/"},{"name":"Unit B1","eligibility":"Not announced in final circular","seats":"Not announced","subjects":[["Admission Test","See official circular"]],"total":"Not announced","type":"See official circular","duration":"Not announced","negative":"Not announced","examDate":"2027-02-03","examTime":"Not announced","status":"TENTATIVE","sourceUrl":"https://cu.ac.bd/"},{"name":"Unit B2","eligibility":"Not announced in final circular","seats":"Not announced","subjects":[["Admission Test","See official circular"]],"total":"Not announced","type":"See official circular","duration":"Not announced","negative":"Not announced","examDate":"2027-02-04","examTime":"Not announced","status":"TENTATIVE","sourceUrl":"https://cu.ac.bd/"},{"name":"Unit B","eligibility":"Not announced in final circular","seats":"Not announced","subjects":[["Admission Test","See official circular"]],"total":"Not announced","type":"See official circular","duration":"Not announced","negative":"Not announced","examDate":"2027-02-05","examTime":"Not announced","status":"TENTATIVE","sourceUrl":"https://cu.ac.bd/"},{"name":"Unit D","eligibility":"Not announced in final circular","seats":"Not announced","subjects":[["Admission Test","See official circular"]],"total":"Not announced","type":"See official circular","duration":"Not announced","negative":"Not announced","examDate":"2027-02-06","examTime":"Not announced","status":"TENTATIVE","sourceUrl":"https://cu.ac.bd/"},{"name":"Unit D1","eligibility":"Not announced in final circular","seats":"Not announced","subjects":[["Admission Test","See official circular"]],"total":"Not announced","type":"See official circular","duration":"Not announced","negative":"Not announced","examDate":"2027-02-08","examTime":"Not announced","status":"TENTATIVE","sourceUrl":"https://cu.ac.bd/"}]},{"category":"MEDICAL","institution":"Government & Private Medical Colleges (MBBS)","shortName":"MBBS","dataYear":"2026–27","dataNote":"December 4, 2026 was reported as a tentative/proposed date; final DGME circular was not yet published in the sources checked.","groups":[{"name":"MBBS Admission Test","eligibility":"Final 2026–27 circular pending","seats":"Government/private seats: final 2026–27 allocation pending","subjects":[["Admission Test","Mark distribution pending final circular"]],"total":"Not finalized","type":"MCQ / OMR (final instructions pending)","duration":"Not finalized","negative":"Not finalized","examDate":"2026-12-04","examTime":"Not announced","status":"TENTATIVE","sourceUrl":"https://dgme.gov.bd/"}]},{"category":"DENTAL","institution":"Government & Private Dental Colleges (BDS)","shortName":"BDS","dataYear":"2026–27","dataNote":"MBBS and BDS were reported as likely to use the same December 4, 2026 test date; final DGME circular was not yet published in the sources checked.","groups":[{"name":"BDS Admission Test","eligibility":"Final 2026–27 circular pending","seats":"Final 2026–27 seat allocation pending","subjects":[["Admission Test","Mark distribution pending final circular"]],"total":"Not finalized","type":"MCQ / OMR (final instructions pending)","duration":"Not finalized","negative":"Not finalized","examDate":"2026-12-04","examTime":"Not announced","status":"TENTATIVE","sourceUrl":"https://dgme.gov.bd/"}]}];
+function buildGuideCard(item){
+ return `<article class="guide-card">
+  <div class="guide-head"><div><div class="guide-name">${esc(item.institution)}</div><div class="guide-cat">${esc(item.category)}</div><div class="year-badge">DATA: ${esc(item.dataYear||"2026–27")}</div></div><div class="guide-badge">${esc(item.shortName)}</div></div>
+  ${item.groups.map(g=>`<div class="group"><div class="group-title">${esc(g.name)}</div>
+   <div class="guide-meta">
+    <div class="meta"><b>📅 EXAM DATE</b><span>${esc(g.examDate||"Not announced")}${g.status&&g.status!=="ANNOUNCED"?` · ${esc(g.status)}`:""}</span></div>
+    <div class="meta"><b>🕐 EXAM TIME</b><span>${esc(g.examTime||"Not announced")}</span></div>
+    <div class="meta"><b>ELIGIBILITY</b><span>${esc(g.eligibility)}</span></div>
+    <div class="meta"><b>SEATS</b><span>${esc(g.seats)}</span></div>
+    <div class="meta"><b>TOTAL MARKS</b><span>${esc(g.total)}</span></div>
+    <div class="meta"><b>EXAM TYPE</b><span>${esc(g.type)}</span></div>
+    <div class="meta"><b>DURATION</b><span>${esc(g.duration)}</span></div>
+    <div class="meta"><b>NEGATIVE MARKING</b><span>${esc(g.negative)}</span></div>
+   </div>
+   <div class="subjects">${g.subjects.map(s=>`<div class="subject"><span>${esc(s[0])}</span><b>${esc(s[1])}</b></div>`).join("")}</div>
+   <div class="data-note">${esc(item.dataNote||"2026–27 verified/announced information. Final circular controls eligibility, seats and detailed pattern.")}</div>
+   ${g.examDate?`<div class="countdown" data-exam="${esc(g.examDate)}" data-time="${esc(g.examTime||"")}"><b>⏳ EXAM COUNTDOWN</b><span class="countdown-value">CALCULATING…</span></div>`:""}
+   <div class="source"><a href="${/^https:\/\//.test(g.sourceUrl||"")?esc(g.sourceUrl):"#"}" target="_blank" rel="noopener noreferrer">SEE OFFICIAL / SOURCE ↗</a></div>
+  </div>`).join("")}
+ </article>`
+}
+function updateGuideCountdowns(){
+ document.querySelectorAll('.countdown[data-exam]').forEach(el=>{
+  const date=el.dataset.exam; const tm=el.dataset.time||''; let t=new Date(date+'T00:00:00');
+  const m=tm.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+  if(m){let h=+m[1],min=+m[2];if(m[3].toUpperCase()==='PM'&&h<12)h+=12;if(m[3].toUpperCase()==='AM'&&h===12)h=0;t=new Date(date+'T'+String(h).padStart(2,'0')+':'+String(min).padStart(2,'0')+':00');}
+  const diff=t-Date.now(); const out=el.querySelector('.countdown-value'); if(!out)return;
+  if(diff<=0){out.textContent='🔴 EXAM COMPLETED';return;}
+  const d=Math.floor(diff/86400000); const h=Math.floor(diff%86400000/3600000); const mi=Math.floor(diff%3600000/60000); const s=Math.floor(diff%60000/1000);
+  out.textContent=`${d} Days : ${h} Hours : ${mi} Minutes : ${s} Seconds`;
+ });
+}
+function renderAdmissionGuide(){
+ const q=(document.getElementById("guideSearch")?.value||"").trim().toLowerCase();
+ const data=admissionGuideData.filter(x=>{
+   const text=JSON.stringify(x).toLowerCase();
+   return (guideFilter==="ALL"||x.category===guideFilter)&&(!q||text.includes(q));
+ });
+ document.getElementById("guideList").innerHTML=data.length?data.map(buildGuideCard).join(""):'<div class="empty">NO MATCHING INSTITUTION FOUND.</div>';
+}
+function exportData(){
+ const data={name:savedName,dob:savedDOB,exams:exams,exportedAt:new Date().toISOString()};
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="personal-life-tracker-backup.json";a.click();URL.revokeObjectURL(a.href)
+}
+function resetData(){
+ if(!confirm("Reset all saved personal data and admission countdowns on this device?"))return;
+ localStorage.removeItem("lifeos_dob");localStorage.removeItem("lifeos_display_name");localStorage.removeItem("lifeos_exams");
+ savedDOB="";savedName="";exams=[];updateNameUI();updateDOBUI();updateSetupState();renderAllExams();openPage("home")
+}
+updateNameUI();updateDOBUI();updateSetupState();renderAllExams();renderAdmissionGuide();updateGuideCountdowns();updateLife();
+setInterval(updateLife,50);setInterval(updateExamCountdowns,50);setInterval(updateGuideCountdowns,1000);
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(e=>console.log("Service Worker Error:",e)))}
+</script>
+</body>
+</html>
