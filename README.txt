@@ -1,4 +1,4 @@
-TIME COUNTER
+Admission Tracker 
 ============
 
 Files:
