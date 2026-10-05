@@ -72,6 +72,21 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
 .update-bar{position:fixed;left:12px;right:12px;top:12px;z-index:1200;display:none;align-items:center;gap:10px;padding:11px 12px;border:1px solid var(--cyan);border-radius:14px;background:var(--card);box-shadow:0 10px 30px rgba(0,0,0,.35)}.update-bar.show{display:flex}.update-bar span{flex:1;font-size:8px;color:var(--text);line-height:1.35}.update-bar .btn{padding:9px 11px;white-space:nowrap}.theme-white .update-bar{box-shadow:0 10px 30px rgba(20,35,55,.12)}
 /* Sudoku */
 .sudoku-toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:0 0 18px}.sudoku-tabs,.sudoku-levels{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}.sudoku-tab,.level-btn{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:12px;padding:10px 13px;font:600 9px Orbitron;letter-spacing:1px;cursor:pointer}.sudoku-tab.active,.level-btn.active{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 18px rgba(0,246,255,.08)}.sudoku-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px}.sudoku-stat{border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center;background:rgba(0,246,255,.025)}.sudoku-stat b{display:block;font:700 18px Orbitron;color:var(--cyan)}.sudoku-stat span{display:block;margin-top:5px;color:var(--muted);font-size:7px;letter-spacing:1.3px}.sudoku-board{width:min(94vw,430px);aspect-ratio:1;margin:0 auto 16px;display:grid;grid-template-columns:repeat(9,1fr);border:2px solid var(--cyan);border-radius:12px;overflow:hidden;background:var(--card);box-shadow:0 0 30px rgba(0,246,255,.08)}.sudoku-cell{appearance:none;border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:transparent;color:var(--text);font:700 clamp(15px,5vw,25px) Orbitron;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}.sudoku-cell:nth-child(3n){border-right:2px solid rgba(0,246,255,.35)}.sudoku-cell:nth-child(9n){border-right:0}.sudoku-cell:nth-child(n+19):nth-child(-n+27),.sudoku-cell:nth-child(n+46):nth-child(-n+54){border-bottom:2px solid rgba(0,246,255,.35)}.sudoku-cell.fixed{color:var(--cyan);background:rgba(0,246,255,.045);cursor:default}.sudoku-cell.selected{background:rgba(141,77,255,.16);box-shadow:inset 0 0 0 1px var(--purple)}.sudoku-cell.same{background:rgba(0,246,255,.07)}.sudoku-cell.error{color:var(--danger);background:rgba(255,82,119,.13);animation:sudokuShake .18s linear}.sudoku-pad{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;width:min(94vw,430px);margin:0 auto}.sudoku-pad button{min-height:45px}.sudoku-message{text-align:center;min-height:24px;margin:10px 0;color:var(--muted);font-size:9px}.sudoku-message.success{color:var(--cyan);font-family:Orbitron}.sudoku-message.error{color:var(--danger)}.sudoku-help{text-align:center;color:var(--muted);font-size:8px;line-height:1.6;margin:14px auto 0;max-width:520px}@keyframes sudokuShake{25%{transform:translateX(-2px)}75%{transform:translateX(2px)}}@media(max-width:390px){.sudoku-stats{grid-template-columns:repeat(3,1fr)}.sudoku-stat{padding:9px}.sudoku-stat b{font-size:15px}.sudoku-cell{font-size:14px}.sudoku-pad button{min-height:40px}}
+
+/* V3 additions */
+.welcome-menu-hero{position:relative;text-align:center;padding:28px 8px 24px;overflow:hidden}
+.welcome-menu-title{font-family:Orbitron;font-size:clamp(25px,8vw,42px);letter-spacing:3px;line-height:1.1;animation:v3Glow 2.8s ease-in-out infinite alternate}
+.welcome-menu-name{margin-top:10px;font-family:Orbitron;font-size:clamp(12px,4vw,18px);letter-spacing:3px;color:var(--cyan);animation:v3Float 3.2s ease-in-out infinite}
+.welcome-menu-hero.off{display:none}
+@keyframes v3Glow{from{opacity:.65;transform:translateY(2px) scale(.99);text-shadow:0 0 8px rgba(0,246,255,.15)}to{opacity:1;transform:translateY(-2px) scale(1);text-shadow:0 0 22px rgba(0,246,255,.55)}}
+@keyframes v3Float{0%,100%{transform:translateY(0);opacity:.78}50%{transform:translateY(-5px);opacity:1}}
+.password-box{max-width:420px;margin:0 auto;text-align:center}
+.password-dots{display:flex;justify-content:center;gap:12px;margin:15px 0}.password-dot{width:14px;height:14px;border-radius:50%;border:1px solid var(--line);background:transparent}.password-dot.on{background:var(--cyan);box-shadow:0 0 12px rgba(0,246,255,.45)}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:15px}.pin-key{padding:15px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.035);color:var(--text);font-family:Orbitron}.pin-key:active{transform:scale(.97)}
+.lock-screen{position:fixed;inset:0;z-index:2000;background:var(--bg);display:none;align-items:center;justify-content:center;padding:22px}.lock-screen.show{display:flex}.lock-card{width:min(440px,100%);text-align:center;padding:25px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,rgba(0,246,255,.06),rgba(141,77,255,.05))}.lock-title{font-family:Orbitron;letter-spacing:2px;font-size:20px}.lock-sub{font-size:9px;color:var(--muted);margin-top:8px}.lock-error{height:18px;color:var(--danger);font-size:9px;margin-top:8px}
+.notes-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.notes-list{display:grid;gap:10px}.note-card{padding:15px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,rgba(0,246,255,.04),rgba(141,77,255,.03));cursor:pointer}.note-title{font-family:Orbitron;font-size:11px;letter-spacing:.7px}.note-preview{font-size:9px;color:var(--muted);line-height:1.55;margin-top:7px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.note-meta{font-size:7px;color:var(--muted);margin-top:9px}.notes-empty{text-align:center;padding:30px;color:var(--muted);font-size:10px}
+.notification-list{display:grid;gap:10px}.notification-card{padding:15px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,rgba(0,246,255,.04),rgba(141,77,255,.03));position:relative}.notification-card.unread{border-color:rgba(0,246,255,.42);box-shadow:0 0 15px rgba(0,246,255,.06)}.notification-card h3{font-family:Orbitron;font-size:10px;margin:0 0 7px}.notification-card p{font-size:9px;color:var(--muted);line-height:1.55;margin:0}.notification-date{font-size:7px;color:var(--muted);margin-top:8px}.notification-dot{position:absolute;right:12px;top:12px;width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px rgba(0,246,255,.5)}.menu-badge{display:inline-flex;min-width:17px;height:17px;align-items:center;justify-content:center;margin-left:5px;padding:0 4px;border-radius:99px;background:var(--danger);color:#fff;font-size:7px;font-family:Orbitron}
+.update-bar{position:fixed;left:50%;bottom:14px;transform:translateX(-50%) translateY(120px);z-index:1200;width:min(680px,calc(100% - 28px));padding:12px 14px;border:1px solid var(--cyan);border-radius:14px;background:var(--card);box-shadow:0 10px 30px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:space-between;gap:10px;transition:.3s}.update-bar.show{transform:translateX(-50%) translateY(0)}.update-bar strong{font-family:Orbitron;font-size:9px}.update-bar span{display:block;color:var(--muted);font-size:8px;margin-top:3px}
 </style>
 </head>
 <body>
@@ -125,7 +140,10 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
 
 <section id="menuPage" class="page active">
   
-  <div class="hero"><h1>MENU</h1><p>CONTROL CENTER</p></div>
+  <div id="welcomeMenuHero" class="welcome-menu-hero">
+    <div class="welcome-menu-title">WELCOME</div>
+    <div id="welcomeMenuName" class="welcome-menu-name"></div>
+  </div>
   <div class="menu-grid">
     <button class="menu-card" onclick="openPage('liveAge')"><strong>⏱️ LIVE AGE</strong><span>Real-time age counter, milliseconds and life progress.</span></button>
     <button class="menu-card" onclick="openPage('goals')"><strong>🎯 MY TARGETS</strong><span>Personal goals workspace.</span></button>
@@ -133,6 +151,8 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
     <button class="menu-card" onclick="openPage('admissionGuide')"><strong>🔔 ADMISSION UPDATES</strong><span>Latest admission information and updates.</span></button>
     <button class="menu-card" onclick="openPage('admissionGuide')"><strong>📚 ADMISSION GUIDE</strong><span>Engineering, university, medical and dental admission information.</span></button>
     <button class="menu-card" onclick="openPage('sudoku')"><strong>🧩 SUDOKU</strong><span>Professional Sudoku with difficulty levels and many puzzles.</span></button>
+    <button class="menu-card" onclick="openPage('notes')"><strong>📝 NOTES</strong><span>Professional offline notes. Save, edit, search and organize your notes.</span></button>
+    <button class="menu-card" onclick="openPage('notifications')"><strong>🔔 NOTIFICATIONS <span id="notificationBadge" class="menu-badge" style="display:none">0</span></strong><span>Updates and app notifications.</span></button>
     <button class="menu-card" onclick="openPage('settings')"><strong>⚙️ SETTINGS</strong><span>Profile, DOB and admission exams.</span></button>
     <button class="menu-card" onclick="openPage('appearance')"><strong>🌙 APPEARANCE</strong><span>Visual preferences.</span></button>
     <button class="menu-card" onclick="openPage('backup')"><strong>💾 DATA & BACKUP</strong><span>Export or reset local data.</span></button>
@@ -149,7 +169,17 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
       <input id="nameInput" class="input" placeholder="Your name">
       <div class="btn-row"><button class="btn primary" onclick="saveName()">SAVE NAME</button></div>
     </div>
-    <div class="setting-row"><div class="setting-title">WELCOME MESSAGE</div><div class="setting-sub">Show a welcome message every time the app opens. If a display name is saved, the message will use your name.</div><div class="toggle-row"><span class="setting-sub" style="margin:0">WELCOME ON APP OPEN</span><label class="switch"><input id="welcomeToggle" type="checkbox" onchange="saveWelcomeSetting()"><span class="slider"></span></label></div></div>
+    <div class="setting-row"><div class="setting-title">WELCOME ANIMATION</div><div class="setting-sub">Show the animated WELCOME and saved user name in the Menu. This also controls the welcome screen shown when the app opens.</div><div class="toggle-row"><span class="setting-sub" style="margin:0">WELCOME ON</span><label class="switch"><input id="welcomeToggle" type="checkbox" onchange="saveWelcomeSetting()"><span class="slider"></span></label></div></div>
+    <div class="setting-row">
+      <div class="setting-title">APP SECURITY</div>
+      <div class="setting-sub">Optional 5-digit password protection. The password is stored locally as a cryptographic hash.</div>
+      <div class="toggle-row"><span class="setting-sub" style="margin:0">PASSWORD LOCK</span><label class="switch"><input id="passwordToggle" type="checkbox" onchange="togglePasswordSetting()"><span class="slider"></span></label></div>
+      <div id="passwordSettingsBox" style="display:none">
+        <input id="newPasswordInput" class="input" inputmode="numeric" maxlength="5" placeholder="Enter 5-digit password" type="password">
+        <input id="confirmPasswordInput" class="input" inputmode="numeric" maxlength="5" placeholder="Confirm 5-digit password" type="password">
+        <div class="btn-row"><button class="btn primary" onclick="savePassword()">SAVE PASSWORD</button><button class="btn danger" onclick="removePassword()">REMOVE PASSWORD</button></div>
+      </div>
+    </div>
     <div class="setting-row">
       <div class="setting-title">DATE OF BIRTH</div>
       <input id="dobInput" class="input" type="date">
@@ -221,6 +251,20 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
   <div class="sudoku-help">Complete every row, column and 3×3 box with numbers 1–9. Fixed numbers cannot be changed. Complete a puzzle to unlock the next level.</div>
 </section>
 
+<section id="notesPage" class="page">
+  <button class="back-button" onclick="openPage('menu')">← MENU</button>
+  <div class="hero"><h1>NOTES</h1><p>PROFESSIONAL OFFLINE NOTES</p></div>
+  <div class="notes-toolbar"><input id="noteSearch" class="search" style="margin:0;flex:1" oninput="renderNotes()" placeholder="Search notes..."><button class="btn primary" onclick="openNoteEditor()">+ NEW NOTE</button></div>
+  <div id="notesList" class="notes-list"></div>
+</section>
+
+<section id="notificationsPage" class="page">
+  <button class="back-button" onclick="openPage('menu')">← MENU</button>
+  <div class="hero"><h1>NOTIFICATIONS</h1><p>APP UPDATES &amp; ALERTS</p></div>
+  <div class="btn-row" style="justify-content:flex-end"><button class="btn" onclick="markAllNotificationsRead()">MARK ALL READ</button><button class="btn danger" onclick="clearNotifications()">CLEAR ALL</button></div>
+  <div id="notificationList" class="notification-list" style="margin-top:12px"></div>
+</section>
+
 <section id="lifeDataPage" class="page">
   <button class="back-button" onclick="openPage('menu')">← MENU</button>
   <div class="hero"><h1>LIFE DATA</h1><p>DETAILED TIME INTELLIGENCE</p></div>
@@ -282,6 +326,16 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
 </main>
 </div>
 
+<div id="noteModal" class="modal" onclick="if(event.target===this)closeNoteEditor()">
+  <div class="modal-box">
+    <div class="modal-title">NOTE</div>
+    <input type="hidden" id="noteEditId">
+    <input id="noteTitleInput" class="input" placeholder="Note title">
+    <textarea id="noteContentInput" class="input" style="min-height:220px;resize:vertical" placeholder="Write your note..."></textarea>
+    <div class="btn-row"><button class="btn primary" onclick="saveNote()">SAVE NOTE</button><button class="btn danger" onclick="deleteCurrentNote()">DELETE</button><button class="btn" onclick="closeNoteEditor()">CANCEL</button></div>
+  </div>
+</div>
+
 <div id="examModal" class="modal" onclick="if(event.target===this)closeExamModal()">
   <div class="modal-box">
     <div class="modal-title" id="modalTitle">ADD ADMISSION EXAM</div>
@@ -290,6 +344,7 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
       <option value="ENGINEERING">ENGINEERING</option>
       <option value="UNIVERSITY">UNIVERSITY</option>
       <option value="MEDICAL">MEDICAL</option>
+      <option value="DENTAL">DENTAL</option>
     </select>
     <input id="examName" class="input" placeholder="Exam name">
     <input id="examDate" class="input" type="date">
@@ -298,13 +353,27 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
   </div>
 </div>
 
+<div id="lockScreen" class="lock-screen">
+  <div class="lock-card">
+    <div class="lock-title">APP LOCKED</div><div class="lock-sub">ENTER YOUR 5-DIGIT PASSWORD</div>
+    <div id="lockDots" class="password-dots"></div><div id="lockError" class="lock-error"></div><div id="lockPad" class="pin-pad"></div>
+  </div>
+</div>
+<div id="updateBar" class="update-bar"><div><strong>🆕 NEW UPDATE AVAILABLE</strong><span>A newer app version is ready. Reload to activate it.</span></div><button class="btn primary" onclick="activateWaitingWorker()">UPDATE NOW</button></div>
+
 <script>
-const pages=["liveAge","menu","settings","examCenter","admissionGuide","lifeData","goals","appearance","backup","about","sudoku"];
+const pages=["liveAge","menu","settings","examCenter","admissionGuide","lifeData","goals","appearance","backup","about","sudoku","notes","notifications"];
 let savedDOB=localStorage.getItem("lifeos_dob")||"";
 let savedName=localStorage.getItem("lifeos_display_name")||"";
 let welcomeEnabled=localStorage.getItem("lifeos_welcome_enabled")!=="0";
 let savedTheme=localStorage.getItem("lifeos_theme")||"dark";
 let exams=JSON.parse(localStorage.getItem("lifeos_exams")||"[]");
+let notes=JSON.parse(localStorage.getItem("lifeos_notes")||"[]");
+let notifications=JSON.parse(localStorage.getItem("lifeos_notifications")||"[]");
+let passwordEnabled=localStorage.getItem("lifeos_password_enabled")==="1";
+let passwordHash=localStorage.getItem("lifeos_password_hash")||"";
+let pinBuffer="";
+const APP_VERSION="3.1";
 let currentFilter="ALL";
 let guideFilter="ALL";
 
@@ -326,13 +395,38 @@ function openPage(page){
  if(page==="admissionGuide")renderAdmissionGuide();
  if(page==="lifeData")updateLife();
 }
-function updateNameUI(){document.getElementById("nameInput").value=savedName;const t=document.getElementById("welcomeToggle");if(t)t.checked=welcomeEnabled}
+function updateNameUI(){document.getElementById("nameInput").value=savedName;const t=document.getElementById("welcomeToggle");if(t)t.checked=welcomeEnabled;const n=document.getElementById("welcomeMenuName");if(n)n.textContent=savedName||"";const h=document.getElementById("welcomeMenuHero");if(h)h.classList.toggle("off",!welcomeEnabled);const pt=document.getElementById("passwordToggle");if(pt)pt.checked=passwordEnabled;const pb=document.getElementById("passwordSettingsBox");if(pb)pb.style.display=passwordEnabled?"block":"none"}
 function saveName(){savedName=document.getElementById("nameInput").value.trim();localStorage.setItem("lifeos_display_name",savedName);updateSetupState();updateWelcomeTitle()}
 function updateWelcomeTitle(){const el=document.getElementById("welcomeTitle");if(!el)return;el.innerHTML=savedName?`WELCOME, <span class="welcome-name">${esc(savedName)}</span>!<br>WELCOME TO ADMISSION TRACKER`:`WELCOME TO ADMISSION TRACKER`}
-function saveWelcomeSetting(){const t=document.getElementById("welcomeToggle");welcomeEnabled=!!t?.checked;localStorage.setItem("lifeos_welcome_enabled",welcomeEnabled?"1":"0")}
+function saveWelcomeSetting(){const t=document.getElementById("welcomeToggle");welcomeEnabled=!!t?.checked;localStorage.setItem("lifeos_welcome_enabled",welcomeEnabled?"1":"0");const h=document.getElementById("welcomeMenuHero");if(h)h.classList.toggle("off",!welcomeEnabled)}
 function closeWelcome(){document.getElementById("welcomeOverlay")?.classList.remove("show")}
 function showWelcome(){if(!welcomeEnabled)return;updateWelcomeTitle();document.getElementById("welcomeOverlay")?.classList.add("show")}
 function updateDOBUI(){document.getElementById("dobInput").value=savedDOB}
+async function sha256(text){const data=new TextEncoder().encode(text);const hash=await crypto.subtle.digest("SHA-256",data);return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,"0")).join("")}
+function togglePasswordSetting(){const t=document.getElementById("passwordToggle");passwordEnabled=!!t?.checked;if(passwordEnabled&&!passwordHash){document.getElementById("passwordSettingsBox").style.display="block";return}localStorage.setItem("lifeos_password_enabled",passwordEnabled?"1":"0");document.getElementById("passwordSettingsBox").style.display=passwordEnabled?"block":"none"}
+async function savePassword(){const a=document.getElementById("newPasswordInput").value.trim(),b=document.getElementById("confirmPasswordInput").value.trim();if(!/^\d{5}$/.test(a)){alert("Password must be exactly 5 digits.");return}if(a!==b){alert("Passwords do not match.");return}passwordHash=await sha256(a);passwordEnabled=true;localStorage.setItem("lifeos_password_hash",passwordHash);localStorage.setItem("lifeos_password_enabled","1");document.getElementById("passwordToggle").checked=true;document.getElementById("passwordSettingsBox").style.display="block";document.getElementById("newPasswordInput").value="";document.getElementById("confirmPasswordInput").value="";alert("5-digit password saved.")}
+function removePassword(){if(!confirm("Remove app password?"))return;passwordEnabled=false;passwordHash="";localStorage.removeItem("lifeos_password_hash");localStorage.setItem("lifeos_password_enabled","0");document.getElementById("passwordToggle").checked=false;document.getElementById("passwordSettingsBox").style.display="none"}
+function lockApp(){if(!passwordEnabled||!passwordHash)return;pinBuffer="";renderPin();document.getElementById("lockScreen").classList.add("show")}
+function renderPin(){const dots=document.getElementById("lockDots");if(dots)dots.innerHTML=Array.from({length:5},(_,i)=>`<span class="password-dot ${i<pinBuffer.length?"on":""}"></span>`).join("");const pad=document.getElementById("lockPad");if(pad)pad.innerHTML=[1,2,3,4,5,6,7,8,9,"⌫",0,"✓"].map(x=>`<button class="pin-key" onclick="pinPress('${x}')">${x}</button>`).join("")}
+async function pinPress(v){if(v==="⌫"){pinBuffer=pinBuffer.slice(0,-1);renderPin();return}if(v==="✓"){if(pinBuffer.length===5)await checkPin();return}if(!/^\d$/.test(v)||pinBuffer.length>=5)return;pinBuffer+=v;renderPin();if(pinBuffer.length===5)await checkPin()}
+async function checkPin(){const hash=await sha256(pinBuffer);if(hash===passwordHash){document.getElementById("lockScreen").classList.remove("show");document.getElementById("lockError").textContent="";pinBuffer=""}else{document.getElementById("lockError").textContent="Incorrect password";pinBuffer="";renderPin()}}
+function lockOnResume(){if(document.visibilityState==="visible"&&passwordEnabled&&passwordHash&&!document.getElementById("lockScreen").classList.contains("show"))lockApp()}
+function openNoteEditor(id){const n=notes.find(x=>String(x.id)===String(id));document.getElementById("noteEditId").value=n?.id||"";document.getElementById("noteTitleInput").value=n?.title||"";document.getElementById("noteContentInput").value=n?.content||"";document.getElementById("noteModal").classList.add("show")}
+function closeNoteEditor(){document.getElementById("noteModal")?.classList.remove("show")}
+function saveNote(){const title=document.getElementById("noteTitleInput").value.trim(),content=document.getElementById("noteContentInput").value.trim();if(!title&&!content){alert("Write something first.");return}const id=document.getElementById("noteEditId").value;const now=new Date().toISOString();if(id){const n=notes.find(x=>String(x.id)===String(id));if(n){n.title=title||"Untitled Note";n.content=content;n.updatedAt=now}}else notes.unshift({id:Date.now(),title:title||"Untitled Note",content,createdAt:now,updatedAt:now});localStorage.setItem("lifeos_notes",JSON.stringify(notes));closeNoteEditor();renderNotes()}
+function deleteCurrentNote(){const id=document.getElementById("noteEditId").value;if(!id)return;if(!confirm("Delete this note?"))return;notes=notes.filter(n=>String(n.id)!==String(id));localStorage.setItem("lifeos_notes",JSON.stringify(notes));closeNoteEditor();renderNotes()}
+function renderNotes(){const q=(document.getElementById("noteSearch")?.value||"").trim().toLowerCase(),el=document.getElementById("notesList");if(!el)return;const list=notes.filter(n=>!q||n.title.toLowerCase().includes(q)||n.content.toLowerCase().includes(q));el.innerHTML=list.length?list.map(n=>`<div class="note-card" onclick="openNoteEditor(${n.id})"><div class="note-title">${esc(n.title)}</div><div class="note-preview">${esc(n.content)}</div><div class="note-meta">Updated ${new Date(n.updatedAt).toLocaleString()}</div></div>`).join(""):"<div class='notes-empty'>No notes yet. Create your first note.</div>"}
+function addNotification(title,message,unread=true){notifications.unshift({id:Date.now(),title,message,date:new Date().toISOString(),unread});notifications=notifications.slice(0,100);localStorage.setItem("lifeos_notifications",JSON.stringify(notifications));renderNotifications();updateNotificationBadge()}
+function renderNotifications(){const el=document.getElementById("notificationList");if(!el)return;el.innerHTML=notifications.length?notifications.map(n=>`<div class="notification-card ${n.unread?"unread":""}" onclick="readNotification(${n.id})">${n.unread?'<span class="notification-dot"></span>':''}<h3>${esc(n.title)}</h3><p>${esc(n.message)}</p><div class="notification-date">${new Date(n.date).toLocaleString()}</div></div>`).join(""):"<div class='notes-empty'>No notifications.</div>"}
+function readNotification(id){const n=notifications.find(x=>x.id===id);if(n){n.unread=false;localStorage.setItem("lifeos_notifications",JSON.stringify(notifications));renderNotifications();updateNotificationBadge()}}
+function markAllNotificationsRead(){notifications.forEach(n=>n.unread=false);localStorage.setItem("lifeos_notifications",JSON.stringify(notifications));renderNotifications();updateNotificationBadge()}
+function clearNotifications(){if(!confirm("Clear all notifications?"))return;notifications=[];localStorage.setItem("lifeos_notifications","[]");renderNotifications();updateNotificationBadge()}
+function updateNotificationBadge(){const c=notifications.filter(n=>n.unread).length,b=document.getElementById("notificationBadge");if(b){b.textContent=c;b.style.display=c?"inline-flex":"none"}}
+function checkAppUpdate(){const key="lifeos_last_seen_app_version";const old=localStorage.getItem(key);if(old&&old!==APP_VERSION){addNotification("New Update Available","Admission Tracker has been updated to version "+APP_VERSION+". Reload to activate the latest version.");document.getElementById("updateBar")?.classList.add("show")}localStorage.setItem(key,APP_VERSION)}
+function activateAppUpdate(){location.reload(true)}
+function watchServiceWorkerUpdate(){if(!("serviceWorker" in navigator))return;navigator.serviceWorker.addEventListener("controllerchange",()=>{document.getElementById("updateBar")?.classList.remove("show");location.reload()});navigator.serviceWorker.ready.then(reg=>{if(reg.waiting){addNotification("New Update Available","A newer app version is ready. Tap UPDATE NOW to activate it.");document.getElementById("updateBar")?.classList.add("show")}reg.addEventListener("updatefound",()=>{const nw=reg.installing;if(!nw)return;nw.addEventListener("statechange",()=>{if(nw.state==="installed"&&navigator.serviceWorker.controller){addNotification("New Update Available","A newer app version is ready. Tap UPDATE NOW to activate it.");document.getElementById("updateBar")?.classList.add("show")}})})})}
+function activateWaitingWorker(){navigator.serviceWorker?.ready.then(reg=>{if(reg.waiting){reg.waiting.postMessage({type:"SKIP_WAITING"})}else{location.reload()}})}
+
 function saveDOB(){savedDOB=document.getElementById("dobInput").value;localStorage.setItem("lifeos_dob",savedDOB);updateSetupState();updateLife()}
 function updateSetupState(){
  const el=document.getElementById("setupState");
@@ -479,18 +573,19 @@ function showAppUpdate(){document.getElementById("updateBar")?.classList.add("sh
 function applyAppUpdate(){if(window.__pendingSW){window.__pendingSW.postMessage({type:"SKIP_WAITING"});return}location.reload()}
 function setupAppUpdate(){if(!("serviceWorker" in navigator))return;navigator.serviceWorker.register("./service-worker.js").then(reg=>{window.__swReg=reg;reg.update();if(reg.waiting)showAppUpdate();reg.addEventListener("updatefound",()=>{const nw=reg.installing;if(!nw)return;nw.addEventListener("statechange",()=>{if(nw.state==="installed"&&navigator.serviceWorker.controller){window.__pendingSW=nw;showAppUpdate()}})})}).catch(e=>console.log("Service Worker Error:",e));navigator.serviceWorker.addEventListener("controllerchange",()=>{if(window.__reloadedForUpdate)return;window.__reloadedForUpdate=true;location.reload()})}
 function exportData(){
- const data={name:savedName,dob:savedDOB,exams:exams,welcomeEnabled,exportedAt:new Date().toISOString()};
+ const data={name:savedName,dob:savedDOB,exams:exams,welcomeEnabled,theme:savedTheme,notes:notes,notifications:notifications,passwordEnabled,exportedAt:new Date().toISOString()};
  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="personal-life-tracker-backup.json";a.click();URL.revokeObjectURL(a.href)
 }
 function resetData(){
  if(!confirm("Reset all saved personal data and admission countdowns on this device?"))return;
- localStorage.removeItem("lifeos_dob");localStorage.removeItem("lifeos_display_name");localStorage.removeItem("lifeos_exams");localStorage.removeItem("lifeos_welcome_enabled");
- savedDOB="";savedName="";exams=[];welcomeEnabled=true;updateNameUI();updateDOBUI();updateSetupState();renderAllExams();openPage("menu")
+ localStorage.removeItem("lifeos_dob");localStorage.removeItem("lifeos_display_name");localStorage.removeItem("lifeos_exams");localStorage.removeItem("lifeos_welcome_enabled");localStorage.removeItem("lifeos_notes");localStorage.removeItem("lifeos_notifications");localStorage.removeItem("lifeos_password_enabled");localStorage.removeItem("lifeos_password_hash");
+ savedDOB="";savedName="";exams=[];notes=[];notifications=[];welcomeEnabled=true;passwordEnabled=false;passwordHash="";updateNameUI();updateDOBUI();updateSetupState();renderAllExams();openPage("menu")
 }
-applyTheme(savedTheme);sudokuLoadLevel();updateNameUI();updateDOBUI();updateSetupState();renderAllExams();renderAdmissionGuide();updateLife();updateWelcomeTitle();setTimeout(showWelcome,350);
+applyTheme(savedTheme);sudokuLoadLevel();updateNameUI();updateDOBUI();updateSetupState();renderAllExams();renderAdmissionGuide();updateLife();updateWelcomeTitle();renderNotes();renderNotifications();updateNotificationBadge();checkAppUpdate();watchServiceWorkerUpdate();setTimeout(()=>{showWelcome();if(passwordEnabled&&passwordHash)lockApp()},350);
 setInterval(updateLife,50);setInterval(updateExamCountdowns,50);setInterval(updateGuideCountdowns,1000);setInterval(()=>{if(document.getElementById("sudokuPage")?.classList.contains("active")&&!sudokuState.completed)sudokuUpdateStats()},1000);
 window.addEventListener("load",setupAppUpdate);
+document.addEventListener("visibilitychange",lockOnResume);
 </script>
 </body>
 </html>
