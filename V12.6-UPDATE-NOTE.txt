@@ -1,0 +1,1 @@
+PI EduTrack V12.6 — Online text-message core + cache/update fix. Uses a unique online send handler and network-first app shell to prevent stale V12.x service-worker code from overriding the current build.
