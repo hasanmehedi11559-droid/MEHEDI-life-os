@@ -1,0 +1,3 @@
+PI EduTrack V9 — Requirement 1: complete visible branding update. Requirement 2: personal account sign-up/login/profile with cryptographic password hashing and persistent per-account local vault. Requirement 3: Settings language panel with multiple language choices and saved preference.
+
+Important: true cross-device online account sync requires a production authentication/database backend; this static PWA build does not fake that network layer.
