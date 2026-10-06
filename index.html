@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- PI EduTrack V12.6 online message core -->
+<!-- PI EduTrack V12.7 online message core -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#05060a">
@@ -1038,7 +1038,7 @@ async function sendOnlineCommunityText(){
  if(!(await v12EnsureAuth()))return;
  const input=document.getElementById("communityMessageInput"),text=input.value.trim();
  if(!text)return alert("Please enter a message.");
- const row={group_id:communityGroup,sender_id:v12Session.user.id,text,message_type:type||"TEXT"};
+ const row={group_id:communityGroup,sender_id:v12Session.user.id,text,message_type:"TEXT"};
  const {error}=await v12sb.from("messages").insert(row);
  if(error)return alert("Message send failed: "+error.message);
  input.value="";input.placeholder="Message";communityChatFileMeta=null;communityReplyTo=null;
