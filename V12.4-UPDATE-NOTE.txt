@@ -1,0 +1,3 @@
+PI EduTrack V12.4 — Online Message Sender Schema Fix
+
+Production Supabase messages table uses sender_id instead of author_id. Community message reads/inserts/realtime author mapping were updated accordingly. No database reset or migration required.
