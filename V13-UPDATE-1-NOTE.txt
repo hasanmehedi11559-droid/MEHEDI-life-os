@@ -1,0 +1,13 @@
+PI EduTrack V13 — Update #1
+
+AUTHENTICATION GATE / PRIVATE APP ACCESS
+
+- The internal PI EduTrack app is now completely hidden until a user is authenticated.
+- Logged-out users see only the Sign Up / Log In account gate.
+- Home, Study, Alerts, Community, dashboard icons, header, bottom navigation and other internal UI are not visible before login.
+- The gate is full-screen and cannot reveal the app underneath by scrolling.
+- After successful Sign Up or Log In, the normal PI EduTrack app becomes visible.
+- Logging out returns to the full-screen authentication gate.
+- The welcome animation is not shown while the account gate is active.
+- Direct route/hash navigation cannot expose the hidden app because the app shell itself is locked.
+- Existing V12.9 functionality and Community code are otherwise preserved.

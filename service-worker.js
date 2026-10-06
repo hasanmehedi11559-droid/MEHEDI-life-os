@@ -1,4 +1,4 @@
-const CACHE_NAME='piedutrack-v12.9-dashboard-account';
+const CACHE_NAME='piedutrack-v13-auth-gate';
 const ASSETS = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", event => {
