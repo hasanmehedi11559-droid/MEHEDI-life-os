@@ -1,0 +1,6 @@
+PI EduTrack V8 update
+- App name/branding changed from Admission Tracker to PI EduTrack.
+- PWA manifest updated.
+- Android/browser back navigation now returns to previous in-app page instead of exiting immediately.
+- Root/menu back shows a professional exit confirmation dialog with YES/NO.
+- Supplied PI EduTrack logo is used for 192x192 and 512x512 PWA icons.
