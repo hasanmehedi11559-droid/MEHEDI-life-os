@@ -1,0 +1,5 @@
+PI EduTrack V12.5 — Online Message Core Schema Fix
+
+The production database reported missing payload, attachment and author_id columns. V12.5 stops guessing optional columns. The text-message path now uses only columns confirmed by the live errors: group_id, sender_id, text and message_type. Reads use id, group_id, sender_id, text, message_type and created_at.
+
+No Supabase SQL reset/migration is required. Existing accounts and data are preserved. Attachment/poll/reply metadata is not written into messages until the production schema is explicitly verified.
