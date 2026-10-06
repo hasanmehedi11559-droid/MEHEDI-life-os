@@ -933,7 +933,7 @@ async function v12EnsureGroupMembership(groupId){
   }catch(e){console.warn('Group membership sync:',e)}
 }
 function v12ToLocalMessage(m){
-  return {id:m.id,group:m.group_id,author:m.author_name||'Student',authorKey:(m.sender_id||'').toLowerCase(),text:m.text||'',createdAt:m.created_at||new Date().toISOString(),type:m.message_type||'TEXT',attachment:null,payload:null,replyTo:null,pinned:false,reactions:m.reactions||{},votes:m.votes||{}};
+  return {id:m.id,group:m.group_id,author:m.author_name||'Student',authorKey:(m.sender_id||'').toLowerCase(),text:m.body||'',createdAt:m.created_at||new Date().toISOString(),type:m.message_type||'TEXT',attachment:null,payload:null,replyTo:null,pinned:!!m.is_pinned,reactions:m.reactions||{},votes:m.votes||{}};
 }
 async function v12LoadProfileAndChat(){
   if(!v12Session)return;
@@ -971,7 +971,7 @@ async function v12LoadProfileAndChat(){
   communityAccount={...v12Profile,mobile:v12Profile.mobile||v12Session.user.phone||md.mobile||''};
   communityProfile={...communityProfile,...communityAccount};
   updateCommunityIdentity();
-  const {data:msgs,error:me}=await v12sb.from('messages').select('id,group_id,sender_id,text,message_type,created_at').eq('group_id',communityGroup).order('created_at',{ascending:true}).limit(500);
+  const {data:msgs,error:me}=await v12sb.from('messages').select('id,group_id,sender_id,body,message_type,reply_to_id,is_pinned,created_at,updated_at').eq('group_id',communityGroup).order('created_at',{ascending:true}).limit(500);
   if(me){
     console.error(me);
     v12State('ONLINE BACKEND: login OK • chat data could not be loaded. '+(me.message||''),false);
@@ -989,7 +989,7 @@ async function v12LoadProfileAndChat(){
   communityAuth();
   if(v12Channel){try{await v12sb.removeChannel(v12Channel)}catch(e){}}
   v12Channel=v12sb.channel('community-'+String(communityGroup),{config:{presence:{key:uid}}});
-  v12Channel.on('postgres_changes',{event:'INSERT',schema:'public',table:'messages',filter:'group_id=eq.'+communityGroup},async payload=>{const m={...payload.new};m.author_name=await v12AuthorName(m.sender_id);if(!v12Messages.some(x=>x.id===m.id)){v12Messages.push(m);communityMessages=v12Messages.map(v12ToLocalMessage);renderCommunityChat();if(m.sender_id!==uid)addNotification('New Community Message',m.text||'New content received.')}})
+  v12Channel.on('postgres_changes',{event:'INSERT',schema:'public',table:'messages',filter:'group_id=eq.'+communityGroup},async payload=>{const m={...payload.new};m.author_name=await v12AuthorName(m.sender_id);if(!v12Messages.some(x=>x.id===m.id)){v12Messages.push(m);communityMessages=v12Messages.map(v12ToLocalMessage);renderCommunityChat();if(m.sender_id!==uid)addNotification('New Community Message',m.body||'New content received.')}})
     .on('postgres_changes',{event:'UPDATE',schema:'public',table:'messages',filter:'group_id=eq.'+communityGroup},payload=>{const i=v12Messages.findIndex(x=>x.id===payload.new.id);if(i>=0)v12Messages[i]={...payload.new};communityMessages=v12Messages.map(v12ToLocalMessage);renderCommunityChat()})
     .on('postgres_changes',{event:'DELETE',schema:'public',table:'messages',filter:'group_id=eq.'+communityGroup},payload=>{v12Messages=v12Messages.filter(x=>x.id!==payload.old.id);communityMessages=v12Messages.map(v12ToLocalMessage);renderCommunityChat()})
     .on('postgres_changes',{event:'INSERT',schema:'public',table:'announcements',filter:'group_id=eq.'+communityGroup},payload=>{communityAnnouncements.unshift({id:payload.new.id,group:payload.new.group_id,text:payload.new.text,date:payload.new.created_at,author:'Admin',pinned:payload.new.pinned,attachment:null});addNotification('Community Announcement',payload.new.text);renderCommunityChat()})
@@ -1000,7 +1000,7 @@ async function v12AuthorName(uid){if(uid===v12Session?.user?.id)return v12Profil
 async function v12Subscribe(){
   if(v12Channel){await v12sb.removeChannel(v12Channel);v12Channel=null}
   v12Channel=v12sb.channel("community-"+communityGroup,{config:{presence:{key:v12Session.user.id}}});
-  v12Channel.on("postgres_changes",{event:"INSERT",schema:"public",table:"messages",filter:"group_id=eq."+communityGroup},async payload=>{const m={...payload.new};m.author_name=await v12AuthorName(m.sender_id);if(!v12Messages.some(x=>x.id===m.id)){v12Messages.push(m);communityMessages=v12Messages.map(v12ToLocalMessage);renderCommunityChat();if(m.sender_id!==v12Session.user.id)addNotification("New Community Message",m.text||"New content received.");}})
+  v12Channel.on("postgres_changes",{event:"INSERT",schema:"public",table:"messages",filter:"group_id=eq."+communityGroup},async payload=>{const m={...payload.new};m.author_name=await v12AuthorName(m.sender_id);if(!v12Messages.some(x=>x.id===m.id)){v12Messages.push(m);communityMessages=v12Messages.map(v12ToLocalMessage);renderCommunityChat();if(m.sender_id!==v12Session.user.id)addNotification("New Community Message",m.body||"New content received.");}})
     .on("postgres_changes",{event:"UPDATE",schema:"public",table:"messages",filter:"group_id=eq."+communityGroup},payload=>{const i=v12Messages.findIndex(x=>x.id===payload.new.id);if(i>=0)v12Messages[i]={...payload.new};communityMessages=v12Messages.map(v12ToLocalMessage);renderCommunityChat()})
     .on("postgres_changes",{event:"DELETE",schema:"public",table:"messages",filter:"group_id=eq."+communityGroup},payload=>{v12Messages=v12Messages.filter(x=>x.id!==payload.old.id);communityMessages=v12Messages.map(v12ToLocalMessage);renderCommunityChat()})
     .on("postgres_changes",{event:"INSERT",schema:"public",table:"announcements",filter:"group_id=eq."+communityGroup},payload=>{communityAnnouncements.unshift({id:payload.new.id,group:payload.new.group_id,text:payload.new.text,date:payload.new.created_at,author:"Admin",pinned:payload.new.pinned,attachment:null});addNotification("Community Announcement",payload.new.text);renderCommunityChat()})
@@ -1038,14 +1038,14 @@ async function sendOnlineCommunityText(){
  if(!(await v12EnsureAuth()))return;
  const input=document.getElementById("communityMessageInput"),text=input.value.trim();
  if(!text)return alert("Please enter a message.");
- const row={group_id:communityGroup,sender_id:v12Session.user.id,text,message_type:"TEXT"};
+ const row={group_id:communityGroup,sender_id:v12Session.user.id,body:text,message_type:"TEXT"};
  const {error}=await v12sb.from("messages").insert(row);
  if(error)return alert("Message send failed: "+error.message);
  input.value="";input.placeholder="Message";communityChatFileMeta=null;communityReplyTo=null;
  const f=document.getElementById("communityChatFile");if(f)f.value="";
 }
 async function reactCommunityMessage(id,emoji){if(!(await v12EnsureAuth()))return;await v12sb.from("message_reactions").upsert({message_id:id,user_id:v12Session.user.id,emoji},{onConflict:"message_id,user_id"});}
-async function pinCommunityMessage(id){if(!(await v12EnsureAuth()))return;const m=v12Messages.find(x=>x.id===id);if(!m)return;const {error}=await v12sb.from("messages").update({pinned:!m.pinned}).eq("id",id);if(error)alert(error.message)}
+async function pinCommunityMessage(id){if(!(await v12EnsureAuth()))return;const m=v12Messages.find(x=>x.id===id);if(!m)return;const {error}=await v12sb.from("messages").update({is_pinned:!m.pinned,updated_at:new Date().toISOString()}).eq("id",id);if(error)alert(error.message)}
 async function voteCommunityMessage(id,index){if(!(await v12EnsureAuth()))return;const {error}=await v12sb.from("poll_votes").upsert({message_id:id,user_id:v12Session.user.id,option_index:index},{onConflict:"message_id,user_id"});if(error)alert(error.message)}
 async function communityAdminAnnouncement(){if(!(await v12EnsureAuth()))return;if(v12Profile?.role!=="ADMIN")return alert("Admin only.");const t=prompt("Admin announcement:");if(!t?.trim())return;const {error}=await v12sb.from("announcements").insert({group_id:communityGroup,author_id:v12Session.user.id,text:t.trim(),pinned:true});if(error)return alert(error.message);addNotification("Community Announcement",t.trim())}
 function updateCommunityIdentity(){const a=document.getElementById("communityAvatar");if(a){if(v12Profile?.photo_url)a.innerHTML=`<img class="chat-avatar" src="${v12Profile.photo_url}" alt="">`;else a.textContent=v12Profile?.gender==="BOYS"?"👦":"👧"}const t=document.getElementById("communityChatTitle");if(t)t.textContent=`${window.v12GroupLabel||communityGroup} COMMUNITY`;updateCommunityPresence()}

@@ -1,0 +1,5 @@
+PI EduTrack V12.8
+Production Supabase messages compatibility fix.
+Exact production messages columns used: group_id, sender_id, body, message_type, reply_to_id, is_pinned, created_at, updated_at.
+Removed text/payload/attachment/author_id assumptions from online message core.
+No database reset required.
