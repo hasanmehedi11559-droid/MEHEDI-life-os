@@ -1,0 +1,9 @@
+PI EduTrack V10 — Account & Language update.
+
+1. Settings > Account now includes profile management, secure logout and permanent account deletion confirmation.
+2. Language panel supports বাংলা, English, हिन्दी, اردو, العربية, Español, Français, 中文 and 日本語, with account-saved language preference.
+3. Password fields include show/hide controls.
+4. Account profile supports editing personal information, profile picture and optional password change.
+5. App version/cache bumped for update detection.
+
+Security note: this static PWA stores accounts locally with password hashing; true cross-device online authentication/database requires a production backend.
