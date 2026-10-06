@@ -1,0 +1,17 @@
+PI EduTrack V12.1 — Online Community Login Fix
+
+Fixed:
+- Mobile + password login no longer silently returns to the account gate.
+- Supabase session persistence explicitly enabled with a dedicated storage key.
+- OAuth URL detection disabled because this build uses Mobile + Password only.
+- Profile creation uses upsert to avoid duplicate-profile failures.
+- If automatic signup session is missing, the app attempts an immediate password login.
+- Login/profile/message errors now stay visible instead of silently abandoning the community screen.
+- Successful login opens the realtime Community chat.
+- Service-worker cache bumped so GitHub/PWA can pick up the fix.
+
+Supabase settings remain unchanged:
+- Email provider ON
+- Confirm email OFF
+- Phone provider OFF
+- Use only the publishable/anon key in the browser.
