@@ -1,24 +1,10 @@
-PI EduTrack V12 — TRUE ONLINE REALTIME COMMUNITY
+PI EduTrack V12 — Online Community / Mobile + Password patch
 
-Built from PI EduTrack V11 baseline.
-
-Community V12 changes:
-- Replaced fake/local-only community chat path with a real Supabase-backed online mode.
-- Supabase Auth: phone + password account flow.
-- Profile: name, mobile, gender, age, school/college, class, department/study group, district/city, profile photo.
-- Gender automatically assigns BOYS or GIRLS group; no manual switching.
-- PostgreSQL messages with RLS isolation.
-- Realtime INSERT/UPDATE/DELETE subscriptions for shared group messages.
-- Realtime presence for online count.
-- Supabase Storage upload support for images/PDF/files/audio/video.
-- Poll/quiz payloads and poll votes stored online.
-- Reactions, pinned messages and admin announcements use online tables.
-- Admin role is database-controlled; do not hard-code owner credentials.
-- Offline/localStorage is NOT presented as cross-device online sync. If Supabase is not configured, Community clearly reports that online backend is unavailable.
-
-Required before live deployment:
-1. Run supabase-schema.sql in Supabase SQL Editor.
-2. Put Supabase Project URL + anon/publishable key in supabase-config.js.
-3. Configure Phone Auth according to your verification policy.
-4. Promote the owner profile to ADMIN using SQL in the setup note.
-5. Deploy over HTTPS.
+- True Supabase Realtime community remains the backend for shared Boys/Girls group chat.
+- Community account login now uses Mobile Number + Password without SMS/OTP.
+- Supabase Auth still securely hashes and manages passwords; the app never stores raw passwords.
+- The mobile number is stored in the student profile; an internal deterministic email identity is used only for Supabase Auth.
+- Supabase Email Confirmation must be OFF for this no-SMS mode, otherwise newly created accounts will not receive a session.
+- Supabase Project URL + publishable key are configured in supabase-config.js.
+- Never put a Supabase secret/service_role key in the PWA.
+- Service-worker cache bumped so installed users can receive this update.
