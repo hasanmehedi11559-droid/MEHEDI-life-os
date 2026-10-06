@@ -1,0 +1,10 @@
+PI EduTrack V12.9 — Dashboard + Account UI Update
+
+1. Account sign-up is simplified to Full Name, Mobile Number, Password and Gender only.
+2. Existing account login remains Mobile + Password.
+3. Existing Community/backend code is intentionally not redesigned in this release.
+4. Home/Menu redesigned into a modern two-column icon-card dashboard inspired by the supplied visual reference, while preserving the existing WELCOME + saved name.
+5. PI EduTrack app icon is shown in the top branding area.
+6. Added quick bottom navigation: Home, Study, Alerts, Community.
+7. Existing feature routes are preserved; this is a UI/navigation update, not a feature-removal update.
+8. Service-worker cache bumped to V12.9.
