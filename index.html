@@ -906,48 +906,92 @@ function v12LoginEmail(mobile){const digits=v12Phone(mobile).replace(/\D/g,"");r
 function v12FileExt(name){return (name||"").split(".").pop().toLowerCase()}
 function v12SafeName(n){return (n||"file").replace(/[^a-zA-Z0-9._-]/g,"_").slice(0,120)}
 async function v12Init(){
-  if(!v12BackendReady()){v12State("ONLINE BACKEND: not configured. Add your Supabase URL + publishable key in supabase-config.js.");return}
-  v12sb=window.supabase.createClient(V12_SUPABASE.url,V12_SUPABASE.anonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false,storageKey:"piedutrack-v12-auth"}});
-  const {data,error}=await v12sb.auth.getSession();
-  if(error) console.warn("Supabase session load:",error);
-  v12Session=data?.session||null;
+  if(!v12BackendReady()){v12State("ONLINE BACKEND: not configured. Add your Supabase URL + anon key in supabase-config.js.");return}
+  v12sb=window.supabase.createClient(V12_SUPABASE.url,V12_SUPABASE.anonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  const {data}=await v12sb.auth.getSession();v12Session=data.session;
   v12OnlineReady=true;
   v12State(v12Session?"ONLINE BACKEND: connected • secure session active":"ONLINE BACKEND: connected • please log in",true);
-  if(v12Session){const ok=await v12LoadProfileAndChat();if(!ok){v12Session=null;}}
+  if(v12Session) await v12LoadProfileAndChat();
+}
+async function v12ResolveGroup(gender){
+  const fallback=gender==='BOYS'?'BOYS':'GIRLS';
+  try{
+    const r=await v12sb.from('community_groups').select('*').limit(20);
+    if(!r.error&&Array.isArray(r.data)&&r.data.length){
+      const row=r.data.find(x=>Object.values(x||{}).some(v=>String(v??'').trim().toUpperCase()===fallback)||Object.values(x||{}).some(v=>String(v??'').toUpperCase().includes(fallback)));
+      if(row?.id)return {id:row.id,label:fallback};
+    }
+  }catch(e){console.warn('Group resolver:',e)}
+  return {id:fallback,label:fallback};
+}
+async function v12EnsureGroupMembership(groupId){
+  if(!groupId||groupId==='BOYS'||groupId==='GIRLS'||!v12Session?.user?.id)return;
+  try{
+    const r=await v12sb.from('group_members').upsert({group_id:groupId,user_id:v12Session.user.id},{onConflict:'group_id,user_id'});
+    if(r.error)console.warn('Group membership sync:',r.error);
+  }catch(e){console.warn('Group membership sync:',e)}
 }
 async function v12LoadProfileAndChat(){
-  if(!v12Session)return false;
-  const uid=v12Session.user.id;
-  const {data:prof,error}=await v12sb.from("profiles").select("*").eq("id",uid).maybeSingle();
-  if(error){console.error("Profile load failed:",error);v12State("ONLINE BACKEND: profile load failed • "+(error.message||"database/RLS error"));return false}
+  if(!v12Session)return;
+  const uid=v12Session.user.id,md=v12Session.user.user_metadata||{};
+  let prof=null,profileError=null;
+  const pr=await v12sb.from('profiles').select('*').eq('id',uid).maybeSingle();
+  if(!pr.error) prof=pr.data;
+  else profileError=pr.error;
+  /* Production DB builds may expose a public profile view/table while keeping the full profile table restricted. */
+  if(!prof&&profileError){
+    try{
+      const pp=await v12sb.from('profile_public').select('*').eq('id',uid).maybeSingle();
+      if(!pp.error&&pp.data) prof=pp.data;
+    }catch(e){console.warn('Public profile fallback:',e)}
+  }
+  const gender=(prof?.gender||md.gender||'').toUpperCase()==='BOYS'?'BOYS':'GIRLS';
+  if(!prof){
+    const draft={id:uid,name:md.name||'Student',mobile:v12Phone(md.mobile||v12Session.user.phone||''),gender,age:Number(md.age||18),school:md.school||'',klass:md.klass||'',department:md.department||'',district:md.district||'',photo_url:md.photo_url||null,role:'STUDENT'};
+    try{
+      const ins=await v12sb.from('profiles').upsert(draft,{onConflict:'id'});
+      if(!ins.error) prof=draft;
+      else console.warn('Profile sync:',ins.error);
+    }catch(e){console.warn('Profile sync:',e)}
+  }
+  /* Auth is already successful. Never throw the student back to the login gate just because profile RLS/schema differs. */
+  if(!prof){
+    prof={id:uid,name:md.name||'Student',mobile:v12Phone(md.mobile||v12Session.user.phone||''),gender,age:Number(md.age||18),school:md.school||'',klass:md.klass||'',department:md.department||'',district:md.district||'',photo_url:md.photo_url||null,role:'STUDENT'};
+    v12State('ONLINE BACKEND: authenticated • profile fallback active',true);
+  }
   v12Profile=prof;
-  if(!v12Profile){
-    const md=v12Session.user.user_metadata||{};
-    if(md.name&&md.gender&&md.age&&md.school&&md.klass&&md.department&&md.district){
-      const draft={id:uid,name:md.name,mobile:v12Phone(v12Session.user.phone||md.mobile||""),gender:md.gender,age:Number(md.age),school:md.school,klass:md.klass,department:md.department,district:md.district,photo_url:md.photo_url||null,role:"STUDENT"};
-      const ins=await v12sb.from("profiles").upsert(draft,{onConflict:"id"}).select("*").maybeSingle();
-      if(ins.error){console.error("Profile create failed:",ins.error);v12State("ONLINE BACKEND: profile setup failed • "+ins.error.message);return false}
-      v12Profile=ins.data||draft;
-    }
-    if(!v12Profile){v12State("ONLINE BACKEND: account profile was not found. Please contact the app admin.");return false}
+  const grp=await v12ResolveGroup(gender);
+  communityGroup=grp.id; window.v12GroupLabel=grp.label;
+  localStorage.setItem('lifeos_community_group_label',grp.label);
+  await v12EnsureGroupMembership(grp.id);
+  communityAccount={...v12Profile,mobile:v12Profile.mobile||v12Session.user.phone||md.mobile||''};
+  communityProfile={...communityProfile,...communityAccount};
+  updateCommunityIdentity();
+  const {data:msgs,error:me}=await v12sb.from('messages').select('id,group_id,author_id,text,message_type,attachment,payload,reply_to,created_at,edited_at,pinned').eq('group_id',communityGroup).order('created_at',{ascending:true}).limit(500);
+  if(me){
+    console.error(me);
+    v12State('ONLINE BACKEND: login OK • chat data could not be loaded. '+(me.message||''),false);
+    return;
   }
-  communityAccount={...v12Profile,mobile:v12Session.user.phone||v12Profile.mobile};communityGroup=v12Group(v12Profile.gender);communityProfile={...communityProfile,...communityAccount};
-  const {data:msgs,error:me}=await v12sb.from("messages").select("id,group_id,author_id,text,message_type,attachment,payload,reply_to,created_at,edited_at,pinned").eq("group_id",communityGroup).order("created_at",{ascending:true}).limit(500);
-  if(me){console.error("Message load failed:",me);v12Messages=[];communityMessages=[];v12State("ONLINE BACKEND: connected • message history unavailable (RLS/database issue)",true);}
-  else {
-    const authors=[...new Set((msgs||[]).map(x=>x.author_id))];
-    const names={};
-    if(authors.length){const {data:aps,error:ae}=await v12sb.from("profiles").select("id,name").in("id",authors);if(ae)console.warn("Author lookup:",ae);(aps||[]).forEach(x=>names[x.id]=x.name)}
-    v12Messages=(msgs||[]).map(x=>({...x,author_name:names[x.author_id]||"Student"}));communityMessages=v12Messages.map(v12ToLocalMessage);
+  const authors=[...new Set((msgs||[]).map(x=>x.author_id))],names={};
+  if(authors.length){
+    const aps=await v12sb.from('profiles').select('id,name').in('id',authors);
+    if(!aps.error)(aps.data||[]).forEach(x=>names[x.id]=x.name);
   }
-  const {data:anns,error:annErr}=await v12sb.from("announcements").select("id,group_id,author_id,text,attachment,pinned,created_at").eq("group_id",communityGroup).order("created_at",{ascending:false}).limit(20);
-  if(annErr)console.warn("Announcement load:",annErr);
-  communityAnnouncements=(anns||[]).map(x=>({id:x.id,group:x.group_id,text:x.text,date:x.created_at,author:"Admin",pinned:x.pinned,attachment:x.attachment}));
-  try{await v12Subscribe()}catch(e){console.warn("Realtime subscribe:",e)}
-  updateCommunityIdentity();renderCommunityChat();
-  return true;
+  v12Messages=(msgs||[]).map(x=>({...x,author_name:names[x.author_id]||((x.author_id===uid)?(v12Profile.name||'You'):'Student')}));
+  communityMessages=v12Messages.map(v12ToLocalMessage);
+  const ar=await v12sb.from('announcements').select('id,group_id,author_id,text,attachment,pinned,created_at').eq('group_id',communityGroup).order('created_at',{ascending:false}).limit(20);
+  communityAnnouncements=ar.error?[]:(ar.data||[]).map(x=>({id:x.id,group:x.group_id,text:x.text,date:x.created_at,author:'Admin',pinned:x.pinned,attachment:x.attachment}));
+  communityAuth();
+  if(v12Channel){try{await v12sb.removeChannel(v12Channel)}catch(e){}}
+  v12Channel=v12sb.channel('community-'+String(communityGroup),{config:{presence:{key:uid}}});
+  v12Channel.on('postgres_changes',{event:'INSERT',schema:'public',table:'messages',filter:'group_id=eq.'+communityGroup},async payload=>{const m=payload.new;m.author_name=await v12AuthorName(m.author_id);if(!v12Messages.some(x=>x.id===m.id)){v12Messages.push(m);communityMessages=v12Messages.map(v12ToLocalMessage);renderCommunityChat();if(m.author_id!==uid)addNotification('New Community Message',m.text||'New content received.')}})
+    .on('postgres_changes',{event:'UPDATE',schema:'public',table:'messages',filter:'group_id=eq.'+communityGroup},payload=>{const i=v12Messages.findIndex(x=>x.id===payload.new.id);if(i>=0)v12Messages[i]=payload.new;communityMessages=v12Messages.map(v12ToLocalMessage);renderCommunityChat()})
+    .on('postgres_changes',{event:'DELETE',schema:'public',table:'messages',filter:'group_id=eq.'+communityGroup},payload=>{v12Messages=v12Messages.filter(x=>x.id!==payload.old.id);communityMessages=v12Messages.map(v12ToLocalMessage);renderCommunityChat()})
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'announcements',filter:'group_id=eq.'+communityGroup},payload=>{communityAnnouncements.unshift({id:payload.new.id,group:payload.new.group_id,text:payload.new.text,date:payload.new.created_at,author:'Admin',pinned:payload.new.pinned,attachment:payload.new.attachment});addNotification('Community Announcement',payload.new.text);renderCommunityChat()})
+    .subscribe((status)=>{if(status==='SUBSCRIBED')v12State('ONLINE BACKEND: connected • realtime '+(window.v12GroupLabel||'community'),true)});
+  renderCommunityChat();
 }
-function v12ToLocalMessage(m){return {id:m.id,group:m.group_id,author:m.author_id===v12Session?.user?.id?(v12Profile?.name||"You"):((m.author_name)||"Student"),authorKey:m.author_id,text:m.text||"",createdAt:m.created_at,type:m.message_type||"TEXT",attachment:m.attachment||null,payload:m.payload||null,replyTo:m.reply_to,pinned:!!m.pinned}}
 async function v12AuthorName(uid){if(uid===v12Session?.user?.id)return v12Profile?.name||"You";const {data}=await v12sb.from("profiles").select("name").eq("id",uid).maybeSingle();return data?.name||"Student"}
 async function v12Subscribe(){
   if(v12Channel){await v12sb.removeChannel(v12Channel);v12Channel=null}
@@ -972,39 +1016,19 @@ function showCommunitySignup(){const g=document.getElementById("communityAuthGat
 function showCommunityLogin(){const g=document.getElementById("communityAuthGate");g.innerHTML=`<h2>ONLINE COMMUNITY LOG IN</h2><input id="caMobile" class="input" inputmode="tel" placeholder="Mobile Number"><div class="password-input-wrap"><input id="caPass" class="input" type="password" placeholder="Password"><button type="button" class="password-eye" onclick="togglePasswordVisibility('caPass',this)">👁️</button></div><div class="btn-row"><button class="btn primary" onclick="loginCommunityAccount()">LOG IN</button><button class="btn" onclick="communityAuth()">BACK</button></div>`}
 async function createCommunityAccount(){
  if(!v12BackendReady())return alert("Supabase backend is not configured.");
- const btn=document.querySelector('#communityAuthGate button[onclick="createCommunityAccount()"]');if(btn){btn.disabled=true;btn.textContent="CREATING..."}
- try{
-  const name=document.getElementById("caName").value.trim(),mobile=document.getElementById("caMobile").value.trim(),pass=document.getElementById("caPass").value,gender=document.getElementById("caGender").value,age=Number(document.getElementById("caAge").value||0),school=document.getElementById("caSchool").value.trim(),klass=document.getElementById("caClass").value.trim(),department=document.getElementById("caDepartment").value.trim(),district=document.getElementById("caDistrict").value.trim(),photo=document.getElementById("caPhoto").files?.[0];
-  if(!name||!mobile||pass.length<6||!gender||!age||!school||!klass||!department||!district)return alert("Please complete all required account fields.");
-  const phone=v12Phone(mobile),loginEmail=v12LoginEmail(phone);
-  if(!loginEmail)return alert("Please enter a valid mobile number.");
-  const {data,error}=await v12sb.auth.signUp({email:loginEmail,password:pass,options:{data:{name,mobile:phone,gender,age,school,klass,department,district}}});
-  if(error)return alert(error.message);
-  if(!data.user)return alert("Account could not be created.");
-  let photoUrl=null;if(photo){if(photo.size>5*1024*1024)return alert("Profile picture must be 5 MB or smaller.");const path=`profiles/${data.user.id}/${crypto.randomUUID()}-${v12SafeName(photo.name)}`;const up=await v12sb.storage.from("community-media").upload(path,photo,{upsert:false,contentType:photo.type});if(up.error)return alert("Profile photo upload failed: "+up.error.message);const pub=v12sb.storage.from("community-media").getPublicUrl(path);photoUrl=pub.data.publicUrl}
-  const profile={id:data.user.id,name,mobile:phone,gender,age,school,klass,department,district,photo_url:photoUrl,role:"STUDENT"};
-  const {error:pe}=await v12sb.from("profiles").upsert(profile,{onConflict:"id"});if(pe)return alert("Profile save failed: "+pe.message);
-  v12Session=data.session||null;
-  if(!v12Session){const si=await v12sb.auth.signInWithPassword({email:loginEmail,password:pass});if(si.error)return alert("Account created, but automatic login failed: "+si.error.message);v12Session=si.data.session}
-  v12Profile=profile;const ok=await v12LoadProfileAndChat();if(!ok)alert("Account created, but Community could not open yet. Your account is safe; please try LOG IN once.");
- }finally{if(btn){btn.disabled=false;btn.textContent="SIGN UP"}}
+ const name=document.getElementById("caName").value.trim(),mobile=document.getElementById("caMobile").value.trim(),pass=document.getElementById("caPass").value,gender=document.getElementById("caGender").value,age=Number(document.getElementById("caAge").value||0),school=document.getElementById("caSchool").value.trim(),klass=document.getElementById("caClass").value.trim(),department=document.getElementById("caDepartment").value.trim(),district=document.getElementById("caDistrict").value.trim(),photo=document.getElementById("caPhoto").files?.[0];
+ if(!name||!mobile||pass.length<6||!gender||!age||!school||!klass||!department||!district)return alert("Please complete all required account fields.");
+ const phone=v12Phone(mobile),loginEmail=v12LoginEmail(phone);
+ if(!loginEmail)return alert("Please enter a valid mobile number.");
+ const {data,error}=await v12sb.auth.signUp({email:loginEmail,password:pass,options:{data:{name,mobile:phone,gender,age,school,klass,department,district}}});if(error)return alert(error.message);
+ if(!data.user)return alert("Account could not be created.");
+ let photoUrl=null;if(photo){if(photo.size>5*1024*1024)return alert("Profile picture must be 5 MB or smaller.");const path=`profiles/${data.user.id}/${crypto.randomUUID()}-${v12SafeName(photo.name)}`;const up=await v12sb.storage.from("community-media").upload(path,photo,{upsert:false,contentType:photo.type});if(up.error)return alert("Profile photo upload failed: "+up.error.message);const pub=v12sb.storage.from("community-media").getPublicUrl(path);photoUrl=pub.data.publicUrl}
+ const profile={id:data.user.id,name,mobile:phone,gender,age,school,klass,department,district,photo_url:photoUrl,role:"STUDENT"};
+ const {error:pe}=await v12sb.from("profiles").upsert(profile,{onConflict:"id"});if(pe)console.warn("Profile save/sync warning:",pe)
+ v12Session=data.session;if(!v12Session){alert("Account was created, but Supabase Email Confirmation is still ON. In Supabase: Authentication → Sign In / Providers → Email → turn OFF Confirm email, save, then create/login again. This mode does not use SMS/OTP.");showCommunityLogin();return}
+ v12Profile=profile;await v12LoadProfileAndChat();
 }
-async function loginCommunityAccount(){
- if(!v12BackendReady())return alert("Supabase backend is not configured.");
- const btn=document.querySelector('#communityAuthGate button[onclick="loginCommunityAccount()"]');if(btn){btn.disabled=true;btn.textContent="LOGGING IN..."}
- try{
-  const rawMobile=document.getElementById("caMobile")?.value||"",mobile=v12Phone(rawMobile),pass=document.getElementById("caPass")?.value||"",loginEmail=v12LoginEmail(mobile);
-  if(!loginEmail||!pass)return alert("Enter mobile number and password.");
-  const {data,error}=await v12sb.auth.signInWithPassword({email:loginEmail,password:pass});
-  if(error){console.error("Community login failed:",error);return alert("Login failed: "+error.message)}
-  if(!data?.session||!data?.user)return alert("Login failed: Supabase did not return a valid session.");
-  v12Session=data.session;
-  const ok=await v12LoadProfileAndChat();
-  if(!ok){return alert("Login successful, but your student profile could not be loaded. Please try again or contact the app admin.")}
-  communityAuth();
- }catch(e){console.error(e);alert("Login failed unexpectedly. Please check your internet connection and try again.")}
- finally{if(btn){btn.disabled=false;btn.textContent="LOG IN"}}
-}
+async function loginCommunityAccount(){if(!v12BackendReady())return alert("Supabase backend is not configured.");const mobile=v12Phone(document.getElementById("caMobile").value),pass=document.getElementById("caPass").value,loginEmail=v12LoginEmail(mobile);if(!loginEmail||!pass)return alert("Enter mobile number and password.");const {data,error}=await v12sb.auth.signInWithPassword({email:loginEmail,password:pass});if(error)return alert(error.message);v12Session=data.session;await v12LoadProfileAndChat()}
 async function communityLogout(){if(v12Channel){await v12sb.removeChannel(v12Channel);v12Channel=null}if(v12sb)await v12sb.auth.signOut();v12Session=null;v12Profile=null;v12Messages=[];communityMessages=[];communityAuth()}
 async function sendCommunityMessage(type="TEXT",payload=null){if(!(await v12EnsureAuth()))return;const input=document.getElementById("communityMessageInput"),text=input.value.trim();if(!text&&!communityChatFileMeta&&!payload)return;let attachment=null;
  if(communityChatFileMeta){const f=document.getElementById("communityChatFile")?.files?.[0];if(!f)return;const path=`messages/${v12Session.user.id}/${crypto.randomUUID()}-${v12SafeName(f.name)}`;const up=await v12sb.storage.from("community-media").upload(path,f,{upsert:false,contentType:f.type});if(up.error)return alert("File upload failed: "+up.error.message);const pub=v12sb.storage.from("community-media").getPublicUrl(path);attachment={name:f.name,type:f.type,size:f.size,kind:communityChatFileMeta.kind,url:pub.data.publicUrl,path};}
@@ -1013,7 +1037,7 @@ async function reactCommunityMessage(id,emoji){if(!(await v12EnsureAuth()))retur
 async function pinCommunityMessage(id){if(!(await v12EnsureAuth()))return;const m=v12Messages.find(x=>x.id===id);if(!m)return;const {error}=await v12sb.from("messages").update({pinned:!m.pinned}).eq("id",id);if(error)alert(error.message)}
 async function voteCommunityMessage(id,index){if(!(await v12EnsureAuth()))return;const {error}=await v12sb.from("poll_votes").upsert({message_id:id,user_id:v12Session.user.id,option_index:index},{onConflict:"message_id,user_id"});if(error)alert(error.message)}
 async function communityAdminAnnouncement(){if(!(await v12EnsureAuth()))return;if(v12Profile?.role!=="ADMIN")return alert("Admin only.");const t=prompt("Admin announcement:");if(!t?.trim())return;const {error}=await v12sb.from("announcements").insert({group_id:communityGroup,author_id:v12Session.user.id,text:t.trim(),pinned:true});if(error)return alert(error.message);addNotification("Community Announcement",t.trim())}
-function updateCommunityIdentity(){const a=document.getElementById("communityAvatar");if(a){if(v12Profile?.photo_url)a.innerHTML=`<img class="chat-avatar" src="${v12Profile.photo_url}" alt="">`;else a.textContent=v12Profile?.gender==="BOYS"?"👦":"👧"}const t=document.getElementById("communityChatTitle");if(t)t.textContent=`${communityGroup} COMMUNITY`;updateCommunityPresence()}
+function updateCommunityIdentity(){const a=document.getElementById("communityAvatar");if(a){if(v12Profile?.photo_url)a.innerHTML=`<img class="chat-avatar" src="${v12Profile.photo_url}" alt="">`;else a.textContent=v12Profile?.gender==="BOYS"?"👦":"👧"}const t=document.getElementById("communityChatTitle");if(t)t.textContent=`${window.v12GroupLabel||communityGroup} COMMUNITY`;updateCommunityPresence()}
 /* V12 init: never falls back to fake cross-device local chat when online mode is requested. */
 setTimeout(v12Init,50);
 

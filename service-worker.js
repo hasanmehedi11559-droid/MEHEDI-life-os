@@ -1,4 +1,4 @@
-const CACHE_NAME = "pi-edutrack-v20-v12-1-loginfix";
+const CACHE_NAME = "pi-edutrack-v20-v12-online-profile-fix";
 const ASSETS = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", event => {

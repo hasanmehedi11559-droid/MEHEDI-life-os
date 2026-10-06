@@ -1,4 +1,4 @@
-PI EduTrack V12.1 — True Online Realtime Community + Login Fix
+PI EduTrack V12 — True Online Realtime Community
 
 1. Supabase project: PI EduTrack Community.
 2. Run the production community SQL/schema that you prepared in the Supabase SQL Editor.
