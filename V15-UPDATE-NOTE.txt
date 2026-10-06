@@ -1,0 +1,6 @@
+PI EduTrack V15
+
+1. Mandatory authentication gate: app UI remains fully hidden until the personal account is created or logged in. Direct navigation cannot bypass the gate.
+2. Advanced Exam Center: Academic / Admission split; Admission has Engineering, Varsity and Medical; subject and chapter-wise question structure; full-book exams; MCQ and Written modes; configurable timer; optional negative marking; automatic MCQ score and accuracy; exam result history.
+
+Community backend/code was not redesigned in V15.
