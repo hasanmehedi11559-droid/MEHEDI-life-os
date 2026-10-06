@@ -1,0 +1,5 @@
+PI EduTrack V11 — built from V10 baseline.
+
+Added: reload/current-page persistence, welcome-once-per-session behavior, Study Planner, MCQ + Quiz, Admission Calendar + Deadline Reminder, Application Tracker, Study Progress Dashboard, Admission Exam Reminder, Application Fee Tracker, Favourite Institutions access, and Study Timer with daily/weekly/monthly/yearly analytics plus 24-hour study map.
+
+Note: community/account realtime cross-device sync still requires a secure production backend.

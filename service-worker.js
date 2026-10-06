@@ -1,4 +1,4 @@
-const CACHE_NAME = "pi-edutrack-v16";
+const CACHE_NAME = "pi-edutrack-v17";
 const ASSETS = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", event => {
