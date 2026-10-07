@@ -1,4 +1,4 @@
-const CACHE_NAME='piedutrack-v15.2-premium-settings-alarm-hidayah';
+const CACHE_NAME='piedutrack-v15.2-premium-settings-alarm';
 const ASSETS = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", event => {
