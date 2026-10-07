@@ -1,0 +1,7 @@
+V15.1 UPDATE
+- Removed Favorite/Favourites, Fee Tracker and Favourite Institutions from the visible app.
+- Made Home dashboard cards thinner/compact.
+- Moved Data & Backup into Settings.
+- Settings Theme now opens a separate Theme page.
+- Removed the duplicate Admission Updates Home option; Admission Guide remains the main admission information center.
+- Application Tracker removed from the visible app.
