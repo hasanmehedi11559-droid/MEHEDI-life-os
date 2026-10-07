@@ -8,7 +8,7 @@
 <meta name="description" content="Private offline age, admission countdown and admission guide app.">
 <link rel="manifest" href="manifest.json">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<title>PI EduTrack</title>
+<title>PI EduTrack V15.2</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700&display=swap');
 *{box-sizing:border-box}
@@ -110,6 +110,9 @@ footer{text-align:center;color:#46505b;font-size:7px;letter-spacing:1.3px;paddin
 /* V11 Student productivity */
 .v11-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.v11-card{padding:14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025)}.v11-big{font-family:Orbitron;font-size:20px;color:var(--cyan)}.v11-muted{font-size:8px;color:var(--muted);margin-top:4px}.chart{height:150px;display:flex;align-items:flex-end;gap:5px;padding:12px 4px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.02)}.bar{flex:1;min-width:3px;border-radius:4px 4px 1px 1px;background:linear-gradient(180deg,var(--cyan),var(--purple));position:relative}.bar span{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);font-size:7px;color:var(--muted);white-space:nowrap}.timer-display{font-family:Orbitron;font-size:34px;text-align:center;padding:18px;color:var(--cyan)}.hour-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}.hour-cell{padding:7px 3px;border:1px solid var(--line);border-radius:8px;text-align:center;font-size:7px}.hour-cell b{display:block;font-family:Orbitron;color:var(--cyan);font-size:10px}.list-row{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06)}.status-pill{font-size:7px;border:1px solid var(--line);border-radius:99px;padding:4px 7px;color:var(--cyan)}.mcq-option{width:100%;text-align:left;margin-top:7px;padding:11px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.025);color:var(--text)}.mcq-option.correct{border-color:#39d98a}.mcq-option.wrong{border-color:var(--danger)}.planner-row{display:grid;grid-template-columns:1fr 90px;gap:7px;margin-top:8px}.calendar-day{padding:10px;border:1px solid var(--line);border-radius:10px}.welcome-menu-hero.off{display:none}
 
+
+/* V15.2 premium settings + alarm + hidayah */
+.settings-premium{display:grid;gap:10px;margin-top:10px}.settings-section-label{padding:7px 4px 2px;color:var(--muted);font:700 8px Orbitron;letter-spacing:2px;text-transform:uppercase}.settings-premium-row{min-height:64px;border:1px solid rgba(255,255,255,.07);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));display:flex;align-items:center;gap:12px;padding:10px 12px;color:var(--text);box-shadow:0 8px 24px rgba(0,0,0,.16);transition:.16s ease;cursor:pointer}.settings-premium-row:active{transform:scale(.985)}.settings-premium-row:hover{border-color:var(--line);box-shadow:0 12px 30px rgba(0,0,0,.22)}.settings-premium-icon{width:42px;height:42px;min-width:42px;border-radius:14px;display:grid;place-items:center;font-size:21px;background:rgba(0,246,255,.09);border:1px solid rgba(255,255,255,.06)}.settings-premium-copy{min-width:0;flex:1}.settings-premium-copy b{display:block;font-size:11px;font-weight:700}.settings-premium-copy small{display:block;color:var(--muted);font-size:7px;margin-top:4px;line-height:1.35}.settings-premium-end{color:var(--muted);font-size:19px}.settings-premium-end.chev{font-size:22px}.settings-premium-toggle{margin-left:auto}.settings-profile-row{min-height:74px}.settings-profile-avatar{width:46px;height:46px;border-radius:15px;object-fit:cover;border:1px solid var(--line);background:rgba(255,255,255,.04)}.settings-danger{color:#ff7894}.language-page-card,.hidayah-page-card{border:1px solid var(--line);border-radius:22px;padding:14px;background:linear-gradient(145deg,rgba(0,246,255,.035),rgba(141,77,255,.035));box-shadow:0 16px 40px rgba(0,0,0,.18)}.language-page-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.language-page-btn{min-height:58px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035);color:var(--text);display:flex;align-items:center;gap:9px;padding:10px;text-align:left}.language-page-btn.active{border-color:var(--cyan);background:rgba(0,246,255,.09);box-shadow:0 0 20px rgba(0,246,255,.07)}.language-page-btn .lang-flag{font-size:22px}.language-page-btn b{font-size:10px}.language-page-btn small{display:block;color:var(--muted);font-size:7px;margin-top:2px}.hidayah-bar{margin:12px 0 2px;border:1px solid rgba(80,220,145,.22);border-radius:20px;background:linear-gradient(135deg,rgba(35,180,105,.12),rgba(0,246,255,.045));padding:12px;display:flex;align-items:center;gap:11px;box-shadow:0 12px 30px rgba(0,0,0,.18);cursor:pointer}.hidayah-bar-icon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-size:22px;background:rgba(57,217,138,.12);border:1px solid rgba(57,217,138,.18)}.hidayah-bar-copy{flex:1}.hidayah-bar-copy b{display:block;font:700 12px Orbitron;color:#6ff0b0}.hidayah-bar-copy small{display:block;color:var(--muted);font-size:7px;margin-top:3px}.hidayah-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}.hidayah-card{min-height:160px;border:1px solid rgba(255,255,255,.07);border-radius:22px;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;color:var(--text);box-shadow:0 12px 28px rgba(0,0,0,.18);cursor:pointer}.hidayah-card:active{transform:scale(.98)}.hidayah-icon{font-size:43px;line-height:1}.hidayah-card b{font-size:15px;font-weight:600}.alarm-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.alarm-summary-card{border:1px solid var(--line);border-radius:16px;padding:10px;text-align:center;background:rgba(255,255,255,.03)}.alarm-summary-card b{display:block;font:700 18px Orbitron;color:var(--cyan)}.alarm-summary-card small{color:var(--muted);font-size:7px}.alarm-list{display:grid;gap:9px;margin-top:12px}.alarm-card{border:1px solid rgba(255,255,255,.07);border-radius:21px;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));padding:15px;box-shadow:0 12px 30px rgba(0,0,0,.2)}.alarm-top{display:flex;align-items:center;gap:10px}.alarm-time{font-size:34px;font-weight:700;letter-spacing:-1px}.alarm-ampm{font-size:11px;font-weight:700;color:var(--muted)}.alarm-switch{margin-left:auto}.alarm-meta{color:var(--cyan);font-size:8px;margin-top:4px}.alarm-label{font-size:11px;font-weight:700;margin-top:4px}.alarm-days{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px}.alarm-day{font-size:7px;padding:5px 7px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}.alarm-day.active{color:var(--cyan);border-color:var(--cyan);background:rgba(0,246,255,.08)}.alarm-actions{display:flex;justify-content:flex-end;gap:6px;margin-top:11px}.alarm-actions button{font-size:8px;padding:7px 10px}.alarm-add-panel{display:grid;gap:8px;margin-top:12px;padding:14px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.025)}.alarm-days-select{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.alarm-days-select label{font-size:7px;text-align:center;padding:7px 2px;border:1px solid var(--line);border-radius:9px;color:var(--muted);cursor:pointer}.alarm-days-select input{display:none}.alarm-days-select label:has(input:checked){color:var(--cyan);border-color:var(--cyan);background:rgba(0,246,255,.08)}.alarm-option-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 0;font-size:8px;color:var(--muted)}.alarm-editing{color:var(--cyan);font-size:8px}.alarm-empty{padding:24px 12px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:18px;font-size:9px}.theme-white .settings-premium-row,.theme-white .alarm-card,.theme-white .hidayah-card{background:linear-gradient(145deg,rgba(20,35,55,.045),rgba(112,72,200,.025))}.theme-white .alarm-time{color:var(--text)}
 /* V15 auth gate + advanced exam */
 body.auth-locked{overflow:hidden!important}
 body.auth-locked .app,body.auth-locked .bottom-nav{visibility:hidden!important;pointer-events:none!important}
@@ -223,6 +226,7 @@ body.auth-locked #welcomeOverlay{display:none!important}
     <button class="dashboard-card tone-cyan" onclick="openPage('settings')"><span class="dash-icon">⚙️</span><span class="dash-copy"><b>Settings</b><small>App & account settings</small></span></button>
     <button class="dashboard-card tone-purple" onclick="openPage('about')"><span class="dash-icon">ℹ️</span><span class="dash-copy"><b>About PI EduTrack</b><small>App information</small></span></button>
   </div>
+  <div class="hidayah-bar" onclick="openPage('hidayah')"><span class="hidayah-bar-icon">🕌</span><span class="hidayah-bar-copy"><b>Hidayah</b><small>Quran • Hadith • Books • Islamic Learning</small></span><span class="settings-premium-end chev">›</span></div>
 </section>
 
 
@@ -262,154 +266,70 @@ body.auth-locked #welcomeOverlay{display:none!important}
 </section>
 <section id="admissionCalendarPage" class="page"><button class="back-button" onclick="backPage()">← MENU</button><div class="hero"><h1>ADMISSION CALENDAR</h1><p>DATES & DEADLINES</p></div><div class="settings"><div class="setting-row"><div class="setting-title">ADMISSION EVENTS</div><div id="calendarList"></div></div><div class="setting-row"><div class="setting-title">ADD PERSONAL DEADLINE</div><input id="deadlineTitle" class="input" placeholder="Deadline title"><input id="deadlineDate" class="input" type="date"><div class="btn-row"><button class="btn primary" onclick="addDeadline()">ADD DEADLINE</button></div></div></div></section>
 <section id="studyProgressPage" class="page"><button class="back-button" onclick="backPage()">← MENU</button><div class="hero"><h1>STUDY PROGRESS</h1><p>YOUR STUDY PERFORMANCE</p></div><div class="v11-grid"><div class="v11-card"><div id="progressToday" class="v11-big">0m</div><div class="v11-muted">TODAY</div></div><div class="v11-card"><div id="progressWeek" class="v11-big">0h</div><div class="v11-muted">THIS WEEK</div></div><div class="v11-card"><div id="progressMonth" class="v11-big">0h</div><div class="v11-muted">THIS MONTH</div></div><div class="v11-card"><div id="progressYear" class="v11-big">0h</div><div class="v11-muted">THIS YEAR</div></div></div><div class="settings" style="margin-top:12px"><div class="setting-row"><div class="setting-title">LAST 7 DAYS</div><div id="progressChart" class="chart"></div></div></div></section>
-<section id="examReminderPage" class="page"><button class="back-button" onclick="backPage()">← MENU</button><div class="hero"><h1>EXAM REMINDER</h1><p>ADMISSION EXAM ALERTS</p></div><div class="settings"><div class="setting-row"><div class="setting-title">UPCOMING EXAMS</div><div id="examReminderList"></div></div><div class="setting-row"><div class="setting-title">REMINDER PERMISSION</div><div class="setting-sub">Enable browser notifications for upcoming admission exams.</div><div class="btn-row"><button class="btn primary" onclick="requestReminderPermission()">ENABLE REMINDERS</button></div></div></div></section>
+<section id="examReminderPage" class="page">
+  <button class="back-button" onclick="backPage()">← MENU</button>
+  <div class="hero"><h1>ALARM & REMINDER</h1><p>PREMIUM ALARM • EXAM ALERTS</p></div>
+  <div class="alarm-summary"><div class="alarm-summary-card"><b id="alarmTotalCount">0</b><small>TOTAL</small></div><div class="alarm-summary-card"><b id="alarmActiveCount">0</b><small>ACTIVE</small></div><div class="alarm-summary-card"><b id="alarmExamCount">0</b><small>EXAM</small></div></div>
+  <div class="btn-row" style="margin-top:12px"><button class="btn primary" onclick="openAlarmForm()">＋ ADD ALARM</button><button class="btn" onclick="requestReminderPermission()">🔔 ENABLE NOTIFICATIONS</button></div>
+  <div id="alarmList" class="alarm-list"></div>
+  <div id="alarmForm" class="alarm-add-panel" style="display:none">
+    <div class="alarm-editing" id="alarmFormTitle">NEW ALARM</div>
+    <input id="alarmLabel" class="input" placeholder="Alarm name / label">
+    <input id="alarmTime" class="input" type="time">
+    <select id="alarmRepeat" class="input"><option value="DAILY">Every day</option><option value="ONCE">One time</option><option value="DAYS">Selected days</option></select>
+    <div class="alarm-days-select">${[['0','S'],['1','M'],['2','T'],['3','W'],['4','T'],['5','F'],['6','S']].map(([v,l])=>`<label>${l}<input type="checkbox" value="${v}"></label>`).join('')}</div>
+    <div class="alarm-option-row"><span>Vibration</span><label class="switch"><input id="alarmVibrate" type="checkbox" checked><span class="slider"></span></label></div>
+    <div class="alarm-option-row"><span>Notification</span><label class="switch"><input id="alarmNotify" type="checkbox" checked><span class="slider"></span></label></div>
+    <div class="alarm-option-row"><span>Exam reminder</span><label class="switch"><input id="alarmExam" type="checkbox"><span class="slider"></span></label></div>
+    <div class="btn-row"><button class="btn primary" onclick="saveAlarm()">SAVE ALARM</button><button class="btn" onclick="closeAlarmForm()">CANCEL</button></div>
+  </div>
+</section>
 <section id="studyTimerPage" class="page"><button class="back-button" onclick="backPage()">← MENU</button><div class="hero"><h1>STUDY TIMER</h1><p>STUDY TIME INTELLIGENCE</p></div><div class="settings"><div class="setting-row"><div class="timer-display" id="studyTimerDisplay">00:00:00</div><input id="timerSubject" class="input" placeholder="Subject (optional)"><div class="btn-row" style="justify-content:center"><button class="btn primary" onclick="startStudyTimer()">START</button><button class="btn" onclick="pauseStudyTimer()">PAUSE</button><button class="btn danger" onclick="stopStudyTimer()">STOP & SAVE</button></div></div><div class="setting-row"><div class="v11-grid"><div class="v11-card"><div id="timerToday" class="v11-big">0m</div><div class="v11-muted">TODAY</div></div><div class="v11-card"><div id="timerWeek" class="v11-big">0h</div><div class="v11-muted">WEEKLY</div></div><div class="v11-card"><div id="timerMonth" class="v11-big">0h</div><div class="v11-muted">MONTHLY</div></div><div class="v11-card"><div id="timerYear" class="v11-big">0h</div><div class="v11-muted">YEARLY</div></div></div></div><div class="setting-row"><div class="setting-title">24-HOUR STUDY MAP</div><div class="setting-sub">Minutes studied in each hour of today.</div><div id="hourGrid" class="hour-grid" style="margin-top:10px"></div></div><div class="setting-row"><div class="setting-title">LAST 7 DAYS</div><div id="timerChart" class="chart"></div></div></div></section>
 <section id="settingsPage" class="page">
   <button class="back-button" onclick="backPage()">← MENU</button>
-  <div class="hero"><h1>SETTINGS</h1><p>PROFILE & ADMISSION CONTROL</p></div>
-  <section class="settings">
-    <div class="setting-row">
-      <div class="setting-title">MY ACCOUNT</div>
-      <div class="account-profile-head"><img id="settingsAccountPhoto" class="account-profile-large" alt="Profile"><div><div id="settingsAccountName" class="setting-title">Not signed in</div><div id="accountProfileSummary" class="setting-sub">Not signed in.</div></div></div>
-      <div class="btn-row"><button class="btn primary" onclick="openAccountProfileEditor()">EDIT ACCOUNT</button><button class="btn danger" onclick="personalAccountLogout()">LOG OUT</button><button class="btn danger" onclick="deletePersonalAccount()">DELETE ACCOUNT</button></div>
-    </div>
-    <div class="setting-row setting-link-row" onclick="openPage('appearance')">
-      <div class="setting-title">THEME</div>
-      <div class="setting-sub">Tap to open the separate Theme page and choose your color or scenic theme.</div>
-      <div class="btn-row"><button class="btn primary" type="button">OPEN THEME →</button></div>
-    </div>
-    <div class="setting-row setting-link-row" onclick="openPage('backup')">
-      <div class="setting-title">DATA & BACKUP</div>
-      <div class="setting-sub">Export, restore or reset your local app data.</div>
-      <div class="btn-row"><button class="btn primary" type="button">OPEN DATA & BACKUP →</button></div>
-    </div>
-    <div class="setting-row">
-      <div class="setting-title">DISPLAY NAME</div>
-      <input id="nameInput" class="input" placeholder="Your name">
-      <div class="btn-row"><button class="btn primary" onclick="saveName()">SAVE NAME</button></div>
-    </div>
-    <div class="setting-row"><div class="setting-title">WELCOME ANIMATION</div><div class="setting-sub">Show the animated WELCOME and saved user name in the Menu. This also controls the welcome screen shown when the app opens.</div><div class="toggle-row"><span class="setting-sub" style="margin:0">WELCOME ON</span><label class="switch"><input id="welcomeToggle" type="checkbox" onchange="saveWelcomeSetting()"><span class="slider"></span></label></div></div>
-    <div class="setting-row">
-      <div class="setting-title">APP SECURITY</div>
-      <div class="setting-sub">Optional 5-digit password protection. The password is stored locally as a cryptographic hash.</div>
-      <div class="toggle-row"><span class="setting-sub" style="margin:0">PASSWORD LOCK</span><label class="switch"><input id="passwordToggle" type="checkbox" onchange="togglePasswordSetting()"><span class="slider"></span></label></div>
-      <div id="passwordSettingsBox" style="display:none">
-        <input id="newPasswordInput" class="input" inputmode="numeric" maxlength="5" placeholder="Enter 5-digit password" type="password">
-        <input id="confirmPasswordInput" class="input" inputmode="numeric" maxlength="5" placeholder="Confirm 5-digit password" type="password">
-        <div class="btn-row"><button class="btn primary" onclick="savePassword()">SAVE PASSWORD</button><button class="btn danger" onclick="removePassword()">REMOVE PASSWORD</button></div>
-      </div>
-    </div>
-    <div class="setting-row">
-      <div class="setting-title">DATE OF BIRTH</div>
-      <input id="dobInput" class="input" type="date">
-      <div class="btn-row"><button class="btn primary" onclick="saveDOB()">SAVE DOB</button></div>
-    </div>
-    <div class="setting-row">
-      <div class="setting-title">ADMISSION EXAMS</div>
-      <div class="setting-sub">Create, edit and delete your live admission countdowns from Settings.</div>
-      <div class="btn-row"><button class="btn primary" onclick="openExamModal()">+ ADD EXAM</button></div>
-      <div class="filters" style="margin-top:12px" id="settingsExamFilters">
-        <button class="filter-btn active" onclick="setExamFilter('ALL')">ALL</button>
-        <button class="filter-btn" onclick="setExamFilter('ENGINEERING')">ENGINEERING</button>
-        <button class="filter-btn" onclick="setExamFilter('UNIVERSITY')">UNIVERSITY</button>
-        <button class="filter-btn" onclick="setExamFilter('MEDICAL')">MEDICAL</button><button class="filter-btn" onclick="setExamFilter('DENTAL')">DENTAL</button>
-      </div>
-      <div id="settingsExamList" class="exam-list"></div>
-    </div>
-  </section>
-</section>
-
-<section id="examCenterPage" class="page">
-  <button class="back-button" onclick="backPage()">← MENU</button>
-  <div class="hero"><h1>EXAM COUNTDOWN</h1><p>LIVE ADMISSION EXAM RESULTS</p></div>
-  <div class="filters" id="centerExamFilters">
-    <button class="filter-btn active" onclick="setExamFilter('ALL')">ALL</button>
-    <button class="filter-btn" onclick="setExamFilter('ENGINEERING')">ENGINEERING</button>
-    <button class="filter-btn" onclick="setExamFilter('UNIVERSITY')">UNIVERSITY</button>
-    <button class="filter-btn" onclick="setExamFilter('MEDICAL')">MEDICAL</button>
-    <button class="filter-btn" onclick="setExamFilter('DENTAL')">DENTAL</button>
-  </div>
-  <div id="centerExamList" class="exam-list"></div>
-</section>
-
-<section id="admissionGuidePage" class="page">
-  <button class="back-button" onclick="backPage()">← MENU</button>
-  <div class="hero"><h1>ADMISSION GUIDE</h1><p>BANGLADESH ADMISSION INTELLIGENCE</p></div>
-  <div class="filters" id="guideFilters">
-    <button class="filter-btn active" onclick="setGuideFilter('ALL')">ALL</button>
-    <button class="filter-btn" onclick="setGuideFilter('ENGINEERING')">ENGINEERING</button>
-    <button class="filter-btn" onclick="setGuideFilter('UNIVERSITY')">UNIVERSITY</button>
-    <button class="filter-btn" onclick="setGuideFilter('MEDICAL')">MEDICAL</button><button class="filter-btn" onclick="setGuideFilter('DENTAL')">DENTAL</button>
-  </div>
-  <input id="guideSearch" class="search" oninput="renderAdmissionGuide()" placeholder="Search institution, unit or group...">
-  <div id="guideList" class="guide-list"></div>
-</section>
-
-<section id="sudokuPage" class="page">
-  <button class="back-button" onclick="backPage()">← MENU</button>
-  <div class="hero"><h1>SUDOKU</h1><p>PROFESSIONAL PUZZLE CENTER</p></div>
-  <div class="sudoku-menu-card">
-    <div class="setting-title">GRID SIZE</div>
-    <div class="sudoku-tabs" id="sudokuSizes">
-      <button class="sudoku-tab active" data-size="9" onclick="setSudokuSize(9)">9×9</button>
-      <button class="sudoku-tab" data-size="4" onclick="setSudokuSize(4)">4×4</button>
-      <button class="sudoku-tab" data-size="6" onclick="setSudokuSize(6)">6×6</button>
-      <button class="sudoku-tab" data-size="12" onclick="setSudokuSize(12)">12×12</button>
-      <button class="sudoku-tab" data-size="16" onclick="setSudokuSize(16)">16×16</button>
-    </div>
-    <div class="setting-title" style="margin-top:10px">DIFFICULTY</div>
-    <div class="sudoku-tabs" id="sudokuDifficultyTabs">
-      <button class="sudoku-tab active" data-diff="EASY" onclick="setSudokuDifficulty('EASY')">EASY</button>
-      <button class="sudoku-tab" data-diff="MEDIUM" onclick="setSudokuDifficulty('MEDIUM')">MEDIUM</button>
-      <button class="sudoku-tab" data-diff="HARD" onclick="setSudokuDifficulty('HARD')">HARD</button>
-    </div>
-  </div>
-  <div class="sudoku-levels" id="sudokuLevels"></div>
-  <div class="sudoku-stats">
-    <div class="sudoku-stat"><b id="sudokuLevelLabel">1</b><span>LEVEL</span></div>
-    <div class="sudoku-stat"><b id="sudokuTimer">00:00</b><span>TIME</span></div>
-    <div class="sudoku-stat"><b id="sudokuMistakes">0</b><span>MISTAKES</span></div>
-  </div>
-  <div id="sudokuBoard" class="sudoku-board" aria-label="Sudoku board"></div>
-  <div id="sudokuMessage" class="sudoku-message">SELECT A CELL, THEN CHOOSE A NUMBER.</div>
-  <div class="sudoku-pad" id="sudokuPad"></div>
-  <div class="btn-row" style="justify-content:center;margin-top:14px">
-    <button class="btn" onclick="sudokuClearSelected()">CLEAR</button>
-    <button class="btn" onclick="sudokuHint()">HINT</button>
-    <button class="btn" onclick="newSudokuPuzzle()">NEW PUZZLE</button>
-  </div>
-  <div id="sudokuProgress"></div><div class="sudoku-help">Complete every row, column and 3×3 box with numbers 1–9. Fixed numbers cannot be changed. Complete a puzzle to unlock the next level.</div>
-</section>
-
-<section id="notesPage" class="page">
-  <button class="back-button" onclick="backPage()">← MENU</button>
-  <div class="hero"><h1>NOTES</h1><p>PROFESSIONAL OFFLINE NOTES</p></div>
-  <div class="notes-toolbar"><input id="noteSearch" class="search" style="margin:0;flex:1" oninput="renderNotes()" placeholder="Search notes..."><button class="btn primary" onclick="openNoteEditor()">+ NEW NOTE</button></div>
-  <div id="notesList" class="notes-list"></div>
-</section>
-
-<section id="notificationsPage" class="page">
-  <button class="back-button" onclick="backPage()">← MENU</button>
-  <div class="hero"><h1>NOTIFICATIONS</h1><p>APP UPDATES &amp; ALERTS</p></div>
-  <div class="btn-row" style="justify-content:flex-end"><button class="btn" onclick="markAllNotificationsRead()">MARK ALL READ</button><button class="btn danger" onclick="clearNotifications()">CLEAR ALL</button></div>
-  <div id="notificationList" class="notification-list" style="margin-top:12px"></div>
-</section>
-
-<section id="lifeDataPage" class="page">
-  <button class="back-button" onclick="backPage()">← MENU</button>
-  <div class="hero"><h1>LIFE DATA</h1><p>DETAILED TIME INTELLIGENCE</p></div>
-  <div class="grid2">
-    <div class="data-card"><div id="ldDays" class="data-value">0</div><div class="data-label">TOTAL DAYS</div></div>
-    <div class="data-card"><div id="ldHours" class="data-value">0</div><div class="data-label">TOTAL HOURS</div></div>
-    <div class="data-card"><div id="ldMinutes" class="data-value">0</div><div class="data-label">TOTAL MINUTES</div></div>
-    <div class="data-card"><div id="ldSeconds" class="data-value">0</div><div class="data-label">TOTAL SECONDS</div></div>
+  <div class="hero"><h1>SETTINGS</h1><p>PERSONALIZE PI EDUTRACK</p></div>
+  <div class="settings-premium">
+    <div class="settings-section-label">ACCOUNT</div>
+    <div class="settings-premium-row settings-profile-row" onclick="openAccountProfileEditor()"><img id="settingsAccountPhoto" class="settings-profile-avatar" alt="Profile"><div class="settings-premium-copy"><b id="settingsAccountName">My Account</b><small id="accountProfileSummary">Account profile & personal data</small></div><span class="settings-premium-end chev">›</span></div>
+    <div class="settings-premium-row" onclick="openPage('language')"><span class="settings-premium-icon">🌐</span><span class="settings-premium-copy"><b>Language</b><small>Choose your preferred app language</small></span><span class="settings-premium-end chev">›</span></div>
+    <div class="settings-section-label">APPEARANCE</div>
+    <div class="settings-premium-row" onclick="openPage('appearance')"><span class="settings-premium-icon">🎨</span><span class="settings-premium-copy"><b>Theme</b><small>Colors, scenic themes & display style</small></span><span class="settings-premium-end chev">›</span></div>
+    <div class="settings-premium-row" onclick="openPage('notifications')"><span class="settings-premium-icon">🔔</span><span class="settings-premium-copy"><b>Notifications</b><small>Updates, reminders & app alerts</small></span><span class="settings-premium-end chev">›</span></div>
+    <div class="settings-section-label">DATA & TOOLS</div>
+    <div class="settings-premium-row" onclick="openPage('backup')"><span class="settings-premium-icon">💾</span><span class="settings-premium-copy"><b>Data & Backup</b><small>Export, restore and manage your data</small></span><span class="settings-premium-end chev">›</span></div>
+    <div class="settings-premium-row" onclick="openPage('examReminder')"><span class="settings-premium-icon">⏰</span><span class="settings-premium-copy"><b>Alarm & Exam Reminder</b><small>Set alarms and never miss an exam</small></span><span class="settings-premium-end chev">›</span></div>
+    <div class="settings-premium-row"><span class="settings-premium-icon">👋</span><span class="settings-premium-copy"><b>Welcome Animation</b><small>Show WELCOME and your saved name</small></span><span class="settings-premium-toggle"><label class="switch"><input id="welcomeToggle" type="checkbox" onchange="saveWelcomeSetting()"><span class="slider"></span></label></span></div>
+    <div class="settings-premium-row" style="flex-wrap:wrap"><span class="settings-premium-icon">🔒</span><span class="settings-premium-copy"><b>App Security</b><small>Optional 5-digit app lock</small></span><span class="settings-premium-toggle"><label class="switch"><input id="passwordToggle" type="checkbox" onchange="togglePasswordSetting()"><span class="slider"></span></label></span><div id="passwordSettingsBox" style="display:none;width:100%;padding-top:4px"><input id="newPasswordInput" class="input" inputmode="numeric" maxlength="5" placeholder="Enter 5-digit password" type="password"><input id="confirmPasswordInput" class="input" inputmode="numeric" maxlength="5" placeholder="Confirm 5-digit password" type="password"><div class="btn-row"><button class="btn primary" onclick="savePassword()">SAVE PASSWORD</button><button class="btn danger" onclick="removePassword()">REMOVE PASSWORD</button></div></div></div>
+    <div class="settings-section-label">PERSONAL INFO</div>
+    <div class="settings-premium-row" onclick="openPage('personalData')"><span class="settings-premium-icon">🎂</span><span class="settings-premium-copy"><b>Date of Birth & Life Data</b><small>Manage your personal age information</small></span><span class="settings-premium-end chev">›</span></div>
+    <div class="settings-premium-row" onclick="openPage('examCenter')"><span class="settings-premium-icon">🎓</span><span class="settings-premium-copy"><b>Admission Exams</b><small>Create and manage your admission countdowns</small></span><span class="settings-premium-end chev">›</span></div>
+    <div class="settings-premium-row" onclick="openExamModal()"><span class="settings-premium-icon">＋</span><span class="settings-premium-copy"><b>Add Admission Exam</b><small>Quickly create a new countdown from Settings</small></span><span class="settings-premium-end chev">›</span></div>
+    <div class="settings-section-label">ACCOUNT ACTIONS</div>
+    <div class="settings-premium-row" onclick="personalAccountLogout()"><span class="settings-premium-icon">🚪</span><span class="settings-premium-copy"><b>Log Out</b><small>Your account remains saved for the next login</small></span><span class="settings-premium-end chev">›</span></div>
+    <div class="settings-premium-row settings-danger" onclick="deletePersonalAccount()"><span class="settings-premium-icon">🗑️</span><span class="settings-premium-copy"><b>Delete Account</b><small>Permanently remove this account from the online system</small></span><span class="settings-premium-end chev">›</span></div>
   </div>
 </section>
 
-<section id="goalsPage" class="page">
-  <button class="back-button" onclick="backPage()">← MENU</button>
-  <div class="hero"><h1>GOALS</h1><p>PERSONAL WORKSPACE</p></div>
-  <div class="settings"><div class="setting-row"><div class="setting-title">GOALS</div><div class="setting-sub">Goal management can be added here without affecting your existing personal data.</div></div></div>
+<section id="languagePage" class="page">
+  <button class="back-button" onclick="backPage()">← SETTINGS</button>
+  <div class="hero"><h1>LANGUAGE</h1><p>CHOOSE YOUR PREFERRED APP LANGUAGE</p></div>
+  <div class="language-page-card"><div class="setting-title">Available Languages</div><div class="setting-sub">Select one language. Your choice is saved with your account when online sync is available.</div><div id="languagePageGrid" class="language-page-grid"></div></div>
+</section>
+
+<section id="hidayahPage" class="page">
+  <button class="back-button" onclick="backPage()">← HOME</button>
+  <div class="hero"><h1>HIDAYAH</h1><p>LEARN • REFLECT • GROW</p></div>
+  <div class="hidayah-page-card"><div class="setting-title">Islamic Learning</div><div class="setting-sub">Explore learning sections in a calm, organized space.</div><div class="hidayah-grid" id="hidayahGrid"></div></div>
+</section>
+
+<section id="personalDataPage" class="page">
+  <button class="back-button" onclick="backPage()">← SETTINGS</button>
+  <div class="hero"><h1>PERSONAL DATA</h1><p>NAME & DATE OF BIRTH</p></div>
+  <div class="settings-premium">
+    <div class="settings-section-label">PROFILE</div>
+    <div class="settings-premium-row"><span class="settings-premium-icon">👤</span><span class="settings-premium-copy"><b>Display Name</b><small>The name shown in PI EduTrack</small><input id="nameInput" class="input" placeholder="Your name"></span><button class="btn primary" onclick="saveName()">SAVE</button></div>
+    <div class="settings-premium-row"><span class="settings-premium-icon">🎂</span><span class="settings-premium-copy"><b>Date of Birth</b><small>Used for Live Age and life progress</small><input id="dobInput" class="input" type="date"></span><button class="btn primary" onclick="saveDOB()">SAVE</button></div>
+  </div>
 </section>
 
 <section id="appearancePage" class="page">
@@ -497,7 +417,7 @@ body.auth-locked #welcomeOverlay{display:none!important}
 <div id="updateBar" class="update-bar" aria-live="polite" role="status"><div><strong>🆕 NEW UPDATE AVAILABLE</strong><span>A newer app version is ready. Reload to activate it.</span></div><button class="btn primary" onclick="activateWaitingWorker()">UPDATE NOW</button></div>
 
 <script>
-const pages=["liveAge","menu","settings","examCenter","admissionGuide","lifeData","goals","backup","appearance","about","sudoku","notes","notifications","community","studyPlanner","mcqQuiz","admissionCalendar","studyProgress","examReminder","studyTimer"];
+const pages=["liveAge","menu","settings","examCenter","admissionGuide","lifeData","goals","backup","appearance","about","sudoku","notes","notifications","community","studyPlanner","mcqQuiz","admissionCalendar","studyProgress","examReminder","studyTimer","language","hidayah","personalData"];
 let savedDOB=localStorage.getItem("lifeos_dob")||"";
 let savedName=localStorage.getItem("lifeos_display_name")||"";
 let personalAccount=null;
@@ -537,7 +457,7 @@ const EXAM_HISTORY_KEY="piedutrack_exam_history_v15";
 let passwordEnabled=localStorage.getItem("lifeos_password_enabled")==="1";
 let passwordHash=localStorage.getItem("lifeos_password_hash")||"";
 let pinBuffer="";
-const APP_VERSION="15.0";
+const APP_VERSION="15.2";
 let currentFilter="ALL";
 let guideFilter="ALL";
 
@@ -560,18 +480,27 @@ function showAccountGate(mode="signup"){document.body.classList.add("auth-locked
 function hideAccountGate(){document.getElementById("accountGate")?.classList.add("hidden");document.body.classList.remove("auth-locked")}
 function readAccountPhoto(input,cb){const f=input?.files?.[0];if(!f){cb("");return}if(f.size>2*1024*1024){setAccountError("Profile picture must be 2 MB or smaller.");input.value="";return}const r=new FileReader();r.onload=()=>cb(String(r.result||""));r.readAsDataURL(f)}
 function saveActiveAccount(){if(!personalAccount)return;const store=getAccountStore();store[personalAccount.mobile]=personalAccount;setAccountStore(store)}
-function accountProfileSummary(){const e=document.getElementById("accountProfileSummary"),n=document.getElementById("settingsAccountName"),p=document.getElementById("settingsAccountPhoto");if(!e)return;if(personalAccount){e.textContent=`${personalAccount.mobile} • ${personalAccount.gender} • Age ${personalAccount.age} • ${personalAccount.school}`;if(n)n.textContent=personalAccount.name||"My Account";if(p){p.src=personalAccount.photo||"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect width='100%25' height='100%25' fill='%23121a24'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' fill='%2300f6ff' font-size='34'%3E%F0%9F%91%A4%3C/text%3E%3C/svg%3E"}}else{e.textContent="Not signed in.";if(n)n.textContent="Not signed in";if(p)p.removeAttribute("src")}}
-function loadAccountIntoApp(a){personalAccount=a;savedName=a.name||"";localStorage.setItem("lifeos_display_name",savedName);localStorage.setItem("piedutrack_active_mobile",a.mobile);selectedLanguage=a.language||selectedLanguage||"en";localStorage.setItem("piedutrack_language",selectedLanguage);accountPhotoData=a.photo||"";accountProfileSummary();updateNameUI();updateWelcomeTitle();renderLanguagePanel();applyLanguage();hideAccountGate()}
-async function createPersonalAccount(){const name=document.getElementById("accountName").value.trim(),mobile=document.getElementById("accountMobile").value.trim(),password=document.getElementById("accountPassword").value,gender=document.getElementById("accountGender").value;if(!name||!mobile||!password||!gender){setAccountError("Please complete your name, mobile number, password and gender.");return}if(password.length<6){setAccountError("Password must be at least 6 characters.");return}const store=getAccountStore();if(store[mobile]){setAccountError("An account with this mobile number already exists. Please log in.");setAccountMode("login");document.getElementById("loginMobile").value=mobile;return}const hash=await v9Hash(password);personalAccount={name,mobile,passwordHash:hash,gender,language:selectedLanguage||"en",createdAt:new Date().toISOString()};store[mobile]=personalAccount;setAccountStore(store);loadAccountIntoApp(personalAccount)}async function loginPersonalAccount(){const mobile=document.getElementById("loginMobile").value.trim(),password=document.getElementById("loginPassword").value;const store=getAccountStore(),a=store[mobile];if(!a){setAccountError("Account not found. Please create an account first.");return}const hash=await v9Hash(password);if(hash!==a.passwordHash){setAccountError("Incorrect mobile number or password.");return}loadAccountIntoApp(a)}
+function accountProfileSummary(){const e=document.getElementById("accountProfileSummary"),n=document.getElementById("settingsAccountName"),p=document.getElementById("settingsAccountPhoto");if(!e)return;if(personalAccount){e.textContent=`${personalAccount.mobile} • ${personalAccount.gender}`;if(n)n.textContent=personalAccount.name||"My Account";if(p)p.src=personalAccount.photo||"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect width='100%25' height='100%25' fill='%23121a24'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' fill='%2300f6ff' font-size='34'%3E%F0%9F%91%A4%3C/text%3E%3C/svg%3E"}else{e.textContent="Not signed in.";if(n)n.textContent="Not signed in";if(p)p.removeAttribute("src")}}
+let personalSb=null,personalOnlineReady=false,personalOnlineUser=null;
+function personalBackendReady(){return !!(V12_SUPABASE?.url&&V12_SUPABASE?.anonKey&&window.supabase)}
+function personalLoginEmail(mobile){return v12LoginEmail(mobile)}
+async function personalBackendInit(){if(!personalBackendReady())return false;try{if(!personalSb)personalSb=window.supabase.createClient(V12_SUPABASE.url,V12_SUPABASE.anonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});const {data}=await personalSb.auth.getSession();personalOnlineUser=data?.session?.user||null;personalOnlineReady=true;if(personalOnlineUser){const u=personalOnlineUser,md=u.user_metadata||{};const mobile=md.mobile||((u.email||'').match(/m(\d+)@auth\.piedutrack\.app/i)?.[1]||'');const normalized=v12Phone(mobile)||mobile;const a={...md,name:md.name||'Student',mobile:normalized,gender:md.gender||'MALE',language:md.language||selectedLanguage||'en',authUserId:u.id,createdAt:md.createdAt||u.created_at};loadAccountIntoApp(a);saveActiveAccount()}return true}catch(e){console.warn('Personal account backend:',e);return false}}
+async function syncPersonalAccountOnline(){if(!personalAccount||!personalBackendReady())return;try{if(!personalSb)personalSb=window.supabase.createClient(V12_SUPABASE.url,V12_SUPABASE.anonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});const {error}=await personalSb.auth.updateUser({data:{name:personalAccount.name,mobile:personalAccount.mobile,gender:personalAccount.gender,language:personalAccount.language||'en',age:personalAccount.age||null,school:personalAccount.school||'',klass:personalAccount.klass||'',department:personalAccount.department||'',district:personalAccount.district||'',photo:personalAccount.photo||'',dob:savedDOB||'',theme:savedTheme||'dark',welcomeEnabled:welcomeEnabled!==false,alarms:alarms||[]}});if(error)console.warn('Account sync:',error.message)}catch(e){console.warn('Account sync:',e)}}
+function loadAccountIntoApp(a){personalAccount=a;savedName=a.name||"";localStorage.setItem("lifeos_display_name",savedName);localStorage.setItem("piedutrack_active_mobile",a.mobile);selectedLanguage=a.language||selectedLanguage||"en";localStorage.setItem("piedutrack_language",selectedLanguage);if(a.dob){savedDOB=a.dob;localStorage.setItem("lifeos_dob",savedDOB)}if(a.theme){savedTheme=a.theme;applyTheme(savedTheme)}if(typeof a.welcomeEnabled==='boolean'){welcomeEnabled=a.welcomeEnabled;localStorage.setItem("lifeos_welcome_enabled",welcomeEnabled?'1':'0')}if(Array.isArray(a.alarms)){alarms=a.alarms;saveAlarms()}accountPhotoData=a.photo||"";accountProfileSummary();updateNameUI();updateWelcomeTitle();renderLanguagePanel();renderAlarmCenter();applyLanguage();hideAccountGate()}
+async function createPersonalAccount(){const name=document.getElementById("accountName").value.trim(),mobile=v12Phone(document.getElementById("accountMobile").value),password=document.getElementById("accountPassword").value,gender=document.getElementById("accountGender").value;if(!name||!mobile||!password||!gender){setAccountError("Please complete your name, mobile number, password and gender.");return}if(password.length<6){setAccountError("Password must be at least 6 characters.");return}if(personalBackendReady()){try{if(!personalSb)personalSb=window.supabase.createClient(V12_SUPABASE.url,V12_SUPABASE.anonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});const email=personalLoginEmail(mobile);const {data,error}=await personalSb.auth.signUp({email,password,options:{data:{name,mobile,gender,language:selectedLanguage||'en',createdAt:new Date().toISOString(),app:'PI EduTrack'}}});if(error){setAccountError(error.message.includes('already registered')?'This mobile number already has an account. Please log in.':error.message);return}if(!data?.session){setAccountError("Account created, but online session is not active. Please make sure Supabase Email confirmation is OFF, then log in.");return}personalOnlineUser=data.user;personalAccount={name,mobile,passwordHash:"",gender,language:selectedLanguage||"en",createdAt:new Date().toISOString(),authUserId:data.user.id};saveActiveAccount();await syncPersonalAccountOnline();loadAccountIntoApp(personalAccount);return}catch(e){setAccountError("Online account could not be created: "+(e?.message||e));return}}
+const store=getAccountStore();if(store[mobile]){setAccountError("An account with this mobile number already exists. Please log in.");setAccountMode("login");document.getElementById("loginMobile").value=mobile;return}const hash=await v9Hash(password);personalAccount={name,mobile,passwordHash:hash,gender,language:selectedLanguage||"en",createdAt:new Date().toISOString()};store[mobile]=personalAccount;setAccountStore(store);loadAccountIntoApp(personalAccount)}
+async function loginPersonalAccount(){const mobile=v12Phone(document.getElementById("loginMobile").value),password=document.getElementById("loginPassword").value;if(!mobile||!password){setAccountError("Enter mobile number and password.");return}if(personalBackendReady()){try{if(!personalSb)personalSb=window.supabase.createClient(V12_SUPABASE.url,V12_SUPABASE.anonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});const email=personalLoginEmail(mobile);const {data,error}=await personalSb.auth.signInWithPassword({email,password});if(error){setAccountError(error.message);return}const u=data.user,md=u?.user_metadata||{};personalOnlineUser=u;let a={...md,name:md.name||'Student',mobile:md.mobile||mobile,gender:md.gender||'MALE',language:md.language||'en',authUserId:u.id,createdAt:md.createdAt||u.created_at};if(!md.name){try{const r=await personalSb.from('profiles').select('*').eq('id',u.id).maybeSingle();if(!r.error&&r.data)a={...a,name:r.data.name||a.name,mobile:r.data.mobile||a.mobile,gender:r.data.gender||a.gender,age:r.data.age,school:r.data.school,klass:r.data.klass,department:r.data.department,district:r.data.district,photo:r.data.photo_url}}catch(e){}}personalAccount=a;saveActiveAccount();loadAccountIntoApp(a);return}catch(e){setAccountError(e?.message||"Login failed.");return}}
+const store=getAccountStore(),a=store[mobile];if(!a){setAccountError("Account not found. Please create an account first.");return}const hash=await v9Hash(password);if(hash!==a.passwordHash){setAccountError("Incorrect mobile number or password.");return}loadAccountIntoApp(a)}
 function togglePasswordVisibility(id,btn){const input=document.getElementById(id);if(!input)return;const show=input.type==="password";input.type=show?"text":"password";if(btn)btn.textContent=show?"🙈":"👁️"}
-function personalAccountLogout(){if(!personalAccount)return;if(!confirm("Log out of this account? Your saved account remains available for the next login."))return;saveActiveAccount();personalAccount=null;localStorage.removeItem("piedutrack_active_mobile");showAccountGate("login")}
-function deletePersonalAccount(){if(!personalAccount)return;if(!confirm("Are you sure you want to permanently delete your account? This cannot be undone."))return;const mobile=personalAccount.mobile,store=getAccountStore();delete store[mobile];setAccountStore(store);personalAccount=null;accountPhotoData="";accountPhotoEditData="";localStorage.removeItem("piedutrack_active_mobile");localStorage.removeItem("lifeos_display_name");accountProfileSummary();showAccountGate(Object.keys(store).length?"login":"signup");setAccountError("Account permanently deleted.")}
+async function personalAccountLogout(){if(!personalAccount)return;if(!confirm("Log out of this account? Your saved account remains available for the next login."))return;saveActiveAccount();if(personalSb)try{await personalSb.auth.signOut()}catch(e){}personalOnlineUser=null;personalAccount=null;localStorage.removeItem("piedutrack_active_mobile");showAccountGate("login")}
+async function deletePersonalAccount(){if(!personalAccount)return;if(!confirm("Are you sure you want to permanently delete this account? This cannot be undone."))return;const mobile=personalAccount.mobile,store=getAccountStore();delete store[mobile];setAccountStore(store);if(personalSb)try{await personalSb.auth.signOut()}catch(e){}personalOnlineUser=null;personalAccount=null;accountPhotoData="";accountPhotoEditData="";localStorage.removeItem("piedutrack_active_mobile");localStorage.removeItem("lifeos_display_name");accountProfileSummary();showAccountGate(Object.keys(store).length?"login":"signup");setAccountError("Account signed out and removed from this device. For complete online deletion, a secure server-side delete function is required.")}
 function openAccountProfileEditor(){if(!personalAccount)return showAccountGate("login");document.getElementById("editAccountName").value=personalAccount.name||"";document.getElementById("editAccountMobile").value=personalAccount.mobile||"";document.getElementById("editAccountGender").value=personalAccount.gender||"MALE";document.getElementById("editAccountAge").value=personalAccount.age||"";document.getElementById("editAccountSchool").value=personalAccount.school||"";document.getElementById("editAccountClass").value=personalAccount.klass||"";document.getElementById("editAccountDepartment").value=personalAccount.department||"";document.getElementById("editAccountDistrict").value=personalAccount.district||"";document.getElementById("editAccountPhotoPreview").src=personalAccount.photo||"";document.getElementById("editAccountNewPassword").value="";accountPhotoEditData="";document.getElementById("accountProfileModal").classList.add("show")}
 function closeAccountProfileEditor(){document.getElementById("accountProfileModal")?.classList.remove("show")}
-async function saveAccountProfile(){if(!personalAccount)return;const name=document.getElementById("editAccountName").value.trim(),gender=document.getElementById("editAccountGender").value,age=Number(document.getElementById("editAccountAge").value||0),school=document.getElementById("editAccountSchool").value.trim(),klass=document.getElementById("editAccountClass").value.trim(),department=document.getElementById("editAccountDepartment").value.trim(),district=document.getElementById("editAccountDistrict").value.trim(),newPassword=document.getElementById("editAccountNewPassword").value;if(!name||!age||!school||!klass||!department||!district){alert("Please complete all account fields.");return}if(newPassword&&newPassword.length<6){alert("New password must be at least 6 characters.");return}personalAccount.name=name;personalAccount.gender=gender;personalAccount.age=age;personalAccount.school=school;personalAccount.klass=klass;personalAccount.department=department;personalAccount.district=district;if(accountPhotoEditData)personalAccount.photo=accountPhotoEditData;if(newPassword)personalAccount.passwordHash=await v9Hash(newPassword);saveActiveAccount();accountPhotoEditData="";savedName=personalAccount.name;localStorage.setItem("lifeos_display_name",savedName);accountProfileSummary();updateNameUI();updateWelcomeTitle();closeAccountProfileEditor()}
-function initPersonalAccount(){const store=getAccountStore();const active=localStorage.getItem("piedutrack_active_mobile");if(active&&store[active]){loadAccountIntoApp(store[active]);return}showAccountGate(Object.keys(store).length?"login":"signup")}
-function renderLanguagePanel(){const g=document.getElementById("languageGrid");if(!g)return;g.innerHTML=LANGUAGE_OPTIONS.map(x=>`<button class="language-btn ${x.id===selectedLanguage?"active":""}" onclick="selectLanguage('${x.id}')">${x.label}</button>`).join("")}
-function selectLanguage(id){selectedLanguage=LANGUAGE_OPTIONS.some(x=>x.id===id)?id:"en";localStorage.setItem("piedutrack_language",selectedLanguage);if(personalAccount){personalAccount.language=selectedLanguage;saveActiveAccount()}renderLanguagePanel();applyLanguage()}
+async function saveAccountProfile(){if(!personalAccount)return;const name=document.getElementById("editAccountName").value.trim(),gender=document.getElementById("editAccountGender").value,age=Number(document.getElementById("editAccountAge").value||0),school=document.getElementById("editAccountSchool").value.trim(),klass=document.getElementById("editAccountClass").value.trim(),department=document.getElementById("editAccountDepartment").value.trim(),district=document.getElementById("editAccountDistrict").value.trim(),newPassword=document.getElementById("editAccountNewPassword").value;if(!name){alert("Please enter your name.");return}if(newPassword&&newPassword.length<6){alert("New password must be at least 6 characters.");return}personalAccount.name=name;personalAccount.gender=gender;personalAccount.age=age||personalAccount.age||null;personalAccount.school=school||personalAccount.school||"";personalAccount.klass=klass||personalAccount.klass||"";personalAccount.department=department||personalAccount.department||"";personalAccount.district=district||personalAccount.district||"";if(accountPhotoEditData)personalAccount.photo=accountPhotoEditData;saveActiveAccount();if(personalSb){if(newPassword){const r=await personalSb.auth.updateUser({password:newPassword});if(r.error){alert(r.error.message);return}}await syncPersonalAccountOnline()}accountPhotoEditData="";savedName=personalAccount.name;localStorage.setItem("lifeos_display_name",savedName);accountProfileSummary();updateNameUI();updateWelcomeTitle();closeAccountProfileEditor()}
+async function initPersonalAccount(){const backend=await personalBackendInit();if(backend&&personalAccount){return}const store=getAccountStore();const active=localStorage.getItem("piedutrack_active_mobile");if(active&&store[active]){loadAccountIntoApp(store[active]);return}showAccountGate(Object.keys(store).length?"login":"signup")}
+function renderLanguagePanel(){const g=document.getElementById("languageGrid");if(g)g.innerHTML=LANGUAGE_OPTIONS.map(x=>`<button class="language-btn ${x.id===selectedLanguage?"active":""}" onclick="selectLanguage('${x.id}')">${x.label}</button>`).join("");renderLanguagePage()}
+function renderLanguagePage(){const g=document.getElementById("languagePageGrid");if(!g)return;g.innerHTML=LANGUAGE_OPTIONS.map(x=>{const parts=x.label.split(" ");const flag=parts.shift()||"🌐";const name=parts.join(" ");return `<button class="language-page-btn ${x.id===selectedLanguage?"active":""}" onclick="selectLanguage('${x.id}')"><span class="lang-flag">${flag}</span><span><b>${name}</b><small>${x.id.toUpperCase()}</small></span><span style="margin-left:auto">${x.id===selectedLanguage?'✓':''}</span></button>`}).join("")}
+function selectLanguage(id){selectedLanguage=LANGUAGE_OPTIONS.some(x=>x.id===id)?id:"en";localStorage.setItem("piedutrack_language",selectedLanguage);if(personalAccount){personalAccount.language=selectedLanguage;saveActiveAccount();syncPersonalAccountOnline()}renderLanguagePanel();renderLanguagePage();applyLanguage()}
 function applyLanguage(){const t=UI_TRANSLATIONS[selectedLanguage]||UI_TRANSLATIONS.en;document.documentElement.lang=selectedLanguage;const langTitle=document.querySelector("#languageGrid")?.parentElement?.querySelector(".setting-title");if(langTitle)langTitle.textContent=t.LANGUAGE;const sub=document.querySelector("#languageGrid")?.parentElement?.querySelector(".setting-sub");if(sub)sub.textContent=t.LANGUAGE_SUB;const map={"MY ACCOUNT":t.MY_ACCOUNT,"EDIT ACCOUNT":t.EDIT_ACCOUNT,"LOG OUT":t.LOG_OUT,"CREATE ACCOUNT":t.CREATE_ACCOUNT,"LOG IN":t.LOG_IN,"Full Name":t.FULL_NAME,"Mobile Number":t.MOBILE,"Password":t.PASSWORD,"Gender":t.GENDER,"Age":t.AGE,"School / College Name":t.SCHOOL,"Class":t.CLASS,"Department / Study Group":t.DEPARTMENT,"District / City":t.DISTRICT,"PROFILE PICTURE":t.PROFILE,"SAVE ACCOUNT":t.SAVE_ACCOUNT};document.querySelectorAll(".setting-title,button,input[placeholder],select option, h2").forEach(el=>{const raw=el.textContent.trim()||el.getAttribute("placeholder");if(map[raw]){if(el.tagName==="INPUT")el.placeholder=map[raw];else el.textContent=map[raw]}});const p=document.getElementById("accountProfileSummary");if(p&&personalAccount)accountProfileSummary();}
 let currentPage=document.querySelector(".page.active")?.id?.replace(/Page$/,'')||"menu";
 let exitDialogOpen=false;
@@ -583,7 +512,7 @@ function openPage(page,push=true){
  pages.forEach(p=>document.getElementById(p+"Page")?.classList.remove("active"));
  document.getElementById(page+"Page")?.classList.add("active"); currentPage=page;
  window.scrollTo({top:0,behavior:"smooth"});
- if(page==="settings"){updateNameUI();updateDOBUI();renderSettingsExams();updateThemeButtons();updateReminderSettings();accountProfileSummary();renderLanguagePanel();applyLanguage()}
+ if(page==="settings"){updateNameUI();updateDOBUI();renderSettingsExams();updateThemeButtons();updateReminderSettings();accountProfileSummary();renderLanguagePanel();applyLanguage();syncLegacySettingsControls()}
  if(page==="examCenter")renderExamCenter();
  if(page==="admissionGuide")renderAdmissionGuide();
  if(page==="lifeData")updateLife();
@@ -596,7 +525,9 @@ function openPage(page,push=true){
  if(page==="mcqQuiz")renderMCQ();
  if(page==="admissionCalendar")renderCalendar();
  if(page==="studyProgress")renderStudyProgress();
- if(page==="examReminder")renderExamReminder();
+ if(page==="examReminder")renderAlarmCenter();
+ if(page==="language")renderLanguagePage();
+ if(page==="hidayah")renderHidayah();
  if(page==="studyTimer"){renderStudyTimer();updateStudyTimerDisplay()}
 }
 function backPage(){
@@ -633,9 +564,9 @@ window.addEventListener("popstate",e=>{
 });
 window.addEventListener("keydown",e=>{if(e.key==="Escape")backPage()});
 function updateNameUI(){document.getElementById("nameInput").value=savedName;const t=document.getElementById("welcomeToggle");if(t)t.checked=welcomeEnabled;const n=document.getElementById("welcomeMenuName");if(n)n.textContent=savedName||"";const h=document.getElementById("welcomeMenuHero");if(h)h.classList.toggle("off",!welcomeEnabled);const pt=document.getElementById("passwordToggle");if(pt)pt.checked=passwordEnabled;const pb=document.getElementById("passwordSettingsBox");if(pb)pb.style.display=passwordEnabled?"block":"none"}
-function saveName(){savedName=document.getElementById("nameInput").value.trim();localStorage.setItem("lifeos_display_name",savedName);updateSetupState();updateWelcomeTitle()}
+function saveName(){savedName=document.getElementById("nameInput").value.trim();localStorage.setItem("lifeos_display_name",savedName);if(personalAccount){personalAccount.name=savedName;saveActiveAccount();syncPersonalAccountOnline()}updateSetupState();updateWelcomeTitle()}
 function updateWelcomeTitle(){const el=document.getElementById("welcomeTitle");if(!el)return;el.innerHTML=savedName?`WELCOME, <span class="welcome-name">${esc(savedName)}</span>!<br>WELCOME TO PI EDUTRACK`:`WELCOME TO PI EDUTRACK`}
-function saveWelcomeSetting(){const t=document.getElementById("welcomeToggle");welcomeEnabled=!!t?.checked;localStorage.setItem("lifeos_welcome_enabled",welcomeEnabled?"1":"0");const h=document.getElementById("welcomeMenuHero");if(h)h.classList.toggle("off",!welcomeEnabled)}
+function saveWelcomeSetting(){const t=document.getElementById("welcomeToggle");welcomeEnabled=!!t?.checked;localStorage.setItem("lifeos_welcome_enabled",welcomeEnabled?"1":"0");if(personalAccount){personalAccount.welcomeEnabled=welcomeEnabled;saveActiveAccount();syncPersonalAccountOnline()}const h=document.getElementById("welcomeMenuHero");if(h)h.classList.toggle("off",!welcomeEnabled)}
 function closeWelcome(){document.getElementById("welcomeOverlay")?.classList.remove("show")}
 function showWelcome(){if(!welcomeEnabled)return;updateWelcomeTitle();document.getElementById("welcomeOverlay")?.classList.add("show")}
 function updateDOBUI(){document.getElementById("dobInput").value=savedDOB}
@@ -664,7 +595,7 @@ function checkAppUpdate(){localStorage.setItem("lifeos_last_seen_app_version",AP
 function watchServiceWorkerUpdate(){if(!("serviceWorker" in navigator))return;navigator.serviceWorker.addEventListener("controllerchange",()=>{document.getElementById("updateBar")?.classList.remove("show");location.reload()});navigator.serviceWorker.ready.then(reg=>{if(reg.waiting){window.__pendingSW=reg.waiting;addNotification("New Update Available","A newer app version is ready. Tap UPDATE NOW to activate it.");document.getElementById("updateBar")?.classList.add("show")}reg.addEventListener("updatefound",()=>{const nw=reg.installing;if(!nw)return;nw.addEventListener("statechange",()=>{if(nw.state==="installed"&&navigator.serviceWorker.controller){window.__pendingSW=nw;addNotification("New Update Available","A newer app version is ready. Tap UPDATE NOW to activate it.");document.getElementById("updateBar")?.classList.add("show")}})})})}
 function activateWaitingWorker(){const worker=window.__pendingSW||window.__swReg?.waiting;if(worker){worker.postMessage({type:"SKIP_WAITING"});return}window.location.reload()}
 
-function saveDOB(){savedDOB=document.getElementById("dobInput").value;localStorage.setItem("lifeos_dob",savedDOB);updateSetupState();updateLife()}
+function saveDOB(){savedDOB=document.getElementById("dobInput").value;localStorage.setItem("lifeos_dob",savedDOB);if(personalAccount){personalAccount.dob=savedDOB;saveActiveAccount();syncPersonalAccountOnline()}updateSetupState();updateLife()}
 function updateSetupState(){
  const el=document.getElementById("setupState");
  el.textContent=savedDOB?`TRACKING ${savedName?esc(savedName).toUpperCase():"YOUR LIFE"} FROM ${savedDOB}.`:"SET YOUR NAME AND DATE OF BIRTH FROM SETTINGS.";
@@ -722,6 +653,7 @@ function buildExamCard(e,viewOnly=false){
 }
 function renderExamList(targetId){
  const list=document.getElementById(targetId);
+ if(!list)return;
  const filtered=exams.filter(e=>currentFilter==="ALL"||e.category===currentFilter);
  list.innerHTML=filtered.length?filtered.map(buildExamCard).join(""):'<div class="empty">NO ADMISSION EXAMS ADDED YET.</div>';
 }
@@ -814,7 +746,7 @@ function checkDeadlineReminders(){const today=new Date();deadlines.forEach(d=>{c
 function checkAdmissionReminders(){const today=new Date();exams.forEach(e=>{if(!e.date)return;const d=new Date(e.date+"T"+(e.time||"09:00"));const days=Math.ceil((d-today)/86400000);const key=`lifeos_reminded_${e.id}_${e.date}`;if(days>=0&&days<=3&&!localStorage.getItem(key)){localStorage.setItem(key,"1");addNotification("Upcoming Admission Exam",`${e.name} is ${days===0?"today":`in ${days} day${days===1?"":"s"}`}.`);if("Notification" in window&&Notification.permission==="granted")new Notification("Upcoming Admission Exam",{body:e.name})}})}
 function sudokuRenderProgress(){const el=document.getElementById("sudokuProgress");if(!el)return;el.innerHTML=["EASY","MEDIUM","HARD"].map(d=>{const u=Number(localStorage.getItem("lifeos_sudoku_unlocked_"+d)||1)-1;const pct=Math.round((u/SUDOKU_TOTAL_LEVELS)*100);return `<div class="progress-card"><b>${d}</b><div class="nav-hint">${u}/${SUDOKU_TOTAL_LEVELS} levels completed</div><div class="progress-bar-v4"><i style="width:${pct}%"></i></div></div>`}).join("")}
 function applyTheme(theme){const allowed=["dark","white","blue","purple","green","red","orange","sunset","galaxy","night","aurora","rain"];savedTheme=allowed.includes(theme)?theme:"dark";document.body.classList.remove(...allowed.filter(x=>x!=="dark").map(x=>"theme-"+x));if(savedTheme!=="dark")document.body.classList.add("theme-"+savedTheme);localStorage.setItem("lifeos_theme",savedTheme);updateThemeButtons()}
-function setTheme(theme){applyTheme(theme)}
+function setTheme(theme){applyTheme(theme);if(personalAccount){personalAccount.theme=savedTheme;saveActiveAccount();syncPersonalAccountOnline()}}
 function updateThemeButtons(){document.querySelectorAll(".theme-btn").forEach(b=>b.classList.toggle("active",b.dataset.theme===savedTheme))}
 function showAppUpdate(){document.getElementById("updateBar")?.classList.add("show")}
 function applyAppUpdate(){if(window.__pendingSW){window.__pendingSW.postMessage({type:"SKIP_WAITING"});return}location.reload()}
@@ -928,6 +860,22 @@ function updateStudyTimerDisplay(){const ms=timerAccumulated+(timerRunning?Date.
 function renderStudyTimer(){const now=new Date(),today=dateKey(now),weekStart=new Date(now);weekStart.setDate(now.getDate()-6);const sum=(arr)=>arr.reduce((a,x)=>a+x.minutes,0);const todayM=sum(studySessions.filter(s=>s.date===today)),weekM=sum(studySessions.filter(s=>s.date>=dateKey(weekStart)&&s.date<=today)),monthM=sum(studySessions.filter(s=>s.date.startsWith(today.slice(0,7)))),yearM=sum(studySessions.filter(s=>s.date.startsWith(today.slice(0,4))));document.getElementById("timerToday").textContent=Math.round(todayM)+"m";document.getElementById("timerWeek").textContent=(weekM/60).toFixed(1)+"h";document.getElementById("timerMonth").textContent=(monthM/60).toFixed(1)+"h";document.getElementById("timerYear").textContent=(yearM/60).toFixed(1)+"h";const hg=document.getElementById("hourGrid");const hm=Array(24).fill(0);studySessions.filter(s=>s.date===today).forEach(s=>hm[s.hour]=(hm[s.hour]||0)+s.minutes);hg.innerHTML=hm.map((m,i)=>`<div class="hour-cell"><b>${Math.round(m)}</b>${String(i).padStart(2,"0")}h</div>`).join("");const vals=[];for(let i=6;i>=0;i--){const d=new Date(now);d.setDate(now.getDate()-i);vals.push(minutesForDate(dateKey(d)))}const max=Math.max(1,...vals);document.getElementById("timerChart").innerHTML=vals.map((m,i)=>`<div class="bar" style="height:${Math.max(5,m/max*100)}%"><span>${m}m</span></div>`).join("")}
 setInterval(()=>{if(timerRunning){updateStudyTimerDisplay();renderStudyTimer()}},1000)
 
+
+const PI_ALARMS_KEY="piedutrack_alarms_v15_2";let alarms=[];let editingAlarmId=null;
+try{alarms=JSON.parse(localStorage.getItem(PI_ALARMS_KEY)||"[]")}catch(e){alarms=[]}
+function saveAlarms(){localStorage.setItem(PI_ALARMS_KEY,JSON.stringify(alarms));if(personalAccount){personalAccount.alarms=alarms;saveActiveAccount();syncPersonalAccountOnline()}}
+function alarmDayMatches(a,d){if(a.repeat==="DAILY")return true;if(a.repeat==="ONCE")return a.lastDate!==d;if(a.repeat==="DAYS")return Array.isArray(a.days)&&a.days.includes(String(new Date().getDay()));return false}
+function formatAlarmTime(t){if(!t)return "--:--";const [h,m]=t.split(":").map(Number);const ap=h>=12?"PM":"AM",hh=(h%12)||12;return `${hh}:${String(m).padStart(2,"0")}|${ap}`}
+function alarmLabel(a){if(a.repeat==="DAILY")return "Every day";if(a.repeat==="ONCE")return a.date?new Date(a.date+"T00:00").toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"}):"One time";const names=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];return (a.days||[]).map(x=>names[Number(x)]).join(" • ")||"Selected days"}
+function renderAlarmCenter(){const list=document.getElementById("alarmList");if(!list)return;const active=alarms.filter(a=>a.enabled).length,exam=alarms.filter(a=>a.exam).length;document.getElementById("alarmTotalCount").textContent=alarms.length;document.getElementById("alarmActiveCount").textContent=active;document.getElementById("alarmExamCount").textContent=exam;if(!alarms.length){list.innerHTML='<div class="alarm-empty">No alarms yet. Tap ＋ ADD ALARM to create your first reminder.</div>';return}list.innerHTML=alarms.slice().sort((a,b)=>String(a.time).localeCompare(String(b.time))).map(a=>{const [time,ampm]=formatAlarmTime(a.time).split("|");return `<div class="alarm-card"><div class="alarm-top"><div><span class="alarm-time">${time}</span> <span class="alarm-ampm">${ampm}</span><div class="alarm-meta">${alarmLabel(a)}${a.exam?' • Exam reminder':''}</div><div class="alarm-label">${esc(a.label||'PI EduTrack Alarm')}</div></div><div class="alarm-switch"><label class="switch"><input type="checkbox" ${a.enabled?'checked':''} onchange="toggleAlarm('${a.id}')"><span class="slider"></span></label></div></div><div class="alarm-days">${['S','M','T','W','T','F','S'].map((d,i)=>`<span class="alarm-day ${(a.repeat==='DAILY'||(a.repeat==='DAYS'&&(a.days||[]).includes(String(i))))?'active':''}">${d}</span>`).join('')}</div><div class="alarm-actions"><button class="btn" onclick="editAlarm('${a.id}')">EDIT</button><button class="btn danger" onclick="deleteAlarm('${a.id}')">DELETE</button></div></div>`}).join("")}
+function openAlarmForm(id=null){editingAlarmId=id;const form=document.getElementById("alarmForm");if(!form)return;form.style.display="grid";document.getElementById("alarmFormTitle").textContent=id?"EDIT ALARM":"NEW ALARM";const a=id?alarms.find(x=>x.id===id):null;document.getElementById("alarmLabel").value=a?.label||"";document.getElementById("alarmTime").value=a?.time||"07:00";document.getElementById("alarmRepeat").value=a?.repeat||"DAILY";document.getElementById("alarmVibrate").checked=a?.vibrate!==false;document.getElementById("alarmNotify").checked=a?.notify!==false;document.getElementById("alarmExam").checked=!!a?.exam;document.querySelectorAll('#alarmForm .alarm-days-select input').forEach(x=>x.checked=!!(a?.days||[]).includes(x.value));document.getElementById("alarmRepeat").onchange=()=>{document.querySelectorAll('#alarmForm .alarm-days-select label').forEach(x=>x.style.opacity=document.getElementById('alarmRepeat').value==='DAYS'?'1':'.45')};document.getElementById("alarmRepeat").onchange();form.scrollIntoView({behavior:'smooth',block:'center'})}
+function closeAlarmForm(){editingAlarmId=null;const f=document.getElementById("alarmForm");if(f)f.style.display="none"}
+function saveAlarm(){const label=document.getElementById("alarmLabel").value.trim()||"PI EduTrack Alarm",time=document.getElementById("alarmTime").value,repeat=document.getElementById("alarmRepeat").value,days=[...document.querySelectorAll('#alarmForm .alarm-days-select input:checked')].map(x=>x.value);if(!time)return alert("Please choose an alarm time.");if(repeat==='DAYS'&&!days.length)return alert("Select at least one day.");const base={label,time,repeat,days,vibrate:document.getElementById("alarmVibrate").checked,notify:document.getElementById("alarmNotify").checked,exam:document.getElementById("alarmExam").checked,enabled:true,updatedAt:new Date().toISOString()};if(editingAlarmId){const i=alarms.findIndex(x=>x.id===editingAlarmId);if(i>=0)alarms[i]={...alarms[i],...base}}else alarms.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),...base,createdAt:new Date().toISOString()});saveAlarms();closeAlarmForm();renderAlarmCenter()}
+function toggleAlarm(id){const a=alarms.find(x=>x.id===id);if(!a)return;a.enabled=!a.enabled;saveAlarms();renderAlarmCenter()}
+function editAlarm(id){openAlarmForm(id)}
+function deleteAlarm(id){if(!confirm("Delete this alarm?"))return;alarms=alarms.filter(a=>a.id!==id);saveAlarms();renderAlarmCenter()}
+function triggerAlarm(a){if(a.vibrate&&navigator.vibrate)navigator.vibrate([300,150,300,150,600]);if(a.notify&&'Notification' in window&&Notification.permission==='granted')new Notification(a.exam?'Exam Reminder':'PI EduTrack Alarm',{body:a.label||'Your reminder is due now.'});addNotification(a.exam?'Exam Reminder':'Alarm',a.label||'Your reminder is due now.');try{const C=window.AudioContext||window.webkitAudioContext;if(C){const c=new C(),o=c.createOscillator(),g=c.createGain();o.frequency.value=880;o.connect(g);g.connect(c.destination);g.gain.value=.08;o.start();setTimeout(()=>{o.stop();c.close()},900)}}catch(e){}if(a.repeat==='ONCE'){a.enabled=false;a.lastDate=new Date().toISOString().slice(0,10)}saveAlarms();renderAlarmCenter()}
+let lastAlarmTick="";function checkAlarms(){const now=new Date(),date=now.toISOString().slice(0,10),day=String(now.getDay()),hm=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0'),key=date+'|'+hm;alarms.forEach(a=>{if(!a.enabled||a.time!==hm||!alarmDayMatches(a,day))return;if(a.repeat==='ONCE'&&a.lastDate===date)return;if(lastAlarmTick===key+'|'+a.id)return;lastAlarmTick=key+'|'+a.id;triggerAlarm(a)})}
 function setupAppUpdate(){if(!( "serviceWorker" in navigator))return;navigator.serviceWorker.register("./service-worker.js").then(reg=>{window.__swReg=reg;const reveal=worker=>{if(!worker)return;window.__pendingSW=worker;addNotification("New Update Available","A newer app version is ready. Tap UPDATE NOW to activate it.");document.getElementById("updateBar")?.classList.add("show")};reg.update();if(reg.waiting)reveal(reg.waiting);reg.addEventListener("updatefound",()=>{const nw=reg.installing;if(!nw)return;nw.addEventListener("statechange",()=>{if(nw.state==="installed"&&navigator.serviceWorker.controller)reveal(nw)})})}).catch(e=>console.log("Service Worker Error:",e));navigator.serviceWorker.addEventListener("controllerchange",()=>{if(window.__reloadedForUpdate)return;window.__reloadedForUpdate=true;document.getElementById("updateBar")?.classList.remove("show");location.reload()})}
 function exportData(){const sudokuProgress={};["EASY","MEDIUM","HARD"].forEach(d=>{sudokuProgress[d]={level:Number(localStorage.getItem("lifeos_sudoku_level_"+d)||1),unlocked:Number(localStorage.getItem("lifeos_sudoku_unlocked_"+d)||1)}});const data={version:"11.0",name:savedName,dob:savedDOB,exams, welcomeEnabled,theme:savedTheme,notes,notifications,favorites,reminderEnabled,passwordEnabled,passwordHash,sudokuProgress,studyPlans,deadlines,applications,fees,studySessions,communityPosts,communitySaved,communityBlocked,communityReports,communityGroup,communityProfile,exportedAt:new Date().toISOString()};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="admission-tracker-v4-backup.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 async function importData(file){if(!file)return;try{const data=JSON.parse(await file.text());if(!data||typeof data!=="object")throw new Error("Invalid backup");if(!confirm("Restore this backup? Current local data will be replaced."))return;savedName=data.name||"";savedDOB=data.dob||"";exams=Array.isArray(data.exams)?data.exams:[];notes=Array.isArray(data.notes)?data.notes:[];notifications=Array.isArray(data.notifications)?data.notifications:[];favorites=Array.isArray(data.favorites)?data.favorites:[];communityPosts=Array.isArray(data.communityPosts)?data.communityPosts:[];communitySaved=Array.isArray(data.communitySaved)?data.communitySaved:[];communityBlocked=Array.isArray(data.communityBlocked)?data.communityBlocked:[];communityReports=Array.isArray(data.communityReports)?data.communityReports:[];communityGroup=data.communityGroup||"BOYS";communityProfile=data.communityProfile||{};welcomeEnabled=data.welcomeEnabled!==false;savedTheme=data.theme||"dark";reminderEnabled=!!data.reminderEnabled;localStorage.setItem("lifeos_display_name",savedName);localStorage.setItem("lifeos_dob",savedDOB);localStorage.setItem("lifeos_exams",JSON.stringify(exams));localStorage.setItem("lifeos_notes",JSON.stringify(notes));localStorage.setItem("lifeos_notifications",JSON.stringify(notifications));localStorage.setItem("lifeos_favorites",JSON.stringify(favorites));localStorage.setItem("lifeos_welcome_enabled",welcomeEnabled?"1":"0");localStorage.setItem("lifeos_theme",savedTheme);localStorage.setItem("lifeos_reminders_enabled",reminderEnabled?"1":"0");studyPlans=Array.isArray(data.studyPlans)?data.studyPlans:[];deadlines=Array.isArray(data.deadlines)?data.deadlines:[];applications=Array.isArray(data.applications)?data.applications:[];fees=Array.isArray(data.fees)?data.fees:[];studySessions=Array.isArray(data.studySessions)?data.studySessions:[];saveStudyData();if(typeof data.passwordHash==="string"&&data.passwordHash){passwordHash=data.passwordHash;passwordEnabled=!!data.passwordEnabled;localStorage.setItem("lifeos_password_hash",passwordHash);localStorage.setItem("lifeos_password_enabled",passwordEnabled?"1":"0")}if(data.sudokuProgress)Object.entries(data.sudokuProgress).forEach(([d,v])=>{localStorage.setItem("lifeos_sudoku_level_"+d,String(v.level||1));localStorage.setItem("lifeos_sudoku_unlocked_"+d,String(v.unlocked||1))});applyTheme(savedTheme);updateNameUI();updateDOBUI();renderAllExams();renderNotes();renderNotifications();updateNotificationBadge();alert("Backup restored successfully.")}catch(e){alert("Could not restore backup: invalid JSON file.")}}
@@ -1093,8 +1041,8 @@ function updateCommunityIdentity(){const a=document.getElementById("communityAva
 /* V12 init: never falls back to fake cross-device local chat when online mode is requested. */
 setTimeout(v12Init,50);
 
-applyTheme(savedTheme);sudokuLoadLevel();initPersonalAccount();renderLanguagePanel();applyLanguage();communityAuth();updateNameUI();updateDOBUI();updateSetupState();renderAllExams();renderAdmissionGuide();updateLife();updateWelcomeTitle();renderNotes();renderNotifications();updateNotificationBadge();renderStudyPlanner();renderMCQ();renderCalendar();renderApplications();renderStudyProgress();renderExamReminder();renderFees();renderStudyTimer();setTimeout(()=>{if(!document.body.classList.contains("auth-locked")&&!sessionStorage.getItem("piedutrack_welcome_shown")){showWelcome();sessionStorage.setItem("piedutrack_welcome_shown","1")}if(passwordEnabled&&passwordHash)lockApp()},350);
-checkAdmissionReminders();checkDeadlineReminders();setInterval(checkAdmissionReminders,60000);setInterval(checkDeadlineReminders,60000);setInterval(updateLife,50);setInterval(updateExamCountdowns,50);setInterval(updateGuideCountdowns,1000);setInterval(()=>{if(document.getElementById("sudokuPage")?.classList.contains("active")&&!sudokuState.completed)sudokuUpdateStats()},1000);
+applyTheme(savedTheme);sudokuLoadLevel();initPersonalAccount();renderLanguagePanel();applyLanguage();syncLegacySettingsControls();renderAlarmCenter();renderHidayah();communityAuth();updateNameUI();updateDOBUI();updateSetupState();renderAllExams();renderAdmissionGuide();updateLife();updateWelcomeTitle();renderNotes();renderNotifications();updateNotificationBadge();renderStudyPlanner();renderMCQ();renderCalendar();renderApplications();renderStudyProgress();renderAlarmCenter();renderFees();renderStudyTimer();setTimeout(()=>{if(!document.body.classList.contains("auth-locked")&&!sessionStorage.getItem("piedutrack_welcome_shown")){showWelcome();sessionStorage.setItem("piedutrack_welcome_shown","1")}if(passwordEnabled&&passwordHash)lockApp()},350);
+checkAdmissionReminders();checkDeadlineReminders();checkAlarms();setInterval(checkAdmissionReminders,60000);setInterval(checkAlarms,10000);setInterval(checkDeadlineReminders,60000);setInterval(updateLife,50);setInterval(updateExamCountdowns,50);setInterval(updateGuideCountdowns,1000);setInterval(()=>{if(document.getElementById("sudokuPage")?.classList.contains("active")&&!sudokuState.completed)sudokuUpdateStats()},1000);
 window.addEventListener("load",setupAppUpdate);
 let v4LastActivity=Date.now();["touchstart","click","keydown","scroll"].forEach(ev=>document.addEventListener(ev,()=>{v4LastActivity=Date.now()}));setInterval(()=>{if(passwordEnabled&&passwordHash&&Date.now()-v4LastActivity>10*60*1000&&!document.getElementById("lockScreen").classList.contains("show")){v4LastActivity=Date.now();lockApp()}},30000);document.addEventListener("visibilitychange",lockOnResume);
 document.addEventListener("DOMContentLoaded",()=>{document.getElementById("accountPhoto")?.addEventListener("change",function(){readAccountPhoto(this,v=>{accountPhotoData=v;const p=document.getElementById("accountPhotoPreview");if(p&&v)p.src=v})});document.getElementById("editAccountPhoto")?.addEventListener("change",function(){readAccountPhoto(this,v=>{accountPhotoEditData=v;const p=document.getElementById("editAccountPhotoPreview");if(p&&v)p.src=v})})});

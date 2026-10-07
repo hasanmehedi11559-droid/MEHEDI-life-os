@@ -1,0 +1,9 @@
+PI EduTrack V15.2
+
+1. Premium Settings redesigned into a clean, organized, screenshot-inspired list UI.
+2. Alarm & Exam Reminder center with add/edit/delete/toggle, repeat schedules, vibration, notifications and exam reminders.
+3. Separate Language page with many selectable languages and saved preference.
+4. New Hidayah home section with premium Islamic learning option grid.
+5. Personal account upgraded to Supabase Auth persistence when configured, so the same account can be logged in again after reinstall or on another device. Local fallback remains only when online backend is unavailable.
+
+Community UI/backend code was not intentionally redesigned in this update.
