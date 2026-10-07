@@ -1,27 +1,10 @@
-V15.2 UPDATE
+PI-EduTrack V15.2 UPDATE
 
-1. Premium Settings
-- Rebuilt Settings as a clean, organized, premium list-style control center inspired by the supplied reference.
-- Existing V15.1 Settings functionality remains available.
-
-2. Alarm & Exam Reminder
-- Added a premium Alarm Center with create/edit/delete/toggle/test controls.
-- Supports daily, one-time, weekdays and weekends alarms, notification and vibration options.
-- Existing admission exam reminder system remains available in the same center.
-
-3. Language
-- Added a separate Language page from Settings.
-- Added a larger language selection list with saved selection.
-
-4. Hidayah
-- Added a Home Hidayah section with a premium 2-column Islamic learning grid.
-- Added Quran, Kitab, Hadith, Articles, Bayan, Quran Education, Salah Education and Dua & Dhikr options.
-
-5. Persistent Account
-- Added cloud-backed personal account authentication using the configured Supabase project.
-- Signup remains Name + Mobile + Password + Gender.
-- Returning users can log in with Mobile + Password on another device or after reinstalling the app.
-- Personal account identity uses a separate internal auth namespace from the existing Community account flow.
-- Community backend/code was not redesigned.
-
-V15.1 baseline features and data structures were preserved; only the requested V15.2 additions/changes were applied.
+- V15.1 retained as the baseline architecture.
+- Fixed/high-resolution Exam Countdown rendering.
+- Home Exam Countdown is view-only; Edit/Delete remain in Settings.
+- Exam Countdown shows Days, Hours, Minutes, Seconds and remaining Milliseconds.
+- Countdown is calculated from the real target timestamp and refreshed every animation frame.
+- Live Age now uses the same high-resolution animation-frame clock for visibly changing milliseconds.
+- Existing local data, Supabase structure, themes and other features are preserved.
+- Service worker cache bumped to V15.2.

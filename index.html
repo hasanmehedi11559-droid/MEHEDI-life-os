@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#05060a">
-<meta name="description" content="Private offline age, admission countdown and admission guide app.">
+<meta name="description" content="PI EduTrack V15.2 — Private offline age, admission countdown and admission guide app.">
 <link rel="manifest" href="manifest.json">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <title>PI EduTrack</title>
@@ -733,11 +733,16 @@ function updateFilterButtons(){
 }
 function setExamFilter(f){currentFilter=f;renderAllExams()}
 function updateExamCountdowns(){
+ const now=Date.now();
  document.querySelectorAll(".exam-card").forEach(card=>{
    const e=exams.find(x=>String(x.id)===card.dataset.examId);if(!e)return;
-   const diff=examTimestamp(e)-Date.now();
+   const diff=examTimestamp(e)-now;
    if(diff<=0){if(!card.querySelector(".completed")){card.outerHTML=buildExamCard(e)}return}
-   const p=countdownParts(diff);card.querySelectorAll(".countdown-number").forEach((n,i)=>n.textContent=String(p[i]).padStart(i===4?3:2,"0"));
+   const p=countdownParts(diff);
+   card.querySelectorAll(".countdown-number").forEach((n,i)=>{
+     const value=String(p[i]).padStart(i===4?3:2,"0");
+     if(n.textContent!==value)n.textContent=value;
+   });
  });
 }
 function openExamModal(id=null){
@@ -1094,7 +1099,17 @@ function updateCommunityIdentity(){const a=document.getElementById("communityAva
 setTimeout(v12Init,50);
 
 applyTheme(savedTheme);sudokuLoadLevel();initPersonalAccount();renderLanguagePanel();applyLanguage();communityAuth();updateNameUI();updateDOBUI();updateSetupState();renderAllExams();renderAdmissionGuide();updateLife();updateWelcomeTitle();renderNotes();renderNotifications();updateNotificationBadge();renderStudyPlanner();renderMCQ();renderCalendar();renderApplications();renderStudyProgress();renderExamReminder();renderFees();renderStudyTimer();setTimeout(()=>{if(!document.body.classList.contains("auth-locked")&&!sessionStorage.getItem("piedutrack_welcome_shown")){showWelcome();sessionStorage.setItem("piedutrack_welcome_shown","1")}if(passwordEnabled&&passwordHash)lockApp()},350);
-checkAdmissionReminders();checkDeadlineReminders();setInterval(checkAdmissionReminders,60000);setInterval(checkDeadlineReminders,60000);setInterval(updateLife,50);setInterval(updateExamCountdowns,50);setInterval(updateGuideCountdowns,1000);setInterval(()=>{if(document.getElementById("sudokuPage")?.classList.contains("active")&&!sudokuState.completed)sudokuUpdateStats()},1000);
+checkAdmissionReminders();checkDeadlineReminders();setInterval(checkAdmissionReminders,60000);setInterval(checkDeadlineReminders,60000);
+// V15.2 high-resolution live clocks: calculate from the real current timestamp on every animation frame.
+// This keeps Live Age and Exam Countdown synchronized with actual elapsed time instead of a fixed 50ms interval.
+let highResolutionFrame=0;
+function runHighResolutionClocks(){
+  updateLife();
+  updateExamCountdowns();
+  highResolutionFrame=requestAnimationFrame(runHighResolutionClocks);
+}
+runHighResolutionClocks();
+setInterval(updateGuideCountdowns,1000);setInterval(()=>{if(document.getElementById("sudokuPage")?.classList.contains("active")&&!sudokuState.completed)sudokuUpdateStats()},1000);
 window.addEventListener("load",setupAppUpdate);
 let v4LastActivity=Date.now();["touchstart","click","keydown","scroll"].forEach(ev=>document.addEventListener(ev,()=>{v4LastActivity=Date.now()}));setInterval(()=>{if(passwordEnabled&&passwordHash&&Date.now()-v4LastActivity>10*60*1000&&!document.getElementById("lockScreen").classList.contains("show")){v4LastActivity=Date.now();lockApp()}},30000);document.addEventListener("visibilitychange",lockOnResume);
 document.addEventListener("DOMContentLoaded",()=>{document.getElementById("accountPhoto")?.addEventListener("change",function(){readAccountPhoto(this,v=>{accountPhotoData=v;const p=document.getElementById("accountPhotoPreview");if(p&&v)p.src=v})});document.getElementById("editAccountPhoto")?.addEventListener("change",function(){readAccountPhoto(this,v=>{accountPhotoEditData=v;const p=document.getElementById("editAccountPhotoPreview");if(p&&v)p.src=v})})});
