@@ -1,4 +1,4 @@
-const CACHE_NAME='piedutrack-v15.3-home-dashboard';
+const CACHE_NAME='piedutrack-v15-advanced-exam-auth';
 const ASSETS = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", event => {
