@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#05060a">
-<meta name="description" content="PI EduTrack V15.2 — Private offline age, admission countdown and admission guide app.">
+<meta name="description" content="Private offline age, admission countdown and admission guide app.">
 <link rel="manifest" href="manifest.json">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <title>PI EduTrack</title>
@@ -537,7 +537,7 @@ const EXAM_HISTORY_KEY="piedutrack_exam_history_v15";
 let passwordEnabled=localStorage.getItem("lifeos_password_enabled")==="1";
 let passwordHash=localStorage.getItem("lifeos_password_hash")||"";
 let pinBuffer="";
-const APP_VERSION="15.0";
+const APP_VERSION="15.2";
 let currentFilter="ALL";
 let guideFilter="ALL";
 
@@ -732,17 +732,13 @@ function updateFilterButtons(){
  document.querySelectorAll("#centerExamFilters .filter-btn,#settingsExamFilters .filter-btn").forEach(b=>b.classList.toggle("active",b.textContent===currentFilter))
 }
 function setExamFilter(f){currentFilter=f;renderAllExams()}
-function updateExamCountdowns(){
- const now=Date.now();
+function updateExamCountdowns(now=Date.now()){
+ const currentNow=Number.isFinite(now)?now:Date.now();
  document.querySelectorAll(".exam-card").forEach(card=>{
    const e=exams.find(x=>String(x.id)===card.dataset.examId);if(!e)return;
-   const diff=examTimestamp(e)-now;
+   const diff=examTimestamp(e)-currentNow;
    if(diff<=0){if(!card.querySelector(".completed")){card.outerHTML=buildExamCard(e)}return}
-   const p=countdownParts(diff);
-   card.querySelectorAll(".countdown-number").forEach((n,i)=>{
-     const value=String(p[i]).padStart(i===4?3:2,"0");
-     if(n.textContent!==value)n.textContent=value;
-   });
+   const p=countdownParts(diff);card.querySelectorAll(".countdown-number").forEach((n,i)=>n.textContent=String(p[i]).padStart(i===4?3:2,"0"));
  });
 }
 function openExamModal(id=null){
@@ -1100,15 +1096,39 @@ setTimeout(v12Init,50);
 
 applyTheme(savedTheme);sudokuLoadLevel();initPersonalAccount();renderLanguagePanel();applyLanguage();communityAuth();updateNameUI();updateDOBUI();updateSetupState();renderAllExams();renderAdmissionGuide();updateLife();updateWelcomeTitle();renderNotes();renderNotifications();updateNotificationBadge();renderStudyPlanner();renderMCQ();renderCalendar();renderApplications();renderStudyProgress();renderExamReminder();renderFees();renderStudyTimer();setTimeout(()=>{if(!document.body.classList.contains("auth-locked")&&!sessionStorage.getItem("piedutrack_welcome_shown")){showWelcome();sessionStorage.setItem("piedutrack_welcome_shown","1")}if(passwordEnabled&&passwordHash)lockApp()},350);
 checkAdmissionReminders();checkDeadlineReminders();setInterval(checkAdmissionReminders,60000);setInterval(checkDeadlineReminders,60000);
-// V15.2 high-resolution live clocks: calculate from the real current timestamp on every animation frame.
-// This keeps Live Age and Exam Countdown synchronized with actual elapsed time instead of a fixed 50ms interval.
-let highResolutionFrame=0;
-function runHighResolutionClocks(){
-  updateLife();
-  updateExamCountdowns();
-  highResolutionFrame=requestAnimationFrame(runHighResolutionClocks);
+// V15.2 LIVE CLOCK ENGINE — actual elapsed/remaining time, continuously rendered.
+let __liveClockRAF=0;
+let __liveClockInterval=0;
+let __liveClockLastPaint=0;
+function __renderLiveClocks(){
+  const now=Date.now();
+  // Keep each clock independent so one missing UI node can never stop the other.
+  try{ updateLife(); }catch(err){ console.warn("Live Age update:",err); }
+  try{ updateExamCountdowns(now); }catch(err){ console.warn("Exam countdown update:",err); }
 }
-runHighResolutionClocks();
+function __liveClockFrame(ts){
+  // Paint on the browser's visual refresh; the timestamp comes from Date.now()
+  // inside the actual calculations, so values are never simulated/faked.
+  if(ts-__liveClockLastPaint>=0){
+    __liveClockLastPaint=ts;
+    __renderLiveClocks();
+  }
+  __liveClockRAF=requestAnimationFrame(__liveClockFrame);
+}
+function __startLiveClocks(){
+  if(!__liveClockRAF) __liveClockRAF=requestAnimationFrame(__liveClockFrame);
+  if(!__liveClockInterval) __liveClockInterval=setInterval(__renderLiveClocks,16);
+}
+function __stopLiveClocks(){
+  // Do not stop the interval on mobile/background transitions; when the page
+  // is visible again the next tick immediately re-syncs from Date.now().
+  if(__liveClockRAF){cancelAnimationFrame(__liveClockRAF);__liveClockRAF=0;}
+  if(__liveClockInterval){clearInterval(__liveClockInterval);__liveClockInterval=0;}
+}
+__startLiveClocks();
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){__startLiveClocks();__renderLiveClocks();}});
+window.addEventListener("pageshow",()=>{__startLiveClocks();__renderLiveClocks();});
+window.addEventListener("pagehide",()=>{});
 setInterval(updateGuideCountdowns,1000);setInterval(()=>{if(document.getElementById("sudokuPage")?.classList.contains("active")&&!sudokuState.completed)sudokuUpdateStats()},1000);
 window.addEventListener("load",setupAppUpdate);
 let v4LastActivity=Date.now();["touchstart","click","keydown","scroll"].forEach(ev=>document.addEventListener(ev,()=>{v4LastActivity=Date.now()}));setInterval(()=>{if(passwordEnabled&&passwordHash&&Date.now()-v4LastActivity>10*60*1000&&!document.getElementById("lockScreen").classList.contains("show")){v4LastActivity=Date.now();lockApp()}},30000);document.addEventListener("visibilitychange",lockOnResume);

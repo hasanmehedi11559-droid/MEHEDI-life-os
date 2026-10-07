@@ -1,10 +1,8 @@
-PI-EduTrack V15.2 UPDATE
+PI EduTrack V15.2 — 2026-27
 
-- V15.1 retained as the baseline architecture.
-- Fixed/high-resolution Exam Countdown rendering.
-- Home Exam Countdown is view-only; Edit/Delete remain in Settings.
-- Exam Countdown shows Days, Hours, Minutes, Seconds and remaining Milliseconds.
-- Countdown is calculated from the real target timestamp and refreshed every animation frame.
-- Live Age now uses the same high-resolution animation-frame clock for visibly changing milliseconds.
-- Existing local data, Supabase structure, themes and other features are preserved.
-- Service worker cache bumped to V15.2.
+- Fixed live Exam Countdown rendering.
+- Home Exam Countdown remains view-only; edit/delete remain in Settings.
+- Countdown shows Days, Hours, Minutes, Seconds and real remaining Milliseconds.
+- Live Age continuously updates while the app is open.
+- Uses actual Date.now() timing with requestAnimationFrame + 16ms fallback rendering; no fake/simulated countdown.
+- Existing Supabase/database structure preserved.
